@@ -34,7 +34,7 @@ entity counter is
    Port ( clk : in  STD_LOGIC;  		--clock input
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
-			 down : in  STD_LOGIC;			--count up unless this is one
+			 down : in  STD_LOGIC;		--count up unless this is 1
           count : out integer range max-1 downto 0);
 end counter;
 
@@ -44,23 +44,34 @@ begin
 		variable count_v: integer range max-1 downto 0;
 	begin
 		if rising_edge(clk) then
+			--if reset is set, counter is 0
 			if rst = '1' then
 				count_v := 0;
+			--only count if cten = 1
 			elsif cten = '1' then
 				case down is
-					when '1' => if count_v > 0 then
+					--if down is set...
+					when '1' => 
+						--count down 
+						if count_v > 0 then
 							count_v := count_v -1;
 						else
+						--or set to max-1 after reaching 0
 							count_v := max-1;
 						end if;
-					when others => if count_v < max-1 then
+					--if down isn't set...
+					when others => 
+						--count up
+						if count_v < max-1 then
 							count_v := count_v +1;
 						else
+						-- or set 0 zero before reaching max
 							count_v := 0;
 						end if;
 				end case;
 			end if;
 		end if;
+		--set output to variable from procedure
 		count <= count_v;
 	end process;
 
