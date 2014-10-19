@@ -47,7 +47,9 @@ ARCHITECTURE behavior OF tb_counter IS
          cten : IN  std_logic;
          rst : IN  std_logic;
          down : IN  std_logic;
-			-- change type to integer
+			ld : IN  std_logic;
+			-- note: change type to integer here
+			data : IN integer range max-1 downto 0;
          count : OUT integer range max-1 downto 0
         );
     END COMPONENT;
@@ -58,7 +60,8 @@ ARCHITECTURE behavior OF tb_counter IS
    signal cten : std_logic := '0';
    signal rst : std_logic := '0';
    signal down : std_logic := '0';
-
+	signal ld : std_logic := '0';
+	signal data : integer := 0;
  	--Outputs
    signal count : integer ;
 
@@ -81,7 +84,9 @@ BEGIN
           cten => cten,
           rst => rst,
           down => down,
-          count => count
+          count => count,
+			 ld => ld,
+			 data => data
         );
 
    -- Clock process definitions
@@ -133,9 +138,19 @@ BEGIN
 		wait for clk_period;
 		assert ( count = 0 ) report "counter not 0 after reset" severity error;
 		
+		--load 3
+		rst <= '0';
+		data <= 3;
+		ld <= '1';
+		wait for clk_period;
+		assert ( count = 3 ) report "loading 3 failed" severity error;
+		
 		--start counting up again
+		ld <= '0';
 		rst <= '0';
 		down <= '0';
+		wait for clk_period;
+		assert ( count = 4 ) report "count after load failed" severity error;
 		
       wait;
    end process;

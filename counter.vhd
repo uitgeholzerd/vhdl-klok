@@ -35,7 +35,9 @@ entity counter is
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
-          count : out integer range max-1 downto 0);
+			 ld : in STD_LOGIC;			--load data
+			 data : in integer range max-1 downto 0;		--data to load
+          count : out integer range max-1 downto 0);	--counter output
 end counter;
 
 architecture Behavioral of counter is
@@ -47,6 +49,9 @@ begin
 			--if reset is set, counter is 0
 			if rst = '1' then
 				count_v := 0;
+			--if load is set, load from data
+			elsif ld = '1' then
+				count_v := data;
 			--only count if cten = 1
 			elsif cten = '1' then
 				case down is
