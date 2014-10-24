@@ -30,20 +30,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity counter is
-	Generic (max: positive := 60);  	--counter will reset instead of reaching this number
+	Generic (max: positive := 60;
+				min: natural := 0);  	--counter will reset instead of reaching this number
    Port ( clk : in  STD_LOGIC;  		--clock input
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
 			 ld : in STD_LOGIC;			--load data
-			 data : in integer range max-1 downto 0;		--data to load
-          count : out integer range max-1 downto 0);	--counter output
+			 data : in integer range max-1 downto min;		--data to load
+          count : out integer range max-1 downto min);	--counter output
 end counter;
 
 architecture Behavioral of counter is
 begin
 	cntr: process (clk)
-		variable count_v: integer range max-1 downto 0;
+		variable count_v: integer range max-1 downto min;
 	begin
 		if rising_edge(clk) then
 			--if reset is set, counter is 0

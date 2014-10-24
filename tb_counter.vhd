@@ -41,7 +41,10 @@ ARCHITECTURE behavior OF tb_counter IS
  
     COMPONENT counter
 	 -- add generic variable here!
-	 GENERIC ( max : positive);
+	 GENERIC (
+			max : positive;
+			min: natural
+			);
     PORT(
          clk : IN  std_logic;
          cten : IN  std_logic;
@@ -49,8 +52,8 @@ ARCHITECTURE behavior OF tb_counter IS
          down : IN  std_logic;
 			ld : IN  std_logic;
 			-- note: change type to integer here
-			data : IN integer range max-1 downto 0;
-         count : OUT integer range max-1 downto 0
+			data : IN integer range max-1 downto min;
+         count : OUT integer range max-1 downto min
         );
     END COMPONENT;
     
@@ -69,7 +72,8 @@ ARCHITECTURE behavior OF tb_counter IS
    constant clk_period : time := 10 ns;
 	
 	-- parameters
-	constant cnt_max : positive := 20;
+	constant cnt_max : positive := 60;
+	constant cnt_min : natural := 0;
 	
 BEGIN
  
@@ -77,8 +81,9 @@ BEGIN
    uut: counter 
 	-- add generic map here to set max for counter
 		GENERIC MAP (
-			 max => positive(cnt_max)  
-		  )		
+			 max => positive(cnt_max), 
+			 min => natural(cnt_min)  
+		  )	
 		  PORT MAP (
           clk => clk,
           cten => cten,

@@ -1,0 +1,106 @@
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   11:37:59 10/24/2014
+-- Design Name:   
+-- Module Name:   C:/Users/Girmi/workspace/VHDL/vhdl-klok/tb_clock_divider.vhd
+-- Project Name:  Klok
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: clock_divider
+-- 
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends
+-- that these types always be used for the top-level I/O of a design in order
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
+ 
+ENTITY tb_clock_divider IS
+END tb_clock_divider;
+ 
+ARCHITECTURE behavior OF tb_clock_divider IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT clock_divider
+	 GENERIC (
+			max : positive
+			);
+    PORT(
+         clockIn : IN  std_logic;
+         clockEnable : IN  std_logic;
+         dividedClock : OUT  std_logic
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal clockIn : std_logic := '0';
+   signal clockEnable : std_logic := '0';
+
+ 	--Outputs
+   signal dividedClock : std_logic;
+
+   -- Clock period definitions
+   constant clock_period : time := 10 ns;
+	
+	-- parameters
+	constant cnt_max : positive := 10;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: clock_divider 
+	GENERIC MAP (
+			 max => positive(cnt_max)  
+		  )
+	PORT MAP (
+          clockIn => clockIn,
+          clockEnable => clockEnable,
+          dividedClock => dividedClock
+        );
+
+   -- Clock process definitions
+   clockIn_process :process
+   begin
+		clockIn <= '0';
+		wait for clock_period/2;
+		clockIn <= '1';
+		wait for clock_period/2;
+   end process;
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+		wait for 100 ns;
+		clockEnable <= '1';
+		assert ( dividedClock = '0' ) report "Clock out appeared before 10 cycles" severity error;
+      wait for clock_period*5;
+		assert ( dividedClock = '0' ) report "Clock out appeared before 10 cycles" severity error;
+      wait for clock_period*5;
+		assert ( dividedClock = '1' ) report "Clock out did not appear after 10 cycles" severity error;
+      wait for clock_period;
+		assert ( dividedClock = '0' ) report "Clock did not disappeared after 11 cycles" severity error;
+
+      wait;
+   end process;
+
+END;
