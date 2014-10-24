@@ -49,7 +49,7 @@ begin
 		if rising_edge(clk) then
 			--if reset is set, counter is 0
 			if rst = '1' then
-				count_v := 0;
+				count_v := min;
 			--if load is set, load from data
 			elsif ld = '1' then
 				count_v := data;
@@ -59,10 +59,10 @@ begin
 					--if down is set...
 					when '1' => 
 						--count down 
-						if count_v > 0 then
+						if count_v > min then
 							count_v := count_v -1;
 						else
-						--or set to max-1 after reaching 0
+						--or set to max-1 after reaching min
 							count_v := max-1;
 						end if;
 					--if down isn't set...
@@ -71,8 +71,8 @@ begin
 						if count_v < max-1 then
 							count_v := count_v +1;
 						else
-						-- or set 0 zero before reaching max
-							count_v := 0;
+						-- or set min zero before reaching max
+							count_v := min;
 						end if;
 				end case;
 			end if;
