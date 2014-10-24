@@ -110,7 +110,7 @@ BEGIN
 		rst <= '0';
 		cten <= '1';
       wait for clk_period*5;
-		assert ( count = std_logic_vector(to_unsigned(5, 8)) ) report "counter not 5 after 5 clocks" severity error;
+		assert ( count = 5 ) report "counter not 5 after 5 clocks" severity error;
 		
 		--test if ct_en=0 disables counting
 		cten <= '0';
@@ -123,6 +123,7 @@ BEGIN
 		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reaching max" severity error;
 		
 		--count up 5 times and down 5 times
+		cten <= '1';
 		wait for clk_period*5;
 		down <= '1';
 		wait for clk_period*5;
