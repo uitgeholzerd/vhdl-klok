@@ -1,7 +1,7 @@
 Release 14.4 par P.49d (nt64)
 Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 
-SURFACE::  Fri Oct 17 11:52:52 2014
+SURFACE::  Mon Oct 20 00:59:58 2014
 
 par -w -intstyle ise -ol high -mt off poorten_map.ncd poorten.ncd poorten.pcf 
 
@@ -87,9 +87,9 @@ Finished initial Timing Analysis.  REAL time: 2 secs
 Starting Router
 
 
-Phase  1  : 11 unrouted;      REAL time: 3 secs 
+Phase  1  : 11 unrouted;      REAL time: 2 secs 
 
-Phase  2  : 11 unrouted;      REAL time: 3 secs 
+Phase  2  : 11 unrouted;      REAL time: 2 secs 
 
 Phase  3  : 1 unrouted;      REAL time: 3 secs 
 
@@ -128,10 +128,10 @@ Generating Pad Report.
 
 All signals are completely routed.
 
-Total REAL time to PAR completion: 4 secs 
+Total REAL time to PAR completion: 3 secs 
 Total CPU time to PAR completion: 3 secs 
 
-Peak Memory Usage:  277 MB
+Peak Memory Usage:  279 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.

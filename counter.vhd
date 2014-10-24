@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,14 +31,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity counter is
-	Generic (max: positive := 60);  	--counter will reset instead of reaching this number
+	Generic (max: positive range 255 downto 1 := 60);  	--counter will reset instead of reaching this number
    Port ( clk : in  STD_LOGIC;  		--clock input
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
 			 ld : in STD_LOGIC;			--load data
-			 data : in integer range max-1 downto 0;		--data to load
-          count : out integer range max-1 downto 0);	--counter output
+			 data : in STD_LOGIC_VECTOR(7 downto 0);		--data to load
+          count : out STD_LOGIC_VECTOR(7 downto 0));	--counter output
 end counter;
 
 architecture Behavioral of counter is
@@ -51,7 +52,7 @@ begin
 				count_v := 0;
 			--if load is set, load from data
 			elsif ld = '1' then
-				count_v := data;
+				count_v := to_integer(unsigned(data));
 			--only count if cten = 1
 			elsif cten = '1' then
 				case down is
@@ -77,7 +78,7 @@ begin
 			end if;
 		end if;
 		--set output to variable from procedure
-		count <= count_v;
+		count <= std_logic_vector(to_unsigned(count_v, 8));
 	end process;
 
 end Behavioral;
