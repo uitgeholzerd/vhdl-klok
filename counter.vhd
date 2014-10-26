@@ -31,25 +31,26 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity counter is
-	Generic (max: positive range 255 downto 1 := 60);  	--counter will reset instead of reaching this number
+	Generic (max: positive := 60;
+				min: natural := 0);  	--counter will reset instead of reaching this number
    Port ( clk : in  STD_LOGIC;  		--clock input
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
 			 ld : in STD_LOGIC;			--load data
-			 data : in STD_LOGIC_VECTOR(7 downto 0);		--data to load
-          count : out STD_LOGIC_VECTOR(7 downto 0));	--counter output
+			 data : in integer range max-1 downto min;		--data to load
+          count : out integer range max-1 downto min);	--counter output
 end counter;
 
 architecture Behavioral of counter is
 begin
 	cntr: process (clk)
-		variable count_v: integer range max-1 downto 0;
+		variable count_v: integer range max-1 downto min;
 	begin
 		if rising_edge(clk) then
 			--if reset is set, counter is 0
 			if rst = '1' then
-				count_v := 0;
+				count_v := min;
 			--if load is set, load from data
 			elsif ld = '1' then
 				count_v := to_integer(unsigned(data));
@@ -59,10 +60,10 @@ begin
 					--if down is set...
 					when '1' => 
 						--count down 
-						if count_v > 0 then
+						if count_v > min then
 							count_v := count_v -1;
 						else
-						--or set to max-1 after reaching 0
+						--or set to max-1 after reaching min
 							count_v := max-1;
 						end if;
 					--if down isn't set...
@@ -71,8 +72,8 @@ begin
 						if count_v < max-1 then
 							count_v := count_v +1;
 						else
-						-- or set 0 zero before reaching max
-							count_v := 0;
+						-- or set min zero before reaching max
+							count_v := min;
 						end if;
 				end case;
 			end if;

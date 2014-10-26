@@ -41,15 +41,19 @@ ARCHITECTURE behavior OF tb_counter IS
  
     COMPONENT counter
 	 -- add generic variable here!
-	 GENERIC ( max : positive);
+	 GENERIC (
+			max : positive;
+			min: natural
+			);
     PORT(
          clk : IN  std_logic;
          cten : IN  std_logic;
          rst : IN  std_logic;
          down : IN  std_logic;
 			ld : IN  std_logic;
-			data : IN STD_LOGIC_VECTOR(7 downto 0);
-         count : OUT STD_LOGIC_VECTOR(7 downto 0)
+			-- note: change type to integer here
+			data : IN integer range max-1 downto min;
+         count : OUT integer range max-1 downto min
         );
     END COMPONENT;
     
@@ -60,15 +64,16 @@ ARCHITECTURE behavior OF tb_counter IS
    signal rst : std_logic := '0';
    signal down : std_logic := '0';
 	signal ld : std_logic := '0';
-	signal data : std_logic_vector(7 downto 0) := "00000000";
+	signal data : integer := 0;
  	--Outputs
-   signal count : std_logic_vector(7 downto 0);
+   signal count : integer ;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
 	
 	-- parameters
-	constant cnt_max : positive := 20;
+	constant cnt_max : positive := 60;
+	constant cnt_min : natural := 0;
 	
 BEGIN
  
@@ -76,8 +81,9 @@ BEGIN
    uut: counter 
 	-- add generic map here to set max for counter
 		GENERIC MAP (
-			 max => positive(cnt_max)  
-		  )		
+			 max => positive(cnt_max), 
+			 min => natural(cnt_min)  
+		  )	
 		  PORT MAP (
           clk => clk,
           cten => cten,
