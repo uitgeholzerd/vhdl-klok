@@ -32,6 +32,7 @@
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="clock_divider_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="counter_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="counter_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="days_in_month_calc_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="debouncer_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
@@ -71,12 +72,14 @@
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="poorten_summary.xml"/>
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="poorten_usage.xml"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="poorten_xst.xrpt"/>
-    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_clock_divider_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_clock_divider_isim_beh.exe"/>
-    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_clock_divider_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_clock_divider_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_counter_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_counter_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_days_in_month_calc_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_days_in_month_calc_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_days_in_month_calc_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_days_in_month_calc_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_debouncer_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_debouncer_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_debouncer_isim_beh.wdb"/>
@@ -95,21 +98,23 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1414145628" xil_pn:in_ck="-8553254476441814479" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414444052" xil_pn:in_ck="-959741652097196510" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1414444052">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="clock_divider.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
+      <outfile xil_pn:name="days_in_month_calc.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
       <outfile xil_pn:name="tb_clock_divider.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
+      <outfile xil_pn:name="tb_days_in_month_calc.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1414145628" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="7888212227604238749" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414443937" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-7141403848791021047" xil_pn:start_ts="1414443937">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1414145628" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-6801537597113024485" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414443937" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8082069344654094471" xil_pn:start_ts="1414443937">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
@@ -117,32 +122,38 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1414145628" xil_pn:in_ck="-8553254476441814479" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414444052" xil_pn:in_ck="-959741652097196510" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1414444052">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="clock_divider.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
+      <outfile xil_pn:name="days_in_month_calc.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
       <outfile xil_pn:name="tb_clock_divider.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
+      <outfile xil_pn:name="tb_days_in_month_calc.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1414145633" xil_pn:in_ck="-8553254476441814479" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-5428987697118312294" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414444057" xil_pn:in_ck="-959741652097196510" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="1090693085534984402" xil_pn:start_ts="1414444052">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
       <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="tb_clock_divider_beh.prj"/>
-      <outfile xil_pn:name="tb_clock_divider_isim_beh.exe"/>
+      <outfile xil_pn:name="tb_days_in_month_calc_beh.prj"/>
+      <outfile xil_pn:name="tb_days_in_month_calc_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1414145633" xil_pn:in_ck="-3750766688121470838" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="2062689891056933575" xil_pn:start_ts="1414145633">
+    <transform xil_pn:end_ts="1414444057" xil_pn:in_ck="4799020963004478215" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-3640719131117043489" xil_pn:start_ts="1414444057">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="tb_clock_divider_isim_beh.wdb"/>
+      <outfile xil_pn:name="tb_days_in_month_calc_isim_beh.wdb"/>
     </transform>
     <transform xil_pn:end_ts="1413539547" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1413539547">
       <status xil_pn:value="SuccessfullyRun"/>
