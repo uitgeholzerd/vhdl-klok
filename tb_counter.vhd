@@ -27,7 +27,7 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
+USE IEEE.NUMERIC_STD.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
@@ -110,13 +110,7 @@ BEGIN
       -- hold reset state for 20 ns.
 		rst <= '1';
       wait for 20 ns;	
-		assert ( count = 0 ) report "counter not 0 after initial reset" severity error;
-		
-		-- count up 5 times
-		rst <= '0';
-		cten <= '1';
-      wait for clk_period*5;
-		assert ( count = 0 ) report "clock did not reset after counting" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after initial reset" severity error;
 		
 		-- count up 5 times
 		rst <= '0';
@@ -127,42 +121,42 @@ BEGIN
 		--test if ct_en=0 disables counting
 		cten <= '0';
 		wait for clk_period*5;
-		assert ( count = 5 ) report "counter counted while cten=0" severity error;
+		assert ( count = std_logic_vector(to_unsigned(5, 8)) ) report "counter counted while cten=0" severity error;
 		
 		--count up till cnt_max, should reset to 0 now
 		cten <= '1';
 		wait for clk_period*(cnt_max -5);
-		assert ( count = 0 ) report "counter not 0 after reaching max" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reaching max" severity error;
 		
 		--count up 5 times and down 5 times
 		cten <= '1';
 		wait for clk_period*5;
 		down <= '1';
 		wait for clk_period*5;
-		assert ( count = 0 ) report "counter not 0 after 5 up and 5 down from 0" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after 5 up and 5 down from 0" severity error;
 		
 		--count down to max and 5 more
 		wait for clk_period*(cnt_max + 5) ;
-		assert ( count = cnt_max-5 ) report "counting down 5 from max failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(cnt_max-5,8)) ) report "counting down 5 from max failed" severity error;
 		
 		--reset to 0 
 		rst <= '1';
 		wait for clk_period;
-		assert ( count = 0 ) report "counter not 0 after reset" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reset" severity error;
 		
 		--load 3
 		rst <= '0';
-		data <= 3;
+		data <= "00000011";
 		ld <= '1';
 		wait for clk_period;
-		assert ( count = 3 ) report "loading 3 failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(3, 8)) ) report "loading 3 failed" severity error;
 		
 		--start counting up again
 		ld <= '0';
 		rst <= '0';
 		down <= '0';
 		wait for clk_period;
-		assert ( count = 4 ) report "count after load failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(4, 8)) ) report "count after load failed" severity error;
 		
       wait;
    end process;

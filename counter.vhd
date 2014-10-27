@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -52,7 +53,7 @@ begin
 				count_v := min;
 			--if load is set, load from data
 			elsif ld = '1' then
-				count_v := data;
+				count_v := to_integer(unsigned(data));
 			--only count if cten = 1
 			elsif cten = '1' then
 				case down is
@@ -78,7 +79,7 @@ begin
 			end if;
 		end if;
 		--set output to variable from procedure
-		count <= count_v;
+		count <= std_logic_vector(to_unsigned(count_v, 8));
 	end process;
 
 end Behavioral;

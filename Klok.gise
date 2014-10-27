@@ -23,14 +23,16 @@
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="_ngo"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/bitgen.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/map.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/par.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/trce.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
-    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="clock_divider_isim_beh.exe"/>
-    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="clock_divider_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="bcd_7seg_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="counter_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="counter_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="counter_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="counter_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="days_in_month_calc_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="debouncer_stx_beh.prj"/>
@@ -72,7 +74,13 @@
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="poorten_summary.xml"/>
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="poorten_usage.xml"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="poorten_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_bcd_7seg_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_bcd_7seg_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_bcd_7seg_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_bcd_7seg_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_clock_divider_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_clock_divider_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_clock_divider_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_clock_divider_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_counter_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_counter_stx_beh.prj"/>
@@ -87,6 +95,8 @@
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_poorten_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_poorten_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="teller_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="usage_statistics_webtalk.html"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="webtalk.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xlnx_auto_0_xdb"/>
@@ -101,11 +111,11 @@
     <transform xil_pn:end_ts="1414444052" xil_pn:in_ck="-959741652097196510" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1414444052">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <outfile xil_pn:name="clock_divider.vhd"/>
+      <outfile xil_pn:name="bcd_7seg.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
       <outfile xil_pn:name="days_in_month_calc.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
-      <outfile xil_pn:name="tb_clock_divider.vhd"/>
+      <outfile xil_pn:name="tb_bcd_7seg.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
       <outfile xil_pn:name="tb_days_in_month_calc.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
@@ -118,18 +128,18 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1414145628" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-6111892713055824240" xil_pn:start_ts="1414145628">
+    <transform xil_pn:end_ts="1414146517" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-6111892713055824240" xil_pn:start_ts="1414146517">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
     <transform xil_pn:end_ts="1414444052" xil_pn:in_ck="-959741652097196510" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1414444052">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <outfile xil_pn:name="clock_divider.vhd"/>
+      <outfile xil_pn:name="bcd_7seg.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
       <outfile xil_pn:name="days_in_month_calc.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
-      <outfile xil_pn:name="tb_clock_divider.vhd"/>
+      <outfile xil_pn:name="tb_bcd_7seg.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
       <outfile xil_pn:name="tb_days_in_month_calc.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
@@ -144,6 +154,10 @@
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="tb_days_in_month_calc_beh.prj"/>
       <outfile xil_pn:name="tb_days_in_month_calc_isim_beh.exe"/>
+      <outfile xil_pn:name="tb_clock_divider_beh.prj"/>
+      <outfile xil_pn:name="tb_clock_divider_isim_beh.exe"/>
+      <outfile xil_pn:name="tb_bcd_7seg_beh.prj"/>
+      <outfile xil_pn:name="tb_bcd_7seg_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
     <transform xil_pn:end_ts="1414444057" xil_pn:in_ck="4799020963004478215" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-3640719131117043489" xil_pn:start_ts="1414444057">
@@ -154,6 +168,8 @@
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="tb_days_in_month_calc_isim_beh.wdb"/>
+      <outfile xil_pn:name="tb_clock_divider_isim_beh.wdb"/>
+      <outfile xil_pn:name="tb_bcd_7seg_isim_beh.wdb"/>
     </transform>
     <transform xil_pn:end_ts="1413539547" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1413539547">
       <status xil_pn:value="SuccessfullyRun"/>
@@ -229,7 +245,7 @@
     </transform>
     <transform xil_pn:end_ts="1413539582" xil_pn:in_ck="8674324977523604711" xil_pn:name="TRANEXT_par_spartan6" xil_pn:prop_ck="-1178055513630676559" xil_pn:start_ts="1413539571">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="NotReadyToRun"/>
+      <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
@@ -238,7 +254,7 @@
     </transform>
     <transform xil_pn:end_ts="1413539582" xil_pn:in_ck="176849644872545866" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416185" xil_pn:start_ts="1413539577">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="NotReadyToRun"/>
+      <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
