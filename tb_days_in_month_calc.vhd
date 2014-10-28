@@ -42,20 +42,20 @@ ARCHITECTURE behavior OF tb_days_in_month_calc IS
     COMPONENT days_in_month_calc
     PORT(
          clk : IN  std_logic;
-         year : IN integer range 1901 to 2099;
-         month : IN  integer range 1 to 12;
-         days_in_month : OUT  integer range 28 to 31
+         year : IN std_logic_vector(11 downto 0) ;
+         month : IN  std_logic_vector(3 downto 0);
+         days_in_month : OUT  std_logic_vector(4 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal clk : std_logic := '0';
-   signal year : integer := 1901;
-   signal month : integer := 1;
+   signal year : std_logic_vector(11 downto 0) := "011101101101";
+   signal month :std_logic_vector(3 downto 0) := "0001";
 
  	--Outputs
-   signal days_in_month : integer;
+   signal days_in_month : std_logic_vector(4 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -86,25 +86,25 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 		
-		year <= 2012;
-		month <= 1;
+		year <= "011111011100";	-- 2012
+		month <= "0001";	-- 01
 		wait for clk_period;
-		assert ( days_in_month = 31 ) report "01/2012 geen 31 dagen" severity error;
+		assert ( days_in_month = "11111" ) report "01/2012 geen 31 dagen" severity error;
 		
-		year <= 2012;
-		month <= 4;
+		year <= "011111011100"; -- 2012
+		month <= "0100"; -- 04
 		wait for clk_period;
-		assert ( days_in_month = 30 ) report "04/2012 geen 30 dagen" severity error;
+		assert ( days_in_month = "11110" ) report "04/2012 geen 30 dagen" severity error;
 		
-		year <= 2012;
-		month <= 2;
+		year <= "011111011100"; -- 2012
+		month <= "0010"; -- 02
 		wait for clk_period;
-		assert ( days_in_month = 29 ) report "02/2012 geen 29 dagen" severity error;
-		
-		year <= 2011;
-		month <= 2;
+		assert ( days_in_month = "11101" ) report "02/2012 geen 29 dagen" severity error;
+		 
+		year <= "011111011011"; -- 2011
+		month <= "0010"; -- 02
 		wait for clk_period;
-		assert ( days_in_month = 28 ) report "02/2011 geen 28 dagen" severity error;
+		assert ( days_in_month = "11100" ) report "02/2011 geen 28 dagen" severity error;
 
       wait;
    end process;
