@@ -102,10 +102,8 @@
     <transform xil_pn:end_ts="1414334869" xil_pn:in_ck="2599505861836225929" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1414334868">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <outfile xil_pn:name="bcd_7seg.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
-      <outfile xil_pn:name="tb_bcd_7seg.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
     </transform>
@@ -124,16 +122,16 @@
     <transform xil_pn:end_ts="1414334887" xil_pn:in_ck="2599505861836225929" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1414334887">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <outfile xil_pn:name="bcd_7seg.vhd"/>
       <outfile xil_pn:name="counter.vhd"/>
       <outfile xil_pn:name="debouncer.vhd"/>
-      <outfile xil_pn:name="tb_bcd_7seg.vhd"/>
       <outfile xil_pn:name="tb_counter.vhd"/>
       <outfile xil_pn:name="tb_debouncer.vhd"/>
     </transform>
     <transform xil_pn:end_ts="1414334892" xil_pn:in_ck="2599505861836225929" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-4538261293469266478" xil_pn:start_ts="1414334887">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
       <outfile xil_pn:name="isim.log"/>
@@ -144,6 +142,7 @@
     <transform xil_pn:end_ts="1414334892" xil_pn:in_ck="3979644993436743008" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-4854808541410352353" xil_pn:start_ts="1414334892">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="tb_bcd_7seg_isim_beh.wdb"/>
