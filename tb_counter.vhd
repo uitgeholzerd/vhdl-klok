@@ -51,9 +51,9 @@ ARCHITECTURE behavior OF tb_counter IS
          rst : IN  std_logic;
          down : IN  std_logic;
 			ld : IN  std_logic;
-			-- note: change type to integer here
-			data : IN integer range max-1 downto min;
-         count : OUT integer range max-1 downto min
+			data : in STD_LOGIC_VECTOR (7 downto 0) ;		
+         count : out STD_LOGIC_VECTOR (7 downto 0) ;
+			carry : out STD_LOGIC
         );
     END COMPONENT;
     
@@ -64,10 +64,10 @@ ARCHITECTURE behavior OF tb_counter IS
    signal rst : std_logic := '0';
    signal down : std_logic := '0';
 	signal ld : std_logic := '0';
-	signal data : integer := 0;
+	signal data : std_logic_vector(7 downto 0) := "00000000";
  	--Outputs
-   signal count : integer ;
-
+   signal count : std_logic_vector(7 downto 0) ;
+	signal carry : std_logic ;
    -- Clock period definitions
    constant clk_period : time := 10 ns;
 	
@@ -91,7 +91,8 @@ BEGIN
           down => down,
           count => count,
 			 ld => ld,
-			 data => data
+			 data => data,
+			 carry => carry
         );
 
    -- Clock process definitions
@@ -116,7 +117,7 @@ BEGIN
 		rst <= '0';
 		cten <= '1';
       wait for clk_period*5;
-		assert ( count = 5 ) report "counter not 5 after 5 clocks" severity error;
+		assert ( count =  std_logic_vector(to_unsigned(5, 8)) ) report "counter not 5 after 5 clocks" severity error;
 		
 		--test if ct_en=0 disables counting
 		cten <= '0';
