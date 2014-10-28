@@ -1,0 +1,10 @@
+[Inputs]
+clk
+cten
+rst
+down
+ld
+=data[7:0]=
+[Outputs]
+=count[7:0]=
+[BiDir]
