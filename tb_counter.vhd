@@ -72,7 +72,7 @@ ARCHITECTURE behavior OF tb_counter IS
    constant clk_period : time := 10 ns;
 	
 	-- parameters
-	constant cnt_max : positive := 60;
+	constant cnt_max : positive := 59;
 	constant cnt_min : natural := 0;
 	
 BEGIN

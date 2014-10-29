@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity counter is
-	Generic (max: positive := 60;
+	Generic (max: positive := 59;
 				min: natural := 0);  	--counter will reset instead of reaching this number
    Port ( clk : in  STD_LOGIC;  		--clock input
           cten : in  STD_LOGIC;		--count enable
@@ -38,7 +38,7 @@ end counter;
 architecture Behavioral of counter is
 begin
 	cntr: process (clk)
-		variable count_v: integer range max-1 downto min;
+		variable count_v: integer range max downto min;
 	begin
 		if rising_edge(clk) then
 			--if reset is set, counter is 0
@@ -60,14 +60,14 @@ begin
 							count_v := count_v -1;
 							carry <= '0';
 						else
-						--or set to max-1 after reaching min
-							count_v := max-1;
+						--or set to max after reaching min
+							count_v := max;
 							carry <= '1';
 						end if;
 					--if down isn't set...
 					when others => 
 						--count up
-						if count_v < max-1 then
+						if count_v < max then
 							count_v := count_v +1;
 							carry <= '0';
 						else
