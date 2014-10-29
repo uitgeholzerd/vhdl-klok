@@ -107,10 +107,7 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-   begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
-		
+   begin				
       -- hold reset state for 20 ns.
 		rst <= '1';
       wait for 20 ns;	
@@ -129,7 +126,7 @@ BEGIN
 		
 		--count up till cnt_max, should reset to 0 now
 		cten <= '1';
-		wait for clk_period*(cnt_max -5);
+		wait for clk_period*(cnt_max -4);
 		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reaching max" severity error;
 		
 		--count up 5 times and down 5 times
