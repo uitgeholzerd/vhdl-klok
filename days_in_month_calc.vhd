@@ -40,7 +40,7 @@ end days_in_month_calc;
 architecture Behavioral of days_in_month_calc is
 
 begin
-	process (clk) is 
+	process (year, month) is 
 	variable int_year: integer range 2001 to 2099;
 	variable int_month: integer range 1 to 12;
 	
