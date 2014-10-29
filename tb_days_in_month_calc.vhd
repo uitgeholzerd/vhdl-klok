@@ -51,8 +51,8 @@ ARCHITECTURE behavior OF tb_days_in_month_calc IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal year : std_logic_vector(11 downto 0) := "011101101101";
-   signal month :std_logic_vector(3 downto 0) := "0001";
+   signal year : std_logic_vector(11 downto 0) := (others => '0');
+   signal month :std_logic_vector(3 downto 0) := (others => '0');
 
  	--Outputs
    signal days_in_month : std_logic_vector(4 downto 0);

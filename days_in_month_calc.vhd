@@ -31,16 +31,16 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity days_in_month_calc is
     Port ( 
-			clk : in std_logic;
-			year : in std_logic_vector(11 downto 0);
-			month : in std_logic_vector(3 downto 0);
-			days_in_month : out std_logic_vector(4 downto 0));
+			clk : in std_logic;												-- clock input
+			year : in std_logic_vector(11 downto 0);					-- year in binary, should be between 2001 and 2099
+			month : in std_logic_vector(3 downto 0);					-- month in binary, should be between 1 and 12
+			days_in_month : out std_logic_vector(4 downto 0));		-- days in the month, in binary
 end days_in_month_calc;
 
 architecture Behavioral of days_in_month_calc is
 
 begin
-	process (clk) is 
+	process (year, month) is 
 	variable int_year: integer range 2001 to 2099;
 	variable int_month: integer range 1 to 12;
 	
