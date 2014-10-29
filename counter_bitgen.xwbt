@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\seb\Google Drive\UA\S-Elektronica 1\digitale technieken\practicum\Klok\counter.ncd
+OUTFILE=C:\Users\seb\Google Drive\UA\S-Elektronica 1\digitale technieken\practicum\Klok\counter.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=C:\Users\seb\Google Drive\UA\S-Elektronica 1\digitale technieken\practicum\Klok
+LICENSE=WebPack
+USER_INFO=210947451_0_0_070
