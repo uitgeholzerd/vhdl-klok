@@ -42,9 +42,9 @@ begin
 process (clk) is 
 begin 
 	if rising_edge(clk) then  
-		delay1 := input;
-		delay2 := delay1;
-		delay3 := delay2; 
+		delay1 <= input;
+		delay2 <= delay1;
+		delay3 <= delay2; 
  end if; 
 end process; 
 
