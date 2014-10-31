@@ -50,8 +50,6 @@ ARCHITECTURE behavior OF tb_counter IS
          cten : IN  std_logic;
          rst : IN  std_logic;
          down : IN  std_logic;
-			ld : IN  std_logic;
-			data : in STD_LOGIC_VECTOR (7 downto 0) ;		
          count : out STD_LOGIC_VECTOR (7 downto 0) ;
 			carry : out STD_LOGIC
         );
@@ -63,8 +61,6 @@ ARCHITECTURE behavior OF tb_counter IS
    signal cten : std_logic := '0';
    signal rst : std_logic := '0';
    signal down : std_logic := '0';
-	signal ld : std_logic := '0';
-	signal data : std_logic_vector(7 downto 0) := "00000000";
  	--Outputs
    signal count : std_logic_vector(7 downto 0) ;
 	signal carry : std_logic ;
@@ -90,8 +86,6 @@ BEGIN
           rst => rst,
           down => down,
           count => count,
-			 ld => ld,
-			 data => data,
 			 carry => carry
         );
 
@@ -145,18 +139,10 @@ BEGIN
 		wait for clk_period;
 		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reset" severity error;
 		
-		--load 3
-		rst <= '0';
-		data <= "00000011";
-		ld <= '1';
-		wait for clk_period;
-		assert ( count = std_logic_vector(to_unsigned(3, 8)) ) report "loading 3 failed" severity error;
-		
 		--start counting up again
-		ld <= '0';
 		rst <= '0';
 		down <= '0';
-		wait for clk_period;
+		wait for clk_period*4;
 		assert ( count = std_logic_vector(to_unsigned(4, 8)) ) report "count after load failed" severity error;
 		
       wait;

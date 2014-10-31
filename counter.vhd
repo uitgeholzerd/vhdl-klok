@@ -28,8 +28,6 @@ entity counter is
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
-			 ld : in STD_LOGIC;			--load data
-			 data : in STD_LOGIC_VECTOR (7 downto 0) ;		--data to load
           count : out STD_LOGIC_VECTOR (7 downto 0);		--counter output
 			 carry : out STD_LOGIC
 			 )	;
@@ -44,11 +42,6 @@ begin
 			--if reset is set, counter is 0
 			if rst = '1' then
 				count_v := min;
-				carry <= '0';
-			--if load is set, load from data
-			elsif ld = '1' then
-				--count_v := data;
-				count_v := to_integer(unsigned(data));
 				carry <= '0';
 			--only count if cten = 1
 			elsif cten = '1' then
