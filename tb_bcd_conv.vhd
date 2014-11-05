@@ -42,8 +42,7 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
  
     COMPONENT bcd_conv
     PORT(
-         number : IN  std_logic_vector(7 downto 0);
-         hundreds : OUT  std_logic_vector(3 downto 0);
+         number : IN  std_logic_vector(6 downto 0);
          tens : OUT  std_logic_vector(3 downto 0);
          ones : OUT  std_logic_vector(3 downto 0)
         );
@@ -51,10 +50,9 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
     
 
    --Inputs
-   signal number : std_logic_vector(7 downto 0) := (others => '0');
+   signal number : std_logic_vector(6 downto 0) := (others => '0');
 
  	--Outputs
-   signal hundreds : std_logic_vector(3 downto 0);
    signal tens : std_logic_vector(3 downto 0);
    signal ones : std_logic_vector(3 downto 0);
    -- No clocks detected in port list. Replace <clock> below with 
@@ -65,7 +63,6 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: bcd_conv PORT MAP (
           number => number,
-          hundreds => hundreds,
           tens => tens,
           ones => ones
         );

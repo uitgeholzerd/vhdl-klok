@@ -28,7 +28,7 @@ entity counter is
           cten : in  STD_LOGIC;		--count enable
           rst : in  STD_LOGIC;		--reset to 0
 			 down : in  STD_LOGIC;		--count up unless this is 1
-          count : out STD_LOGIC_VECTOR (7 downto 0);		--counter output
+          count : out STD_LOGIC_VECTOR (6 downto 0);		--counter output
 			 carry : out STD_LOGIC
 			 )	;
 end counter;
@@ -48,32 +48,41 @@ begin
 				case down is
 					--if down is set...
 					when '1' => 
+						-- set carry
+						if count_v = min + 1 then
+							carry <= '1';
+						else
+							carry <= '0';
+						end if;
 						--count down 
 						if count_v > min then
 							count_v := count_v -1;
-							carry <= '0';
 						else
 						--or set to max after reaching min
 							count_v := max;
-							carry <= '1';
 						end if;
 					--if down isn't set...
 					when others => 
+						if count_v = max -1 then
+							carry <= '1';
+						else
+							carry <= '0';
+						end if;
 						--count up
 						if count_v < max then
 							count_v := count_v +1;
-							carry <= '0';
+	
 						else
 						-- or set to min before reaching max
 							count_v := min;
-							carry <= '1';
+	
 						end if;
 				end case;
 			end if;
 		end if;
 		--set output to variable from procedure
 		--count <= count_v;
-		count <= std_logic_vector(to_unsigned(count_v, 8));
+		count <= std_logic_vector(to_unsigned(count_v, 7));
 	end process;
 
 end Behavioral;
