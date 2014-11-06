@@ -54,15 +54,49 @@ architecture Behavioral of mod_display is
 			segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
 		);
 	end component;
-	component display_select is 
-		port (
-		   clk : IN  std_logic;
-         rst : IN  std_logic;
-         a : OUT  std_logic_vector(3 downto 0)
-        );
-	end component;
+	signal sig_num: std_logic_vector (6 downto 0);
+	signal sig_tens, sig_ones, sig_bcd, sig_anode: std_logic_vector (3 downto 0);
 begin
-
-
+	CONV: bcd_conv
+		port map (number => sig_num, tens => sig_tens, ones => sig_ones);
+	--SLCT: display_select
+	--	port map (clk <= clk, rst <= rst, a <= anode);
+	SEGM: bcd_7seg
+		port map (clk => clk, bcd => sig_bcd, segment7 => seg7);
+	process (clk)
+		variable cnt:integer range 4 downto 0;
+	begin
+		if (rising_edge(clk)) then
+			if(rst='1') then
+				sig_anode<="1111";
+				cnt:=0;
+			else
+				if(cnt=4) then 
+					cnt:=0;
+				end if;
+				case cnt is
+					when 0 =>
+						sig_num <= num1;
+						sig_bcd <= sig_tens;
+					when 1 =>
+						sig_num <= num1;
+						sig_bcd <= sig_ones;
+					when 2 =>
+						sig_num <= num2;
+						sig_bcd <= sig_tens;
+					when 3 =>
+						sig_num <= num2;
+						sig_bcd <= sig_ones;
+					when others =>
+						sig_num <= num1;
+						sig_bcd <= sig_tens;
+				end case;	
+				sig_anode<="1111";
+				sig_anode(cnt)<='0';
+				cnt:=cnt+1;
+			end if;
+			anode <= sig_anode;
+		end if;
+	end process;
 end Behavioral;
 

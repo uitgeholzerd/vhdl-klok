@@ -44,19 +44,18 @@ ARCHITECTURE behavior OF tb_clock_divider IS
 			max : positive
 			);
     PORT(
-         clockIn : IN  std_logic;
-         clockEnable : IN  std_logic;
-         dividedClock : OUT  std_logic
+         clk, ena : IN  std_logic;
+         div : OUT  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal clockIn : std_logic := '0';
-   signal clockEnable : std_logic := '0';
+   signal clk, ena : std_logic := '0';
+   --signal ena : std_logic := '0';
 
  	--Outputs
-   signal dividedClock : std_logic;
+   signal div : std_logic;
 
    -- Clock period definitions
    constant clock_period : time := 10 ns;
@@ -72,17 +71,17 @@ BEGIN
 			 max => positive(cnt_max)  
 		  )
 	PORT MAP (
-          clockIn => clockIn,
-          clockEnable => clockEnable,
-          dividedClock => dividedClock
+          clk => clk,
+          ena => ena,
+          div => div
         );
 
    -- Clock process definitions
-   clockIn_process :process
+   clk_process :process
    begin
-		clockIn <= '0';
+		clk <= '0';
 		wait for clock_period/2;
-		clockIn <= '1';
+		clk <= '1';
 		wait for clock_period/2;
    end process;
  
@@ -91,14 +90,14 @@ BEGIN
    stim_proc: process
    begin		
 		wait for 100 ns;
-		clockEnable <= '1';
-		assert ( dividedClock = '0' ) report "Clock out appeared before 10 cycles" severity error;
+		ena <= '1';
+		assert ( div = '0' ) report "Clock out appeared before 10 cycles" severity error;
       wait for clock_period*5;
-		assert ( dividedClock = '0' ) report "Clock out appeared before 10 cycles" severity error;
+		assert ( div = '0' ) report "Clock out appeared before 10 cycles" severity error;
       wait for clock_period*5;
-		assert ( dividedClock = '1' ) report "Clock out did not appear after 10 cycles" severity error;
+		assert ( div = '1' ) report "Clock out did not appear after 10 cycles" severity error;
       wait for clock_period;
-		assert ( dividedClock = '0' ) report "Clock did not disappeared after 11 cycles" severity error;
+		assert ( div = '0' ) report "Clock did not disappeared after 11 cycles" severity error;
 
       wait;
    end process;
