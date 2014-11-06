@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   13:22:02 10/28/2014
+-- Create Date:   23:14:53 11/05/2014
 -- Design Name:   
--- Module Name:   C:/Users/seb/Google Drive/UA/S-Elektronica 1/digitale technieken/practicum/Klok/tb_bcd_conv.vhd
+-- Module Name:   C:/Users/seb/Google Drive/UA/S-Elektronica 1/digitale technieken/practicum/Klok/VHDL/tb_display_select.vhd
 -- Project Name:  Klok
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: bcd_conv
+-- VHDL Test Bench Created by ISE for module: display_select
 -- 
 -- Dependencies:
 -- 
@@ -27,60 +27,65 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_bcd_conv IS
-END tb_bcd_conv;
+ENTITY tb_display_select IS
+END tb_display_select;
  
-ARCHITECTURE behavior OF tb_bcd_conv IS 
+ARCHITECTURE behavior OF tb_display_select IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT bcd_conv
+    COMPONENT display_select
     PORT(
-         number : IN  std_logic_vector(6 downto 0);
-         tens : OUT  std_logic_vector(3 downto 0);
-         ones : OUT  std_logic_vector(3 downto 0)
+         clk : IN  std_logic;
+         rst : IN  std_logic;
+         a : OUT  std_logic_vector(3 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal number : std_logic_vector(6 downto 0) := (others => '0');
+   signal clk : std_logic := '0';
+   signal rst : std_logic := '0';
 
  	--Outputs
-   signal tens : std_logic_vector(3 downto 0);
-   signal ones : std_logic_vector(3 downto 0);
-   -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
-  
+   signal a : std_logic_vector(3 downto 0);
+
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
+ 
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: bcd_conv PORT MAP (
-          number => number,
-          tens => tens,
-          ones => ones
+   uut: display_select PORT MAP (
+          clk => clk,
+          rst => rst,
+          a => a
         );
 
+   -- Clock process definitions
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
  
 
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 10 ns.
-      wait for 10 ns;	
-
-		loop
-         number <= std_logic_vector(unsigned(number) + 1);
- 
-         wait for 10 ns;
-      end loop;
-
+		rst <= '1';
+      -- hold rst state for 100 ns.
+      wait for 20 ns;	
+		rst <= '0';
+      wait for clk_period*10;
+		
       -- insert stimulus here 
 
       wait;

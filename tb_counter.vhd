@@ -50,9 +50,7 @@ ARCHITECTURE behavior OF tb_counter IS
          cten : IN  std_logic;
          rst : IN  std_logic;
          down : IN  std_logic;
-			ld : IN  std_logic;
-			data : in STD_LOGIC_VECTOR (7 downto 0) ;		
-         count : out STD_LOGIC_VECTOR (7 downto 0) ;
+         count : out STD_LOGIC_VECTOR (6 downto 0) ;
 			carry : out STD_LOGIC
         );
     END COMPONENT;
@@ -63,10 +61,8 @@ ARCHITECTURE behavior OF tb_counter IS
    signal cten : std_logic := '0';
    signal rst : std_logic := '0';
    signal down : std_logic := '0';
-	signal ld : std_logic := '0';
-	signal data : std_logic_vector(7 downto 0) := "00000000";
  	--Outputs
-   signal count : std_logic_vector(7 downto 0) ;
+   signal count : std_logic_vector(6 downto 0) ;
 	signal carry : std_logic ;
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -90,8 +86,6 @@ BEGIN
           rst => rst,
           down => down,
           count => count,
-			 ld => ld,
-			 data => data,
 			 carry => carry
         );
 
@@ -107,60 +101,49 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-   begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
-		
+   begin				
       -- hold reset state for 20 ns.
 		rst <= '1';
       wait for 20 ns;	
-		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after initial reset" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after initial reset" severity error;
 		
 		-- count up 5 times
 		rst <= '0';
 		cten <= '1';
       wait for clk_period*5;
-		assert ( count =  std_logic_vector(to_unsigned(5, 8)) ) report "counter not 5 after 5 clocks" severity error;
+		assert ( count =  std_logic_vector(to_unsigned(5, 7)) ) report "counter not 5 after 5 clocks" severity error;
 		
 		--test if ct_en=0 disables counting
 		cten <= '0';
 		wait for clk_period*5;
-		assert ( count = std_logic_vector(to_unsigned(5, 8)) ) report "counter counted while cten=0" severity error;
+		assert ( count = std_logic_vector(to_unsigned(5, 7)) ) report "counter counted while cten=0" severity error;
 		
 		--count up till cnt_max, should reset to 0 now
 		cten <= '1';
-		wait for clk_period*(cnt_max -5);
-		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reaching max" severity error;
+		wait for clk_period*(cnt_max -4);
+		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after reaching max" severity error;
 		
 		--count up 5 times and down 5 times
 		cten <= '1';
 		wait for clk_period*5;
 		down <= '1';
 		wait for clk_period*5;
-		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after 5 up and 5 down from 0" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after 5 up and 5 down from 0" severity error;
 		
 		--count down to max and 5 more
 		wait for clk_period*(cnt_max + 5) ;
-		assert ( count = std_logic_vector(to_unsigned(cnt_max-5,8)) ) report "counting down 5 from max failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(cnt_max-5,7)) ) report "counting down 5 from max failed" severity error;
 		
 		--reset to 0 
 		rst <= '1';
 		wait for clk_period;
-		assert ( count = std_logic_vector(to_unsigned(0, 8)) ) report "counter not 0 after reset" severity error;
-		
-		--load 3
-		rst <= '0';
-		data <= "00000011";
-		ld <= '1';
-		wait for clk_period;
-		assert ( count = std_logic_vector(to_unsigned(3, 8)) ) report "loading 3 failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after reset" severity error;
 		
 		--start counting up again
-		ld <= '0';
 		rst <= '0';
 		down <= '0';
-		wait for clk_period;
-		assert ( count = std_logic_vector(to_unsigned(4, 8)) ) report "count after load failed" severity error;
+		wait for clk_period*4;
+		assert ( count = std_logic_vector(to_unsigned(4, 7)) ) report "count after load failed" severity error;
 		
       wait;
    end process;

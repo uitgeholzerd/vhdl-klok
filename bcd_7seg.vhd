@@ -15,7 +15,7 @@ architecture Behavioral of bcd_7seg is
 begin
 	process (clk,bcd)
 	BEGIN
-		if (clk'event and clk='1') then
+		if (rising_edge(clk)) then
 			case  bcd is
 				when "0000"=> segment7 <="0000001";  -- '0'
 				when "0001"=> segment7 <="1001111";  -- '1'
