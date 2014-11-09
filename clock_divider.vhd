@@ -31,18 +31,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity clock_divider is
 	generic (max 	: 	positive  := 10);				-- Number by which the clock should be divided
-	Port (	clockIn : in  STD_LOGIC;
-				clockEnable : in  STD_LOGIC;
-				dividedClock : out  STD_LOGIC);
+	Port (	clk, ena : in  STD_LOGIC;
+				div : out  STD_LOGIC);
 end clock_divider;
 
 architecture Behavioral of clock_divider is
 	signal 	count_int : integer range 0 to max;
 
 begin
-	counter: process (clockIn)                  						-- Begin counting
+	counter: process (clk, ena)                  						-- Begin counting
 		Begin
-			If rising_edge(clockIn) and (clockEnable = '1') then		
+			If rising_edge(clk) and (ena = '1') then		
 				if count_int = max then										-- If counter reached max, reset it
 					count_int <= 0;				
 				Else
@@ -51,7 +50,7 @@ begin
 			End if;                                     			
 		End process;                             						
 ---------------------------------------------------------
-dividedClock <= '1' when (count_int = max) and (clockEnable = '1') else '0';	-- Put 1 signal on the dividedClock outpunt when counter has reached max
+div <= '1' when (count_int = max) and (ena = '1') else '0';	-- Put 1 signal on the div outpunt when counter has reached max
 
 
 end Behavioral;

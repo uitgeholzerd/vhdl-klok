@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   13:22:02 10/28/2014
+-- Create Date:   04:15:29 11/09/2014
 -- Design Name:   
--- Module Name:   C:/Users/seb/Google Drive/UA/S-Elektronica 1/digitale technieken/practicum/Klok/tb_bcd_conv.vhd
+-- Module Name:   C:/Users/seb/Google Drive/UA/S-Elektronica 1/digitale technieken/practicum/Klok/VHDL/tb_bcd_conv.vhd
 -- Project Name:  Klok
 -- Target Device:  
 -- Tool versions:  
@@ -27,11 +27,10 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
+USE ieee.numeric_std.ALL;
  
 ENTITY tb_bcd_conv IS
 END tb_bcd_conv;
@@ -42,6 +41,8 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
  
     COMPONENT bcd_conv
     PORT(
+         clk : IN  std_logic;
+         rst : IN  std_logic;
          number : IN  std_logic_vector(6 downto 0);
          tens : OUT  std_logic_vector(3 downto 0);
          ones : OUT  std_logic_vector(3 downto 0)
@@ -50,38 +51,50 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
     
 
    --Inputs
+   signal clk : std_logic := '0';
+   signal rst : std_logic := '0';
    signal number : std_logic_vector(6 downto 0) := (others => '0');
 
  	--Outputs
    signal tens : std_logic_vector(3 downto 0);
    signal ones : std_logic_vector(3 downto 0);
-   -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
-  
+
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
+ 
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: bcd_conv PORT MAP (
+          clk => clk,
+          rst => rst,
           number => number,
           tens => tens,
           ones => ones
         );
 
+   -- Clock process definitions
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
  
 
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 10 ns.
-      wait for 10 ns;	
-
+		
+      -- hold reset state for 20 ns.
+		rst <= '1';
+      wait for 20 ns;	
+		rst <= '0';
 		loop
          number <= std_logic_vector(unsigned(number) + 1);
- 
          wait for 10 ns;
       end loop;
-
-      -- insert stimulus here 
 
       wait;
    end process;

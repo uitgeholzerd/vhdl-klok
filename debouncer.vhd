@@ -30,9 +30,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity debouncer is
-	Port(	clk : in  STD_LOGIC; 
-			input : in  STD_LOGIC; 
-			debounced : out  STD_LOGIC); 
+	Port(	clk, input : in  STD_LOGIC; 
+			debounced : out  STD_LOGIC
+			); 
 end debouncer;
 
 architecture Behavioral of debouncer is

@@ -41,8 +41,7 @@ ARCHITECTURE behavior OF tb_mod_time IS
  
     COMPONENT mod_time
     PORT(
-         clk : IN  std_logic;
-         reset : IN  std_logic;
+         clk, rst : IN  std_logic;
          hours : OUT  std_logic_vector(6 downto 0);
          mins : OUT  std_logic_vector(6 downto 0);
          secs : OUT  std_logic_vector(6 downto 0);
@@ -53,7 +52,7 @@ ARCHITECTURE behavior OF tb_mod_time IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal reset : std_logic := '0';
+   signal rst : std_logic := '0';
 
  	--Outputs
    signal hours : std_logic_vector(6 downto 0);
@@ -69,7 +68,7 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: mod_time PORT MAP (
           clk => clk,
-          reset => reset,
+          rst => rst,
           hours => hours,
           mins => mins,
           secs => secs,
@@ -90,9 +89,9 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-		reset <= '1';
+		rst <= '1';
       wait for 100 ns;	
-		reset <= '0';
+		rst <= '0';
       wait for clk_period*100;
 
       -- insert stimulus here 

@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity bcd_7seg is
 port (
-      clk : in std_logic;
+		  clk,rst : in std_logic;
         bcd : in std_logic_vector(3 downto 0);  --BCD input
         segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
     );
@@ -13,9 +13,12 @@ end bcd_7seg;
 
 architecture Behavioral of bcd_7seg is
 begin
-	process (clk,bcd)
+	process (clk,rst, bcd)
 	BEGIN
-		if (rising_edge(clk)) then
+		if (rst = '1') then
+			 segment7 <="1111111"; 
+		--elsif (rising_edge(clk)) then
+		else
 			case  bcd is
 				when "0000"=> segment7 <="0000001";  -- '0'
 				when "0001"=> segment7 <="1001111";  -- '1'
