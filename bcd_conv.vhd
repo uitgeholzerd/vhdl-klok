@@ -23,6 +23,7 @@ use IEEE.NUMERIC_STD.ALL;
  
 entity bcd_conv is
    Port ( 
+		clk, rst	: in std_logic;
       number   : in  std_logic_vector (6 downto 0);
       tens     : out std_logic_vector (3 downto 0);
       ones     : out std_logic_vector (3 downto 0)
@@ -30,10 +31,10 @@ entity bcd_conv is
 end bcd_conv;
  
 architecture Behavioral of bcd_conv is
- 
+	signal sig_ten, sig_one: std_logic_vector (3 downto 0);
 begin
  
-   bin_to_bcd : process (number)
+   bin_to_bcd : process (clk, rst, number)
       -- Internal variable for storing bits
       variable shift : unsigned(18 downto 0);
  
@@ -43,6 +44,13 @@ begin
       alias ten is shift(14 downto 11);
       alias hun is shift(18 downto 15);
    begin
+	
+	if (rst = '1') then 
+		tens <= X"0";
+		ones <= X"0";
+		
+	--elsif (rising_edge(clk)) then 
+	else
       -- Clear previous number and store new number in shift register
       num := unsigned(number);
       one := X"0";
@@ -68,8 +76,19 @@ begin
       end loop;
  
       -- Push decimal numbers to output
-      tens     <= std_logic_vector(ten);
+      tens    <= std_logic_vector(ten);
       ones     <= std_logic_vector(one);
+	end if;
    end process;
- 
+	
+--	output: process (clk)
+--	begin
+--		if (rst = '1') then 
+--			tens <= "0000";
+--			ones <= "0000";
+--		elsif (rising_edge(clk)) then
+--			tens <= sig_ten;
+--			ones <= sig_one;
+--		end if;
+--	end process;
 end Behavioral;

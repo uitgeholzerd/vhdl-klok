@@ -1,0 +1,19 @@
+
+# PlanAhead Generated physical constraints 
+
+NET "btn_l" LOC = C4;
+NET "btn_r" LOC = D9;
+NET "btn_d" LOC = C9;
+NET "btn_s" LOC = B8;
+NET "btn_u" LOC = A8;
+NET "disp_an[3]" LOC = N16;
+NET "disp_an[2]" LOC = N15;
+NET "disp_an[1]" LOC = P18;
+NET "disp_an[0]" LOC = P17;
+NET "disp_cat[0]" LOC = T17;
+NET "disp_cat[1]" LOC = T18;
+NET "disp_cat[2]" LOC = U17;
+NET "disp_cat[3]" LOC = U18;
+NET "disp_cat[4]" LOC = M14;
+NET "disp_cat[5]" LOC = N14;
+NET "disp_cat[6]" LOC = L14;

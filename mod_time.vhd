@@ -66,7 +66,7 @@ begin
 		port map (clk => clk, rst => rst, cten => ctenM, down=> zero, count => mins, carry => carryM);
 	HRS: counter
 		generic map (max => 59, min => 0)
-		port map (clk => clk, rst => rst, cten => ctenS, down=> zero, count => hours, carry => carryH);
+		port map (clk => clk, rst => rst, cten => ctenH, down=> zero, count => hours, carry => carryH);
 		
 		
 end Behavioral;
