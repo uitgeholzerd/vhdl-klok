@@ -72,6 +72,8 @@ architecture Behavioral of main is
 	end component;
 	
 	component mod_display is
+	-- TODO: add blink inputs
+	-- TODO: incorrect cathode output
 	   Port ( clk, rst, refresh : in  STD_LOGIC;
            num1, num2: in  STD_LOGIC_VECTOR (6 downto 0);
 			  blink1, blink2: in STD_LOGIC;
@@ -132,7 +134,6 @@ begin
 	
 	DISPLAY: mod_display
 		port map (
-			-- TODO: add blink inputs
 			clk => clk, rst => rst, refresh => sig_disp_clk, 
 			num1 => sig_disp_num1, num2 => sig_disp_num2, 
 			blink1 => sig_disp_blink1, blink2 => sig_disp_blink2, 
@@ -152,7 +153,6 @@ begin
 	
 	MTIME: mod_time
 		port map (
-			--TODO: add up/down inputs
 			clk => sig_time_clk, rst => rst, 
 			hours => sig_hrs, mins => sig_min, secs => sig_sec, 
 			carry => sig_time_carry
