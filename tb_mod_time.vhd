@@ -97,11 +97,12 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
-   refresh_process :process
+	
+   cten_process :process
    begin
-		refresh <= '0';
+		cten <= '0';
 		wait for clk_period*10;
-		refresh <= '1';
+		cten <= '1';
 		wait for clk_period;
    end process;
 

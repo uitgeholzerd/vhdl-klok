@@ -40,7 +40,6 @@ end main;
 
 architecture Behavioral of main is
 	component func_select is
-	--TODO: btn_x needs to be a pulse
 	port(
          clk, rst : IN  std_logic;
          btn_l, btn_r, btn_u, btn_d, btn_s : IN  std_logic;
@@ -64,10 +63,11 @@ architecture Behavioral of main is
 	end component;
 	
 	component mod_time is
-		--TODO: add up/down ports
-		Port ( clk, rst, refresh : in  STD_LOGIC;
-           hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
-           carry : out  STD_LOGIC
+		Port ( clk, rst, cten : in  STD_LOGIC;
+				incr_hour, incr_min, reset_sec : in STD_LOGIC;
+				down : in STD_LOGIC;
+				hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
+				carry : out  STD_LOGIC
 				);
 	end component;
 	
@@ -98,6 +98,7 @@ architecture Behavioral of main is
 	signal sig_alarm_enabled, sig_time_carry: std_logic;
 	signal sig_blink1, sig_blink2, sig_disp_blink1, sig_disp_blink2: std_logic;
 	signal sig_up_hh, sig_up_mm, sig_rst_ss, sig_down_hh, sig_down_mm: std_logic;
+	signal sig_change_hh, sig_change_mm, sig_mod_time_down: std_logic;
 
 begin
 	one <= '1';
@@ -109,6 +110,9 @@ begin
 	sig_disp_blink1 <= sig_blink1; sig_disp_blink2 <= sig_blink2;
 	sig_disp_num1 <= sig_num1; sig_disp_num2 <= sig_num2;
 	sig_ss <= sig_sec; sig_mm <=sig_min; sig_hh <= sig_hrs;
+	sig_change_hh <= sig_up_hh or sig_down_hh;
+	sig_change_mm <= sig_up_mm or sig_down_mm;
+	sig_mod_time_down <= sig_down_hh or sig_down_mm;
 	
 	FUNC: func_select
 		port map(
@@ -156,7 +160,9 @@ begin
 	
 	MTIME: mod_time
 		port map (
-			clk => clk, refresh => sig_time_clk, rst => rst, 
+			clk => clk, rst => rst, cten => sig_time_clk,
+			incr_hour => sig_change_hh, incr_min => sig_change_mm, reset_sec => sig_rst_ss,
+			down => sig_mod_time_down,
 			hours => sig_hrs, mins => sig_min, secs => sig_sec, 
 			carry => sig_time_carry
 			);
