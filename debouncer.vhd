@@ -48,7 +48,7 @@ begin
  end if; 
 end process; 
 
-debounced <= delay1 and delay2 and delay3;
+debounced <= delay1 and delay2 and not delay3;
 
 end Behavioral; 
 

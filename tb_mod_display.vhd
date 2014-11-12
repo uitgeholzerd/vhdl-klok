@@ -42,7 +42,7 @@ ARCHITECTURE behavior OF tb_mod_display IS
     COMPONENT mod_display
     Port ( clk, rst, refresh: in STD_LOGIC;
            num1, num2 : in  STD_LOGIC_VECTOR (6 downto 0);
-			  blink1, blink2: in STD_LOGIC;
+			  blink1, blink2, blink_freq: in STD_LOGIC;
 			  seg7 : out  STD_LOGIC_VECTOR (6 downto 0);
 			  anode : out STD_LOGIC_VECTOR (3 downto 0)
 	 );
@@ -51,7 +51,7 @@ ARCHITECTURE behavior OF tb_mod_display IS
 
    --Inputs
    signal clk, rst, refresh : std_logic := '0';
-   signal blink1, blink2 : std_logic := '0';
+   signal blink1, blink2, blink_freq : std_logic := '0';
    signal num1 : std_logic_vector(6 downto 0) := (others => '0');
    signal num2 : std_logic_vector(6 downto 0) := (others => '0');
 
@@ -61,7 +61,7 @@ ARCHITECTURE behavior OF tb_mod_display IS
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
- 
+
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
@@ -69,10 +69,12 @@ BEGIN
           clk => clk,
           rst => rst,
 			 refresh => refresh,
+			 
           num1 => num1,
           num2 => num2,
 			 blink1 => blink1,
           blink2 => blink2,
+          blink_freq => blink_freq,
           seg7 => seg7,
           anode => anode
         );
@@ -85,17 +87,20 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
-	
+	blink_process :process
+   begin
+		blink_freq <= '0';
+		wait for clk_period*50;
+		blink_freq <= '1';
+		wait for clk_period;
+   end process;
 	refresh_process :process
    begin
 		refresh <= '0';
-		wait for clk_period*2;
+		wait for clk_period*5;
 		refresh <= '1';
 		wait for clk_period;
    end process;
- 
-
-
    -- Stimulus process
    stim_proc: process
    begin		
@@ -105,10 +110,14 @@ BEGIN
 		rst <= '0';
 		num1 <= std_logic_vector(to_unsigned(23, 7));
 		num2 <= std_logic_vector(to_unsigned(59, 7));
-      wait for clk_period*10;
-
-      -- insert stimulus here 
-
+		wait for clk_period * 1000;
+		blink1 <= '1';
+		wait for clk_period * 1000;
+		blink1 <= '0';
+		blink2 <= '1';
+		wait for clk_period * 1000;
+		blink2 <= '0';
+		
       wait;
    end process;
 

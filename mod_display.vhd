@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity mod_display is
     Port ( clk, rst, refresh: in STD_LOGIC;
            num1, num2 : in  STD_LOGIC_VECTOR (6 downto 0);
-			  blink1, blink2: in STD_LOGIC;
+			  blink1, blink2, blink_freq: in STD_LOGIC;
 			  seg7 : out  STD_LOGIC_VECTOR (6 downto 0);
 			  anode : out STD_LOGIC_VECTOR (3 downto 0)
 	 );
@@ -62,41 +62,52 @@ begin
 		port map (clk => clk, rst => rst, number => sig_num, tens => sig_tens, ones => sig_ones);
 	SEGM: bcd_7seg
 		port map (clk => clk, rst => rst, bcd => sig_bcd, segment7 => seg7);
-	process (clk, rst) 
-		variable cnt:integer range 4 downto 0;
+	process (clk) 
+		variable cnt:integer range 3 downto 0;
+		variable blink: std_logic;
+		variable blink_mask, anode_v: std_logic_vector (3 downto 0);
 	begin
 		if(rst='1') then
-				anode<="1111";
+				sig_anode<="1111";
+				sig_num <= (others => '0');
+				sig_bcd <= X"0";
+				blink := '0';
 				cnt:=0;
-		elsif (rising_edge(clk)) then
+--		elsif (rising_edge(clk) and refresh = '1' ) then
 
-		-- TODO: add blinking
-				if (refresh = '1' ) then
-					if(cnt=4) then 
+		elsif (rising_edge(clk)) then
+				if (refresh = '1') then
+					if(cnt=3) then 
 						cnt:=0;
+					else
+						cnt:=cnt+1;
 					end if;
-					cnt:=cnt+1;
-					case cnt is
-						when 0 =>
-							sig_num <= num1;
-							sig_bcd <= sig_tens;
-						when 1 =>
-							sig_num <= num1;
-							sig_bcd <= sig_ones;
-						when 2 =>
-							sig_num <= num2;
-							sig_bcd <= sig_tens;
-						when 3 =>
-							sig_num <= num2;
-							sig_bcd <= sig_ones;
-						when others =>
-							sig_num <= num1;
-							sig_bcd <= sig_tens;
-					end case;	
-					anode<="1111";
-					anode(cnt)<='0';
 				end if;
-			--anode <= sig_anode;
+				if (blink_freq = '1') then 
+					blink := not blink;
+				end if;
+				blink_mask := (blink2 and  blink, blink2 and blink, blink1 and blink, blink1 and  blink );
+				anode_v := (cnt => '0', others => '1');
+				anode<= anode_v or blink_mask;
+				case cnt is
+					when 0 =>
+						sig_bcd <= sig_tens;
+						sig_num <= num1;
+						
+					when 1 =>
+						sig_bcd <= sig_ones;
+						sig_num <= num1;
+						
+					when 2 =>
+						sig_bcd <= sig_tens;
+						sig_num <= num2;
+					
+					when 3 =>
+						sig_bcd <= sig_ones;
+						sig_num <= num2;
+					
+				end case;	
+				
 		end if;
 	end process;
 end Behavioral;

@@ -42,7 +42,7 @@ ARCHITECTURE behavior OF tb_bcd_7seg IS
  
     COMPONENT bcd_7seg
     PORT(
-         clk : IN  std_logic;
+         clk,rst : IN  std_logic;
          bcd : IN  std_logic_vector(3 downto 0);
          segment7 : OUT  std_logic_vector(6 downto 0)
         );
@@ -50,7 +50,7 @@ ARCHITECTURE behavior OF tb_bcd_7seg IS
     
 
    --Inputs
-   signal clk : std_logic := '0';
+   signal clk,rst : std_logic := '0';
    signal bcd : std_logic_vector(3 downto 0) := (others => '0');
 
  	--Outputs
@@ -64,6 +64,7 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: bcd_7seg PORT MAP (
           clk => clk,
+			 rst => rst,
           bcd => bcd,
           segment7 => segment7
         );

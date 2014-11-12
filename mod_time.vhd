@@ -64,7 +64,7 @@ begin
 	
 	SEC: counter
 		generic map (max => 59, min => 0)
-		port map (clk => clk, rst => reset_seconds, cten => ctenS, down=> down, count => secs, carry => carryS);
+		port map (clk => clk, rst => reset_seconds, cten => cten, down=> down, count => secs, carry => carryS);
 	MIN: counter
 		generic map (max => 59, min => 0)
 		port map (clk => clk, rst => rst, cten => ctenM, down=> down, count => mins, carry => carryM);

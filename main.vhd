@@ -65,18 +65,17 @@ architecture Behavioral of main is
 	
 	component mod_time is
 		--TODO: add up/down ports
-		Port ( clk, rst : in  STD_LOGIC;
+		Port ( clk, rst, refresh : in  STD_LOGIC;
            hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
            carry : out  STD_LOGIC
 				);
 	end component;
 	
 	component mod_display is
-	-- TODO: add blink inputs
-	-- TODO: incorrect cathode output
+	-- TODO: cathode timing issue when switching between numbers
 	   Port ( clk, rst, refresh : in  STD_LOGIC;
            num1, num2: in  STD_LOGIC_VECTOR (6 downto 0);
-			  blink1, blink2: in STD_LOGIC;
+			  blink1, blink2, blink_freq: in STD_LOGIC;
 			  seg7: out  STD_LOGIC_VECTOR (6 downto 0);
 			  anode : out STD_LOGIC_VECTOR (3 downto 0)
 				);
@@ -89,7 +88,7 @@ architecture Behavioral of main is
 	end component;
 	
 	signal one, zero : std_logic;
-	signal sig_div_disp, sig_div_time, sig_disp_clk, sig_time_clk: std_logic;
+	signal sig_div_disp, sig_div_time, sig_div_blink, sig_blink_freq, sig_disp_clk, sig_time_clk: std_logic;
 	signal sig_r, sig_l, sig_s, sig_u, sig_d: std_logic;
 	signal sig_btn_r, sig_btn_l, sig_btn_s, sig_btn_u, sig_btn_d: std_logic;
 	signal sig_sec, sig_min, sig_hrs, sig_cathode: std_logic_vector (6 downto 0);
@@ -103,6 +102,7 @@ architecture Behavioral of main is
 begin
 	one <= '1';
 	zero <= '0';
+	sig_blink_freq <= sig_div_blink;
 	sig_disp_clk <= sig_div_disp; sig_time_clk <= sig_div_time;
 	led_alarm_on <= sig_alarm_enabled;
 	sig_u <= sig_btn_u; sig_d <= sig_btn_d; sig_l <= sig_btn_l; sig_r <= sig_btn_r; sig_s <= sig_btn_s;
@@ -129,14 +129,17 @@ begin
 		generic map (max => 10)
 		port map (clk => clk, div => sig_div_disp, ena => one);
 	FREQ_TIME: clock_divider
-		generic map (max => 2)
-		port map (clk => sig_div_disp, div => sig_div_time, ena => one);
+		generic map (max => 10)
+		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
+	FREQ_BLINK: clock_divider
+		generic map (max => 3)
+		port map (clk => clk, ena => sig_disp_clk, div => sig_div_blink);
 	
 	DISPLAY: mod_display
 		port map (
 			clk => clk, rst => rst, refresh => sig_disp_clk, 
 			num1 => sig_disp_num1, num2 => sig_disp_num2, 
-			blink1 => sig_disp_blink1, blink2 => sig_disp_blink2, 
+			blink1 => sig_disp_blink1, blink2 => sig_disp_blink2, blink_freq => sig_blink_freq, 
 			seg7 => disp_cat, anode => disp_an
 			);
 	
@@ -153,7 +156,7 @@ begin
 	
 	MTIME: mod_time
 		port map (
-			clk => sig_time_clk, rst => rst, 
+			clk => clk, refresh => sig_time_clk, rst => rst, 
 			hours => sig_hrs, mins => sig_min, secs => sig_sec, 
 			carry => sig_time_carry
 			);
