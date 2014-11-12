@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Girmi/Xilinx/vhdl-klok/tb_main_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="tb_main" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/tb_main/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/btn_u" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">btn_u</obj_property>
+      <obj_property name="ObjectShortName">btn_u</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/btn_d" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">btn_d</obj_property>
+      <obj_property name="ObjectShortName">btn_d</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/btn_l" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">btn_l</obj_property>
+      <obj_property name="ObjectShortName">btn_l</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/btn_r" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">btn_r</obj_property>
+      <obj_property name="ObjectShortName">btn_r</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/btn_s" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">btn_s</obj_property>
+      <obj_property name="ObjectShortName">btn_s</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/uut/FUNC/currentmode" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">currentmode</obj_property>
+      <obj_property name="ObjectShortName">currentmode</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/uut/MTIME/hours" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">hours[6:0]</obj_property>
+      <obj_property name="ObjectShortName">hours[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/uut/MTIME/mins" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mins[6:0]</obj_property>
+      <obj_property name="ObjectShortName">mins[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_main/uut/MTIME/secs" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">secs[6:0]</obj_property>
+      <obj_property name="ObjectShortName">secs[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

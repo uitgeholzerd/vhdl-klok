@@ -251,6 +251,43 @@ BEGIN
 		btn_d <= '0';
 		wait for clk_period*3;
 		
+		-- Test increase + decrease hours/minutes
+		btn_r <= '1';				-- Go to mode set_time_hh
+		wait for clk_period*3;	
+		btn_r <= '0';
+		wait for clk_period*3;
+		btn_r <= '1';				
+		wait for clk_period*3;	
+		btn_r <= '0';
+		
+		btn_u <= '1';				-- Increase hours
+		wait for clk_period*3;	
+		btn_u <= '0';
+		wait for clk_period*3;
+		btn_u <= '1';				
+		wait for clk_period*3;	
+		btn_u <= '0';
+		
+		btn_d <= '1';				-- Decrease hours
+		wait for clk_period*3;	
+		btn_d <= '0';
+		
+		btn_r <= '1';				-- Go to mode set_time_mm
+		wait for clk_period*3;	
+		btn_r <= '0';
+		
+		btn_u <= '1';				-- Increase minutes
+		wait for clk_period*3;	
+		btn_u <= '0';		
+		
+		btn_d <= '1';				-- Decrease minutes
+		wait for clk_period*3;	
+		btn_d <= '0';
+		wait for clk_period*3;
+		btn_d <= '1';				
+		wait for clk_period*3;	
+		btn_d <= '0';
+		
       wait;
    end process;
 
