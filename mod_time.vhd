@@ -31,7 +31,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity mod_time is
 
-    Port ( clk, rst : in  STD_LOGIC;
+    Port ( clk, rst, refresh : in  STD_LOGIC;
            hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
            carry : out  STD_LOGIC);
 end mod_time;
@@ -60,12 +60,12 @@ begin
 	
 	SEC: counter
 		generic map (max => 59, min => 0)
-		port map (clk => clk, rst => rst, cten => one, down=> zero, count => secs, carry => carryS);
+		port map (clk => clk, rst => rst, cten => refresh, down=> zero, count => secs, carry => carryS);
 	MIN: counter
 		generic map (max => 59, min => 0)
 		port map (clk => clk, rst => rst, cten => ctenM, down=> zero, count => mins, carry => carryM);
 	HRS: counter
-		generic map (max => 59, min => 0)
+		generic map (max => 23, min => 0)
 		port map (clk => clk, rst => rst, cten => ctenH, down=> zero, count => hours, carry => carryH);
 		
 		

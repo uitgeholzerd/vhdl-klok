@@ -48,36 +48,29 @@ begin
 				case down is
 					--if down is set...
 					when '1' => 
-						-- set carry
-						if count_v = min + 1 then
-							carry <= '1';
-						else
-							carry <= '0';
-						end if;
 						--count down 
 						if count_v > min then
 							count_v := count_v -1;
+							
 						else
 						--or set to max after reaching min
 							count_v := max;
+							carry <= '1';
 						end if;
 					--if down isn't set...
 					when others => 
-						if count_v = max -1 then
-							carry <= '1';
-						else
-							carry <= '0';
-						end if;
 						--count up
 						if count_v < max then
 							count_v := count_v +1;
-	
+							
 						else
 						-- or set to min before reaching max
 							count_v := min;
-	
+							carry <= '1';
 						end if;
 				end case;
+			else
+				carry <= '0';
 			end if;
 		end if;
 		--set output to variable from procedure

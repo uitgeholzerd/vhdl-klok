@@ -31,10 +31,10 @@ entity bcd_conv is
 end bcd_conv;
  
 architecture Behavioral of bcd_conv is
-	signal sig_ten, sig_one: std_logic_vector (3 downto 0);
+	signal sig_tens, sig_ones: std_logic_vector (3 downto 0);
 begin
  
-   bin_to_bcd : process (clk, rst, number)
+   bin_to_bcd : process (rst, number)
       -- Internal variable for storing bits
       variable shift : unsigned(18 downto 0);
  
@@ -76,19 +76,20 @@ begin
       end loop;
  
       -- Push decimal numbers to output
+      --sig_tens    <= std_logic_vector(ten);
+      --sig_ones     <= std_logic_vector(one);
+		--if rising_edge(clk) then
       tens    <= std_logic_vector(ten);
       ones     <= std_logic_vector(one);
+	--	end if;
 	end if;
    end process;
 	
 --	output: process (clk)
 --	begin
---		if (rst = '1') then 
---			tens <= "0000";
---			ones <= "0000";
---		elsif (rising_edge(clk)) then
---			tens <= sig_ten;
---			ones <= sig_one;
+--		if rising_edge(clk) then
+--			tens <= sig_tens;
+--			ones <= sig_ones;
 --		end if;
 --	end process;
 end Behavioral;

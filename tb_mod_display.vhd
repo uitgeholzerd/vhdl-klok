@@ -61,7 +61,8 @@ ARCHITECTURE behavior OF tb_mod_display IS
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
- 
+	
+   signal blahbla: std_logic := '0';
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
@@ -86,16 +87,6 @@ BEGIN
 		wait for clk_period/2;
    end process;
 	
-	refresh_process :process
-   begin
-		refresh <= '0';
-		wait for clk_period*2;
-		refresh <= '1';
-		wait for clk_period;
-   end process;
- 
-
-
    -- Stimulus process
    stim_proc: process
    begin		
@@ -105,10 +96,13 @@ BEGIN
 		rst <= '0';
 		num1 <= std_logic_vector(to_unsigned(23, 7));
 		num2 <= std_logic_vector(to_unsigned(59, 7));
-      wait for clk_period*10;
-
-      -- insert stimulus here 
-
+		
+       for i in 0 to 100 loop
+          refresh<='1';
+          wait for clk_period;
+			 refresh<='0';
+			 wait for clk_period*4;
+     end loop;
       wait;
    end process;
 

@@ -41,7 +41,7 @@ ARCHITECTURE behavior OF tb_mod_time IS
  
     COMPONENT mod_time
     PORT(
-         clk, rst : IN  std_logic;
+         clk, rst, refresh: IN  std_logic;
          hours : OUT  std_logic_vector(6 downto 0);
          mins : OUT  std_logic_vector(6 downto 0);
          secs : OUT  std_logic_vector(6 downto 0);
@@ -53,7 +53,8 @@ ARCHITECTURE behavior OF tb_mod_time IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
-
+	signal refresh : std_logic := '0';
+	
  	--Outputs
    signal hours : std_logic_vector(6 downto 0);
    signal mins : std_logic_vector(6 downto 0);
@@ -69,6 +70,7 @@ BEGIN
    uut: mod_time PORT MAP (
           clk => clk,
           rst => rst,
+			 refresh => refresh,
           hours => hours,
           mins => mins,
           secs => secs,
@@ -83,7 +85,13 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
- 
+   refresh_process :process
+   begin
+		refresh <= '0';
+		wait for clk_period*10;
+		refresh <= '1';
+		wait for clk_period;
+   end process;
 
    -- Stimulus process
    stim_proc: process

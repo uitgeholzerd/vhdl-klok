@@ -65,15 +65,14 @@ architecture Behavioral of main is
 	
 	component mod_time is
 		--TODO: add up/down ports
-		Port ( clk, rst : in  STD_LOGIC;
+		Port ( clk, rst, refresh : in  STD_LOGIC;
            hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
            carry : out  STD_LOGIC
 				);
 	end component;
 	
 	component mod_display is
-	-- TODO: add blink inputs
-	-- TODO: incorrect cathode output
+	-- TODO: cathode timing issue when switching between numbers
 	   Port ( clk, rst, refresh : in  STD_LOGIC;
            num1, num2: in  STD_LOGIC_VECTOR (6 downto 0);
 			  blink1, blink2: in STD_LOGIC;
@@ -130,7 +129,7 @@ begin
 		port map (clk => clk, div => sig_div_disp, ena => one);
 	FREQ_TIME: clock_divider
 		generic map (max => 2)
-		port map (clk => sig_div_disp, div => sig_div_time, ena => one);
+		port map (clk => clk, ena => sig_div_disp, div => sig_div_time);
 	
 	DISPLAY: mod_display
 		port map (
@@ -153,7 +152,7 @@ begin
 	
 	MTIME: mod_time
 		port map (
-			clk => sig_time_clk, rst => rst, 
+			clk => clk, refresh => sig_time_clk, rst => rst, 
 			hours => sig_hrs, mins => sig_min, secs => sig_sec, 
 			carry => sig_time_carry
 			);
