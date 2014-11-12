@@ -27,9 +27,8 @@ entity variable_counter is
    Port ( clk : in  STD_LOGIC;  		-- clock input
           cten : in  STD_LOGIC;		-- count enable
           reset : in  STD_LOGIC;		-- reset to 0
+			 increment: in STD_LOGIC;	--Increase/decrease counter async
 			 down : in  STD_LOGIC;		-- count up unless this is 1
-			 load : in STD_LOGIC;		-- load data
-			 data : in STD_LOGIC_VECTOR (7 downto 0) ;		-- data to load
 			 max : in STD_LOGIC_VECTOR (4 downto 0);			-- maximum, at which the counter should reset
           count : out STD_LOGIC_VECTOR (7 downto 0);		-- counter output
 			 carry : out STD_LOGIC									-- carry
@@ -38,19 +37,15 @@ end variable_counter;
 
 architecture Behavioral of variable_counter is
 begin
-	cntr: process (clk)
+	cntr: process (clk, increment)
 		variable int_max: integer range 31 downto 28; 
 		variable count_v: integer range int_max downto min;
 	begin
 		int_max := to_integer(unsigned(max));
-		if rising_edge(clk) then
+		if rising_edge(clk) or increment = '1' then
 			--if reset is set, counter is 0
 			if reset = '1' then
 				count_v := min;
-				carry <= '0';
-			--if load is set, load from data
-			elsif load = '1' then
-				count_v := to_integer(unsigned(data));
 				carry <= '0';
 			--only count if cten = 1
 			elsif cten = '1' then

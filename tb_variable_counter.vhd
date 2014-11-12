@@ -44,9 +44,8 @@ ARCHITECTURE behavior OF tb_variable_counter IS
          clk : IN  std_logic;
          cten : IN  std_logic;
          reset : IN  std_logic;
+			increment : IN  std_logic;
          down : IN  std_logic;
-         load : IN  std_logic;
-         data : IN  std_logic_vector(7 downto 0);
          max : IN  std_logic_vector(4 downto 0);
          count : OUT  std_logic_vector(7 downto 0);
          carry : OUT  std_logic
@@ -58,9 +57,8 @@ ARCHITECTURE behavior OF tb_variable_counter IS
    signal clk : std_logic := '0';
    signal cten : std_logic := '0';
    signal reset : std_logic := '0';
+   signal increment : std_logic := '0';
    signal down : std_logic := '0';
-   signal load : std_logic := '0';
-   signal data : std_logic_vector(7 downto 0) := (others => '0');
    signal max : std_logic_vector(4 downto 0) := (others => '0');
 
  	--Outputs
@@ -77,9 +75,8 @@ BEGIN
           clk => clk,
           cten => cten,
           reset => reset,
+			 increment => increment,
           down => down,
-          load => load,
-          data => data,
           max => max,
           count => count,
           carry => carry

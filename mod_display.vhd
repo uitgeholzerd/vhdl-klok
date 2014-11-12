@@ -54,6 +54,7 @@ architecture Behavioral of mod_display is
 			segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
 		);
 	end component;
+	
 	signal sig_num: std_logic_vector (6 downto 0);
 	signal sig_tens, sig_ones, sig_bcd, sig_anode: std_logic_vector (3 downto 0);
 begin
