@@ -186,9 +186,6 @@ begin
 				if (btn_u = '1') then
 					rst_ss <= '1';
 				end if;
-
-			when others =>
-				--shouldn't happen
 		end case;
 	end process;
 end Behavioral;

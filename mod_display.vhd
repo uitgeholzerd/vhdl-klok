@@ -61,13 +61,12 @@ begin
 		port map (clk => clk, rst => rst, number => sig_num, tens => sig_tens, ones => sig_ones);
 	SEGM: bcd_7seg
 		port map (clk => clk, rst => rst, bcd => sig_bcd, segment7 => seg7);
-	process (clk) 
-		variable cnt:integer range 3 downto 0;
+	process (rst, clk) 
+		variable cnt:integer range 3 downto 0 := 0;
 		variable blink: std_logic;
 		variable blink_mask, anode_v: std_logic_vector (3 downto 0);
 	begin
 		if(rst='1') then
-				sig_anode<="1111";
 				sig_num <= (others => '0');
 				sig_bcd <= X"0";
 				blink := '0';
@@ -86,7 +85,8 @@ begin
 					blink := not blink;
 				end if;
 				blink_mask := (blink2 and  blink, blink2 and blink, blink1 and blink, blink1 and  blink );
-				anode_v := (cnt => '0', others => '1');
+				anode_v := (others => '1');
+				anode_v(cnt) := '0'; 
 				anode<= anode_v or blink_mask;
 				case cnt is
 					when 0 =>
