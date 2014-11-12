@@ -115,6 +115,42 @@ BEGIN
 		rst <= '0';
       wait for clk_period*2;
 		
+		
+		btn_l <= '1';
+		wait for clk_period;
+		btn_l <= '0';
+		wait for clk_period;		
+		
+		btn_l <= '1';
+		wait for clk_period;
+		btn_l <= '0';
+		wait for clk_period;		
+		
+		btn_u <= '1';
+		wait for clk_period;
+		btn_u <= '0';
+		wait for clk_period;		
+		
+		btn_d <= '1';
+		wait for clk_period;
+		btn_d <= '0';
+		wait for clk_period;		
+		
+		btn_r <= '1';
+		wait for clk_period;
+		btn_r <= '0';
+		wait for clk_period;		
+		
+		btn_s <= '1';
+		wait for clk_period;
+		btn_s <= '0';
+		wait for clk_period;		
+		
+		btn_l <= '1';
+		wait for clk_period;
+		btn_l <= '0';
+		wait for clk_period;		
+		
 		btn_l <= '1';
 		wait for clk_period*3;
 		btn_l <= '0';
@@ -122,39 +158,39 @@ BEGIN
 		btn_l <= '1';
 		wait for clk_period*10;
 		btn_l <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_l <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_l <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 		
 		btn_s <= '1';
 		wait for clk_period*3;
@@ -163,57 +199,57 @@ BEGIN
 		btn_s <= '1';
 		wait for clk_period*10;
 		btn_s <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*30;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '0';
-		wait for clk_period;
+		wait for clk_period*30;
 
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_r <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_r <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_u <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '1';
-		wait for clk_period;
+		wait for clk_period*3;
 		btn_d <= '0';
-		wait for clk_period;
+		wait for clk_period*3;
 		
       wait;
    end process;
