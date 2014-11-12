@@ -131,10 +131,11 @@ BEGIN
 		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after 5 up and 5 down from 0" severity error;
 		
 		--count down to max and 5 more
-		wait for clk_period*(cnt_max + 5) ;
-		assert ( count = std_logic_vector(to_unsigned(cnt_max-5,7)) ) report "counting down 5 from max failed" severity error;
+		wait for clk_period*(cnt_max + 6) ;
+		assert ( count = std_logic_vector(to_unsigned(55,7)) ) report "counting down 5 from max failed" severity error;
 		
 		--reset to 0 
+		wait for clk_period;
 		rst <= '1';
 		wait for clk_period;
 		assert ( count = std_logic_vector(to_unsigned(0, 7)) ) report "counter not 0 after reset" severity error;
@@ -143,7 +144,7 @@ BEGIN
 		rst <= '0';
 		down <= '0';
 		wait for clk_period*4;
-		assert ( count = std_logic_vector(to_unsigned(4, 7)) ) report "count after load failed" severity error;
+		assert ( count = std_logic_vector(to_unsigned(4, 7)) ) report "count up after count down failed" severity error;
 		
       wait;
    end process;

@@ -41,7 +41,11 @@ ARCHITECTURE behavior OF tb_mod_time IS
  
     COMPONENT mod_time
     PORT(
-         clk, rst, refresh: IN  std_logic;
+         clk, rst, cten : IN  std_logic;
+			incr_hour : in STD_LOGIC;
+			incr_min : in STD_LOGIC;
+			reset_sec : in STD_LOGIC;
+			down : in STD_LOGIC;
          hours : OUT  std_logic_vector(6 downto 0);
          mins : OUT  std_logic_vector(6 downto 0);
          secs : OUT  std_logic_vector(6 downto 0);
@@ -52,9 +56,13 @@ ARCHITECTURE behavior OF tb_mod_time IS
 
    --Inputs
    signal clk : std_logic := '0';
+   signal cten : std_logic := '0';
    signal rst : std_logic := '0';
-	signal refresh : std_logic := '0';
-	
+	signal incr_hour : std_logic := '0';
+	signal incr_min : std_logic := '0';
+	signal reset_sec : std_logic := '0';
+	signal down : std_logic := '0';
+
  	--Outputs
    signal hours : std_logic_vector(6 downto 0);
    signal mins : std_logic_vector(6 downto 0);
@@ -69,8 +77,12 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: mod_time PORT MAP (
           clk => clk,
+			 cten => cten,
           rst => rst,
-			 refresh => refresh,
+			 incr_hour => incr_hour,
+			 incr_min => incr_min,
+			 reset_sec => reset_sec,
+			 down => down,
           hours => hours,
           mins => mins,
           secs => secs,
@@ -85,24 +97,43 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
-   refresh_process :process
+	
+   cten_process :process
    begin
-		refresh <= '0';
+		cten <= '0';
 		wait for clk_period*10;
-		refresh <= '1';
+		cten <= '1';
 		wait for clk_period;
    end process;
 
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
+      -- hold reset state for 10 ns.
 		rst <= '1';
-      wait for 100 ns;	
+      wait for 10 ns;	
 		rst <= '0';
-      wait for clk_period*100;
+      wait for clk_period*10;
 
-      -- insert stimulus here 
+      -- Test manual counting
+		incr_min <= '1';
+      wait for clk_period*3;
+		incr_min <= '0';
+		incr_hour <= '1';
+      wait for clk_period*3;
+		incr_hour <= '0';
+		
+      wait for clk_period;
+		down <= '1';
+		
+		incr_min <= '1';
+      wait for clk_period*2;
+		incr_min <= '0';
+		incr_hour <= '1';
+      wait for clk_period*2;
+		incr_hour <= '0';
+		
+		down <= '0';
 
       wait;
    end process;

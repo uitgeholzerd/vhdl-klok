@@ -72,7 +72,6 @@ begin
 			end if;
 		end if;
 		--set output to variable from procedure
-		--count <= count_v;
 		count <= std_logic_vector(to_unsigned(count_v, 7));
 	end process;
 

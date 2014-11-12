@@ -6,5 +6,6 @@ down
 ld
 =data[7:0]=
 [Outputs]
+carry
 =count[7:0]=
 [BiDir]
