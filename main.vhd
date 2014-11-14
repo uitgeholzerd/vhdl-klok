@@ -130,13 +130,13 @@ begin
          );
 	
 	FREQ_DISP: clock_divider
-		generic map (max => 10)
+		generic map (max => 100000)
 		port map (clk => clk, div => sig_div_disp, ena => one);
 	FREQ_TIME: clock_divider
-		generic map (max => 10)
+		generic map (max => 1000)
 		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
 	FREQ_BLINK: clock_divider
-		generic map (max => 3)
+		generic map (max => 300)
 		port map (clk => clk, ena => sig_disp_clk, div => sig_div_blink);
 	
 	DISPLAY: mod_display
