@@ -36,7 +36,7 @@ entity debouncer is
 end debouncer;
 
 architecture Behavioral of debouncer is
- signal delay1, delay2, delay3 : STD_LOGIC := '0'; 
+ signal delay1, delay2, delay3, delay4 : STD_LOGIC := '0'; 
 
 begin 
 process (clk) is 
@@ -48,7 +48,7 @@ begin
  end if; 
 end process; 
 
-debounced <= delay1 and delay2 and not delay3;
+debounced <= delay1 and delay2 and delay3 and not delay4;
 
 end Behavioral; 
 
