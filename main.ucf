@@ -1,6 +1,6 @@
 
-# PlanAhead Generated physical constraints 
 
+NET "clk" LOC = V10;
 NET "btn_l" LOC = C4;
 NET "btn_r" LOC = D9;
 NET "btn_d" LOC = C9;
@@ -21,3 +21,29 @@ NET "disp_cat[3]" LOC = U18;
 NET "disp_cat[4]" LOC = M14;
 NET "disp_cat[5]" LOC = N14;
 NET "disp_cat[6]" LOC = L14;
+
+
+NET "disp_an[3]" IOSTANDARD = LVCMOS33;
+NET "disp_an[2]" IOSTANDARD = LVCMOS33;
+NET "disp_an[1]" IOSTANDARD = LVCMOS33;
+NET "disp_an[0]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[6]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[5]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[4]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[3]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[2]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[1]" IOSTANDARD = LVCMOS33;
+NET "disp_cat[0]" IOSTANDARD = LVCMOS33;
+NET "btn_d" IOSTANDARD = LVCMOS33;
+NET "btn_l" IOSTANDARD = LVCMOS33;
+NET "btn_r" IOSTANDARD = LVCMOS33;
+NET "btn_s" IOSTANDARD = LVCMOS33;
+NET "btn_u" IOSTANDARD = LVCMOS33;
+NET "clk" IOSTANDARD = LVCMOS33;
+NET "led_alarm" IOSTANDARD = LVCMOS33;
+NET "led_alarm_on" IOSTANDARD = LVCMOS33;
+NET "led_time" IOSTANDARD = LVCMOS33;
+NET "led_date" IOSTANDARD = LVCMOS33;
+
+# PlanAhead Generated physical constraints 
+

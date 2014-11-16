@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   21:56:17 10/27/2014
+-- Create Date:   13:49:04 11/16/2014
 -- Design Name:   
--- Module Name:   C:/Users/Girmi/workspace/VHDL/vhdl-klok/tb_days_in_month_calc.vhd
+-- Module Name:   C:/Users/Girmi/Xilinx/vhdl-klok/tb_mod_date.vhd
 -- Project Name:  Klok
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: days_in_month_calc
+-- VHDL Test Bench Created by ISE for module: mod_date
 -- 
 -- Dependencies:
 -- 
@@ -32,30 +32,42 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_days_in_month_calc IS
-END tb_days_in_month_calc;
+ENTITY tb_mod_date IS
+END tb_mod_date;
  
-ARCHITECTURE behavior OF tb_days_in_month_calc IS 
+ARCHITECTURE behavior OF tb_mod_date IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT days_in_month_calc
+    COMPONENT mod_date
     PORT(
          clk : IN  std_logic;
-         year : IN std_logic_vector(6 downto 0) ;
-         month : IN  std_logic_vector(6 downto 0);
-         days_in_month : OUT  std_logic_vector(4 downto 0)
+         rst : IN  std_logic;
+         cten : IN  std_logic;
+         incr_day : IN  std_logic;
+         incr_month : IN  std_logic;
+         incr_year : IN  std_logic;
+         down : IN  std_logic;
+         day : OUT  std_logic_vector(6 downto 0);
+         month : OUT  std_logic_vector(6 downto 0);
+         year : OUT  std_logic_vector(6 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal clk : std_logic := '0';
-   signal year : std_logic_vector(6 downto 0) := (others => '0');
-   signal month :std_logic_vector(6 downto 0) := (others => '0');
+   signal rst : std_logic := '0';
+   signal cten : std_logic := '0';
+   signal incr_day : std_logic := '0';
+   signal incr_month : std_logic := '0';
+   signal incr_year : std_logic := '0';
+   signal down : std_logic := '0';
 
  	--Outputs
-   signal days_in_month : std_logic_vector(4 downto 0);
+   signal day : std_logic_vector(6 downto 0);
+   signal month : std_logic_vector(6 downto 0);
+   signal year : std_logic_vector(6 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -63,11 +75,17 @@ ARCHITECTURE behavior OF tb_days_in_month_calc IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: days_in_month_calc PORT MAP (
+   uut: mod_date PORT MAP (
           clk => clk,
-          year => year,
+          rst => rst,
+          cten => cten,
+          incr_day => incr_day,
+          incr_month => incr_month,
+          incr_year => incr_year,
+          down => down,
+          day => day,
           month => month,
-          days_in_month => days_in_month
+          year => year
         );
 
    -- Clock process definitions
@@ -83,28 +101,15 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
+      -- hold reset state.
+		rst <= '1';
+      wait for clk_period;	
+		rst <= '0';
 		
-		year <= "0001100";	-- 2012
-		month <= "0001";	-- 01
-		wait for clk_period;
-		assert ( days_in_month = "11111" ) report "01/2012 geen 31 dagen" severity error;
-		
-		year <= "0001100"; -- 2012
-		month <= "0100"; -- 04
-		wait for clk_period;
-		assert ( days_in_month = "11110" ) report "04/2012 geen 30 dagen" severity error;
-		
-		year <= "0001100"; -- 2012
-		month <= "0010"; -- 02
-		wait for clk_period;
-		assert ( days_in_month = "11101" ) report "02/2012 geen 29 dagen" severity error;
-		 
-		year <= "0001011"; -- 2011
-		month <= "0010"; -- 02
-		wait for clk_period;
-		assert ( days_in_month = "11100" ) report "02/2011 geen 28 dagen" severity error;
+		cten <= '1';
+      wait for clk_period*10;
+
+      -- insert stimulus here 
 
       wait;
    end process;

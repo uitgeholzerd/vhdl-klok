@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Users\Girmi\Xilinx\vhdl-klok\main.ncd
+OUTFILE=C:\Users\Girmi\Xilinx\vhdl-klok\main.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=C:\Users\Girmi\Xilinx\vhdl-klok
+LICENSE=WebPack
+USER_INFO=210950997_0_0_514
