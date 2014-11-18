@@ -34,9 +34,7 @@ entity mod_date is
 		Port ( clk, rst, cten : in  STD_LOGIC;
 				incr_day, incr_month, incr_year : in STD_LOGIC;
 				down : in STD_LOGIC;
-				day  : out  STD_LOGIC_VECTOR (6 downto 0);
-				month : out  STD_LOGIC_VECTOR (6 downto 0);
-				year : out  STD_LOGIC_VECTOR (6 downto 0)
+				day, month, year : out  STD_LOGIC_VECTOR (6 downto 0)
 				);
 end mod_date;
 

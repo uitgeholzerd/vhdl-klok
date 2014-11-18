@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -34,21 +35,23 @@ entity func_select is
          clk, rst : IN  std_logic;
          btn_l, btn_r, btn_u, btn_d, btn_s : IN  std_logic;
          hh, mm, ss : IN  std_logic_vector(6 downto 0);
+			day, month, year : IN  std_logic_vector(6 downto 0);
 			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;
-			--day, month, year : IN  std_logic_vector(6 downto 0);
-			--up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
+			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
 			--alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
 			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
-			mode_time, mode_date, mode_alarm, alarm_enabled: out std_logic;
-			blink1, blink2: out std_logic;
+			mode_time, mode_date, mode_alarm, alarm_enabled: OUT std_logic;
+			blink1, blink2: OUT std_logic;
          num1, num2 : OUT  std_logic_vector(6 downto 0)
         );
 end func_select;
 
 architecture Behavioral of func_select is
-	type mode is (disp_time_HHMM, disp_time_MMSS, set_time_HH, set_time_MM, set_time_SS );
-			--disp_date_DDMM, disp_date_YYYY, set_date_DD, set_date_MM, set_date_YYYY, disp_alarm, set_alarm
+	type mode is (	disp_time_HHMM, disp_time_MMSS, set_time_HH, set_time_MM, reset_time_SS,
+						disp_date_DDMM, set_date_DD, set_date_MM, set_date_YYYY
+						); -- disp_alarm, set_alarm
 	signal currentmode, nextmode: mode;
+	
 	type alarm_mode is (enabled, disabled);
 	signal currentalarm, nextalarm: alarm_mode;
 begin
@@ -98,12 +101,21 @@ begin
 			
 			when disp_time_MMSS =>
 				if (btn_l = '1') then
-					nextmode <= disp_time_HHMM; --has to change when date is added
+					nextmode <= disp_date_DDMM; 
 				elsif (btn_r = '1') then
-					nextmode <= set_time_HH;
+					nextmode <= set_time_MM;
 				else
 					nextmode <= disp_time_MMSS;
 				end if;
+				
+			when disp_date_DDMM =>
+			if (btn_l = '1') then
+				nextmode <= disp_time_HHMM; 
+			elsif (btn_r = '1') then
+				nextmode <= set_date_DD;
+			else
+				nextmode <= disp_date_DDMM;
+			end if;
 			
 			when set_time_HH =>
 				if (btn_l = '1') then
@@ -118,18 +130,45 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_time_HHMM;
 				elsif (btn_r = '1') then
-					nextmode <= set_time_SS;
+					nextmode <= reset_time_SS;
 				else
 					nextmode <= set_time_MM;
 				end if;
 			
-			when set_time_SS =>
+			when reset_time_SS =>
 				if (btn_l = '1') then
 					nextmode <= disp_time_HHMM;
 				elsif (btn_r = '1') then
-					nextmode <= disp_time_HHMM;
+					nextmode <= set_time_HH;
 				else
-					nextmode <= set_time_SS;
+					nextmode <= reset_time_SS;
+				end if;
+				
+			when set_date_DD =>
+				if (btn_l = '1') then
+					nextmode <= disp_date_DDMM;
+				elsif (btn_r = '1') then
+					nextmode <= set_date_MM;
+				else
+					nextmode <= set_date_DD;
+				end if;
+				
+			when set_date_MM =>
+				if (btn_l = '1') then
+					nextmode <= disp_date_DDMM;
+				elsif (btn_r = '1') then
+					nextmode <= set_date_YYYY;
+				else
+					nextmode <= set_date_MM;
+				end if;
+				
+			when set_date_YYYY =>
+				if (btn_l = '1') then
+					nextmode <= disp_date_DDMM;
+				elsif (btn_r = '1') then
+					nextmode <= set_date_DD;
+				else
+					nextmode <= set_date_YYYY;
 				end if;
 
 		end case;
@@ -149,6 +188,7 @@ begin
 				alarm_enabled <= '0';
 		end case;
 		case currentmode is
+		-- Time modes
 			when disp_time_HHMM =>
 				num1 <= hh; num2 <= mm;
 				blink1 <= '0'; blink2 <= '0';
@@ -179,13 +219,50 @@ begin
 					down_mm <= '1';
 				end if;
 
-			when set_time_SS =>
+			when reset_time_SS =>
 				num1 <= mm; num2 <= ss;
 				blink1 <= '0'; blink2 <= '1';
 				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
 				if (btn_u = '1') then
 					rst_ss <= '1';
 				end if;
+				
+		-- Date modes
+			when disp_date_DDMM =>
+				num1 <= day; num2 <= month;
+				blink1 <= '0'; blink2 <= '0';
+				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				
+			when set_date_DD =>
+				num1 <= day; num2 <= month;
+				blink1 <= '1'; blink2 <= '0';
+				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				if (btn_u = '1') then
+					up_day <= '1';
+				elsif (btn_d = '1') then
+					down_day <= '1';
+				end if;
+				
+			when set_date_MM =>
+				num1 <= day; num2 <= month;
+				blink1 <= '0'; blink2 <= '1';
+				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				if (btn_u = '1') then
+					up_month <= '1';
+				elsif (btn_d = '1') then
+					down_month <= '1';
+				end if;
+				
+			when set_date_YYYY =>
+				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
+				blink1 <= '0'; blink2 <= '1';
+				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				if (btn_u = '1') then
+					up_year <= '1';
+				elsif (btn_d = '1') then
+					down_year <= '1';
+				end if;
+				
 		end case;
 	end process;
 end Behavioral;

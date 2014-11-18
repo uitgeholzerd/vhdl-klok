@@ -39,7 +39,7 @@ architecture Behavioral of clock_divider is
 	signal 	count_int : integer range 0 to max;
 
 begin
-	counter: process (clk, ena)                  						-- Begin counting
+	counter: process (clk, ena)                  					-- Begin counting
 		Begin
 			If rising_edge(clk) and (ena = '1') then		
 				if count_int = max then										-- If counter reached max, reset it
