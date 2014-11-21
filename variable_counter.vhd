@@ -38,7 +38,7 @@ architecture Behavioral of variable_counter is
 begin
 	cntr: process (clk)
 		variable int_max: integer range 31 downto 28; 
-		variable count_v: integer range 99 downto min;
+		variable count_v: integer range 31 downto min;
 	begin
 		int_max := to_integer(unsigned(max));
 		if rising_edge(clk) then
