@@ -174,7 +174,7 @@ begin
 		end case;
 	end process;
 	
-	set_outputs: process (currentmode, currentalarm, btn_u, btn_d, hh, mm, ss)
+	set_outputs: process (currentmode, currentalarm, btn_u, btn_d, hh, mm, ss, day, month, year)
 	begin
 		up_hh <= '0';
 		down_hh <= '0';
