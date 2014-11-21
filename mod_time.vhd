@@ -52,10 +52,9 @@ architecture Behavioral of mod_time is
 
 	 end component;
 	 signal carryS, carryM, carryH : std_logic;
-	 signal ctenS, ctenM, ctenH : std_logic;
+	 signal ctenM, ctenH : std_logic;
 	 signal reset_seconds : std_logic;
 begin
-	ctenS <= not (incr_min or incr_hour);
 	ctenM <= carryS or incr_min;
 	ctenH <= carryM or incr_hour;
 	carry <= carryH;

@@ -43,11 +43,10 @@ ARCHITECTURE behavior OF tb_variable_counter IS
     PORT(
          clk : IN  std_logic;
          cten : IN  std_logic;
-         reset : IN  std_logic;
-			increment : IN  std_logic;
+         rst : IN  std_logic;
          down : IN  std_logic;
          max : IN  std_logic_vector(4 downto 0);
-         count : OUT  std_logic_vector(7 downto 0);
+         count : OUT  std_logic_vector(6 downto 0);
          carry : OUT  std_logic
         );
     END COMPONENT;
@@ -56,13 +55,12 @@ ARCHITECTURE behavior OF tb_variable_counter IS
    --Inputs
    signal clk : std_logic := '0';
    signal cten : std_logic := '0';
-   signal reset : std_logic := '0';
-   signal increment : std_logic := '0';
+   signal rst : std_logic := '0';
    signal down : std_logic := '0';
    signal max : std_logic_vector(4 downto 0) := (others => '0');
 
  	--Outputs
-   signal count : std_logic_vector(7 downto 0) := (others => '0');
+   signal count : std_logic_vector(6 downto 0) := (others => '0');
    signal carry : std_logic;
 
    -- Clock period definitions
@@ -74,8 +72,7 @@ BEGIN
    uut: variable_counter PORT MAP (
           clk => clk,
           cten => cten,
-          reset => reset,
-			 increment => increment,
+          rst => rst,
           down => down,
           max => max,
           count => count,
@@ -98,9 +95,9 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 10 ns;
 
-		reset <= '1';
+		rst <= '1';
 		wait for clk_period * 1;
-		reset <= '0';
+		rst <= '0';
 		
 		--start counting to 30
 		max <= std_logic_vector(to_unsigned(30, 5));
@@ -113,9 +110,9 @@ BEGIN
 		wait for clk_period;
 		assert ( count = std_logic_vector(to_unsigned(0, count'length)) ) report "Count not 0" severity error;
 		
-		reset <= '1';
+		rst <= '1';
 		wait for clk_period * 1;
-		reset <= '0';
+		rst <= '0';
 		
 		--start counting to 28
 		max <= std_logic_vector(to_unsigned(28, 5));

@@ -56,15 +56,15 @@ ARCHITECTURE behavior OF tb_func_select IS
          rst_ss : OUT  std_logic;
          down_hh : OUT  std_logic;
          down_mm : OUT  std_logic;
---         day : IN  std_logic_vector(6 downto 0);
---         month : IN  std_logic_vector(6 downto 0);
---         year : IN  std_logic_vector(6 downto 0);
---         up_day : OUT  std_logic;
---         up_month : OUT  std_logic;
---         up_year : OUT  std_logic;
---         down_day : OUT  std_logic;
---         down_month : OUT  std_logic;
---         down_year : OUT  std_logic;
+         day : IN  std_logic_vector(6 downto 0);
+         month : IN  std_logic_vector(6 downto 0);
+         year : IN  std_logic_vector(6 downto 0);
+			up_day : OUT  std_logic;
+         up_month : OUT  std_logic;
+         up_year : OUT  std_logic;
+         down_day : OUT  std_logic;
+         down_month : OUT  std_logic;
+         down_year : OUT  std_logic;
 --         alarm_hh : IN  std_logic_vector(6 downto 0);
 --         alarm_mm : IN  std_logic_vector(6 downto 0);
 --         up_alarm_hh : OUT  std_logic;
@@ -94,9 +94,9 @@ ARCHITECTURE behavior OF tb_func_select IS
    signal hh : std_logic_vector(6 downto 0) := (others => '0');
    signal mm : std_logic_vector(6 downto 0) := (others => '0');
    signal ss : std_logic_vector(6 downto 0) := (others => '0');
---   signal day : std_logic_vector(6 downto 0) := (others => '0');
---   signal month : std_logic_vector(6 downto 0) := (others => '0');
---   signal year : std_logic_vector(6 downto 0) := (others => '0');
+   signal day : std_logic_vector(6 downto 0) := (others => '0');
+   signal month : std_logic_vector(6 downto 0) := (others => '0');
+   signal year : std_logic_vector(6 downto 0) := (others => '0');
 --   signal alarm_hh : std_logic_vector(6 downto 0) := (others => '0');
 --   signal alarm_mm : std_logic_vector(6 downto 0) := (others => '0');
 
@@ -106,12 +106,12 @@ ARCHITECTURE behavior OF tb_func_select IS
    signal rst_ss : std_logic;
    signal down_hh : std_logic;
    signal down_mm : std_logic;
---   signal up_day : std_logic;
---   signal up_month : std_logic;
---   signal up_year : std_logic;
---   signal down_day : std_logic;
---   signal down_month : std_logic;
---   signal down_year : std_logic;
+   signal up_day : std_logic;
+   signal up_month : std_logic;
+   signal up_year : std_logic;
+   signal down_day : std_logic;
+   signal down_month : std_logic;
+   signal down_year : std_logic;
 --   signal up_alarm_hh : std_logic;
 --   signal up_alarm_mm : std_logic;
 --   signal down_alarm_hh : std_logic;
@@ -131,46 +131,47 @@ ARCHITECTURE behavior OF tb_func_select IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: func_select PORT MAP (
-          clk => clk,
-          rst => rst,
-          btn_l => btn_l,
-          btn_r => btn_r,
-          btn_u => btn_u,
-          btn_d => btn_d,
-          btn_s => btn_s,
-          hh => hh,
-          mm => mm,
-          ss => ss,
-          up_hh => up_hh,
-          up_mm => up_mm,
-          rst_ss => rst_ss,
-          down_hh => down_hh,
-          down_mm => down_mm,
---          day => day,
---          month => month,
---          year => year,
---          up_day => up_day,
---          up_month => up_month,
---          up_year => up_year,
---          down_day => down_day,
---          down_month => down_month,
---          down_year => down_year,
---          alarm_hh => alarm_hh,
---          alarm_mm => alarm_mm,
---          up_alarm_hh => up_alarm_hh,
---          up_alarm_mm => up_alarm_mm,
---          down_alarm_hh => down_alarm_hh,
---          down_alarm_mm => down_alarm_mm,
-          mode_time => mode_time,
-          mode_date => mode_date,
-          mode_alarm => mode_alarm,
-          alarm_enabled => alarm_enabled,
-          blink1 => blink1,
-          blink2 => blink2,
-          num1 => num1,
-          num2 => num2
-        );
+   uut: func_select 
+		PORT MAP (
+			clk => clk,
+			rst => rst,
+			btn_l => btn_l,
+			btn_r => btn_r,
+			btn_u => btn_u,
+			btn_d => btn_d,
+			btn_s => btn_s,
+			hh => hh,
+			mm => mm,
+			ss => ss,
+			up_hh => up_hh,
+			up_mm => up_mm,
+			rst_ss => rst_ss,
+			down_hh => down_hh,
+			down_mm => down_mm,
+			day => day,
+			month => month,
+			year => year,
+			up_day => up_day,
+			up_month => up_month,
+			up_year => up_year,
+			down_day => down_day,
+			down_month => down_month,
+			down_year => down_year,
+--         alarm_hh => alarm_hh,
+--         alarm_mm => alarm_mm,
+--         up_alarm_hh => up_alarm_hh,
+--         up_alarm_mm => up_alarm_mm,
+--         down_alarm_hh => down_alarm_hh,
+--         down_alarm_mm => down_alarm_mm,
+			mode_time => mode_time,
+			mode_date => mode_date,
+			mode_alarm => mode_alarm,
+			alarm_enabled => alarm_enabled,
+			blink1 => blink1,
+			blink2 => blink2,
+			num1 => num1,
+			num2 => num2
+		);
 
    -- Clock process definitions
    clk_process :process

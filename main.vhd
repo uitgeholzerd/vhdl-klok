@@ -81,38 +81,57 @@ architecture Behavioral of main is
 				);
 	end component;
 	
+	component mod_date is
+		Port ( clk, rst, cten : in  STD_LOGIC;
+				incr_day, incr_month, incr_year : in STD_LOGIC;
+				down : in STD_LOGIC;
+				day, month, year : out  STD_LOGIC_VECTOR (6 downto 0)
+				);
+	end component;
+	
 	component debouncer is
 		Port(	clk, input : in  STD_LOGIC; 
 			debounced : out  STD_LOGIC
 				); 
 	end component;
 	
-	signal one, zero : std_logic;
 	signal sig_div_disp, sig_div_time, sig_div_blink, sig_blink_freq, sig_disp_clk, sig_time_clk: std_logic;
 	signal sig_r, sig_l, sig_s, sig_u, sig_d: std_logic;
 	signal sig_btn_r, sig_btn_l, sig_btn_s, sig_btn_u, sig_btn_d: std_logic;
-	signal sig_sec, sig_min, sig_hrs, sig_cathode: std_logic_vector (6 downto 0);
-	signal sig_ss, sig_mm, sig_hh: std_logic_vector (6 downto 0);
+	
 	signal sig_num1, sig_num2, sig_disp_num1, sig_disp_num2: std_logic_vector (6 downto 0);
+	signal sig_cathode : std_logic_vector (6 downto 0);
 	signal sig_anode: std_logic_vector (3 downto 0);
 	signal sig_alarm_enabled, sig_time_carry: std_logic;
 	signal sig_blink1, sig_blink2, sig_disp_blink1, sig_disp_blink2: std_logic;
+	
+	signal sig_sec, sig_min, sig_hrs : std_logic_vector (6 downto 0);		-- Is deze regel én de volgende nodig?
+	signal sig_ss, sig_mm, sig_hh: std_logic_vector (6 downto 0);
 	signal sig_up_hh, sig_up_mm, sig_rst_ss, sig_down_hh, sig_down_mm: std_logic;
 	signal sig_change_hh, sig_change_mm, sig_mod_time_down: std_logic;
+	
+	signal sig_day, sig_month, sig_year: std_logic_vector (6 downto 0);
+	signal sig_up_day, sig_up_month, sig_up_year, sig_down_day, sig_down_month, sig_down_year : std_logic;
+	signal sig_change_day, sig_change_month, sig_change_year, sig_mod_date_down: std_logic;
+	
 
 begin
-	one <= '1';
-	zero <= '0';
 	sig_blink_freq <= sig_div_blink;
 	sig_disp_clk <= sig_div_disp; sig_time_clk <= sig_div_time;
 	led_alarm_on <= sig_alarm_enabled;
 	sig_u <= sig_btn_u; sig_d <= sig_btn_d; sig_l <= sig_btn_l; sig_r <= sig_btn_r; sig_s <= sig_btn_s;
 	sig_disp_blink1 <= sig_blink1; sig_disp_blink2 <= sig_blink2;
 	sig_disp_num1 <= sig_num1; sig_disp_num2 <= sig_num2;
+	
 	sig_ss <= sig_sec; sig_mm <=sig_min; sig_hh <= sig_hrs;
 	sig_change_hh <= sig_up_hh or sig_down_hh;
 	sig_change_mm <= sig_up_mm or sig_down_mm;
 	sig_mod_time_down <= sig_down_hh or sig_down_mm;
+	
+	sig_change_day <= sig_up_day or sig_down_day;
+	sig_change_month <= sig_up_month or sig_down_month;
+	sig_change_year <= sig_up_year or sig_down_year;
+	sig_mod_date_down <= sig_down_day or sig_down_month or sig_down_year;
 	
 	FUNC: func_select
 		port map(
@@ -131,7 +150,7 @@ begin
 	
 	FREQ_DISP: clock_divider
 		generic map (max => 100000)
-		port map (clk => clk, div => sig_div_disp, ena => one);
+		port map (clk => clk, div => sig_div_disp, ena => '1');
 	FREQ_TIME: clock_divider
 		generic map (max => 1000)
 		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
@@ -160,11 +179,17 @@ begin
 	
 	MTIME: mod_time
 		port map (
-			clk => clk, rst => rst, cten => sig_time_clk,
+			clk => clk, rst => rst, cten => sig_time_clk, down => sig_mod_time_down,
 			incr_hour => sig_change_hh, incr_min => sig_change_mm, reset_sec => sig_rst_ss,
-			down => sig_mod_time_down,
 			hours => sig_hrs, mins => sig_min, secs => sig_sec, 
 			carry => sig_time_carry
+			);
+			
+	MDATE: mod_date
+		port map (
+			clk => clk, rst => rst, cten => sig_time_carry, down => sig_mod_date_down,
+			incr_day => sig_change_day, incr_month => sig_change_month, incr_year => sig_change_year,
+			day => sig_day, month => sig_month, year => sig_year
 			);
 	
 end Behavioral;

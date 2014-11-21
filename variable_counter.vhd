@@ -26,25 +26,24 @@ entity variable_counter is
 	
    Port ( clk : in  STD_LOGIC;  		-- clock input
           cten : in  STD_LOGIC;		-- count enable
-          reset : in  STD_LOGIC;		-- reset to 0
-			 increment: in STD_LOGIC;	--Increase/decrease counter async
+          rst : in  STD_LOGIC;		-- reset to 0
 			 down : in  STD_LOGIC;		-- count up unless this is 1
 			 max : in STD_LOGIC_VECTOR (4 downto 0);			-- maximum, at which the counter should reset
-          count : out STD_LOGIC_VECTOR (7 downto 0);		-- counter output
+          count : out STD_LOGIC_VECTOR (6 downto 0);		-- counter output
 			 carry : out STD_LOGIC									-- carry
 			 )	;	
 end variable_counter;
 
 architecture Behavioral of variable_counter is
 begin
-	cntr: process (clk, increment)
+	cntr: process (clk)
 		variable int_max: integer range 31 downto 28; 
 		variable count_v: integer range int_max downto min;
 	begin
 		int_max := to_integer(unsigned(max));
-		if rising_edge(clk) or increment = '1' then
+		if rising_edge(clk) then
 			--if reset is set, counter is 0
-			if reset = '1' then
+			if rst = '1' then
 				count_v := min;
 				carry <= '0';
 			--only count if cten = 1
@@ -76,7 +75,6 @@ begin
 			end if;
 		end if;
 		--set output to variable from procedure
-		--count <= count_v;
 		count <= std_logic_vector(to_unsigned(count_v, count'length));
 	end process;
 

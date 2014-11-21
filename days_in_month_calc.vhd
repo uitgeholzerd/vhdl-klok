@@ -32,8 +32,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity days_in_month_calc is
     Port ( 
 			clk : in std_logic;												-- clock input
-			year : in std_logic_vector(11 downto 0);					-- year in binary, should be between 2001 and 2099
-			month : in std_logic_vector(3 downto 0);					-- month in binary, should be between 1 and 12
+			year : in std_logic_vector(6 downto 0);					-- last 2 digits of the year in binary, should be between 00 and 99
+			month : in std_logic_vector(6 downto 0);					-- month in binary, should be between 1 and 12
 			days_in_month : out std_logic_vector(4 downto 0));		-- days in the month, in binary
 end days_in_month_calc;
 
@@ -41,7 +41,7 @@ architecture Behavioral of days_in_month_calc is
 
 begin
 	process (year, month) is 
-	variable int_year: integer range 2001 to 2099;
+	variable int_year: integer range 00 to 99;
 	variable int_month: integer range 1 to 12;
 	
 	variable leap_year: Boolean;
@@ -49,9 +49,9 @@ begin
 		begin
 		int_year := to_integer(unsigned(year));
 		int_month := to_integer(unsigned(month));
-		-- leap_year := ((year mod 4 = 0) and not(year mod 100 = 0)) or (year mod 400 = 0);
+		
 		case int_year is
-			when 2004 | 2008 | 2012 | 2016 | 2020 | 2024 | 2028 | 2032 | 2036 | 2040 | 2044 | 2048 | 2052 | 2056 | 2060 | 2064 | 2068 | 2072 | 2076 | 2080 | 2084 | 2088 | 2092 | 2096 =>
+			when 00 | 04 | 08 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60 | 64 | 68 | 72 | 76 | 80 | 84 | 88 | 92 | 96 =>
 				leap_year := true;
 			when others =>
 				leap_year := false;
