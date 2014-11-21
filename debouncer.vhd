@@ -45,6 +45,7 @@ begin
 		delay1 <= input;
 		delay2 <= delay1;
 		delay3 <= delay2; 
+		delay4 <= delay3; 
  end if; 
 end process; 
 
