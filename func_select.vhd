@@ -48,7 +48,7 @@ end func_select;
 
 architecture Behavioral of func_select is
 	type mode is (	disp_time_HHMM, disp_time_MMSS, set_time_HH, set_time_MM, reset_time_SS,
-						disp_date_DDMM, set_date_DD, set_date_MM, set_date_YYYY
+						disp_date_DDMM, disp_date_YYYY, set_date_DD, set_date_MM, set_date_YYYY
 						); -- disp_alarm, set_alarm
 	signal currentmode, nextmode: mode;
 	
@@ -110,11 +110,20 @@ begin
 				
 			when disp_date_DDMM =>
 			if (btn_l = '1') then
-				nextmode <= disp_time_HHMM; 
+				nextmode <= disp_date_YYYY; 
 			elsif (btn_r = '1') then
 				nextmode <= set_date_DD;
 			else
 				nextmode <= disp_date_DDMM;
+			end if;
+			
+			when disp_date_YYYY =>
+			if (btn_l = '1') then
+				nextmode <= disp_time_HHMM; 
+			elsif (btn_r = '1') then
+				nextmode <= set_date_YYYY;
+			else
+				nextmode <= disp_date_YYYY;
 			end if;
 			
 			when set_time_HH =>
@@ -232,7 +241,10 @@ begin
 				num1 <= day; num2 <= month;
 				blink1 <= '0'; blink2 <= '0';
 				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
-				
+			when disp_date_YYYY =>
+				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
+				blink1 <= '0'; blink2 <= '0';
+				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
 			when set_date_DD =>
 				num1 <= day; num2 <= month;
 				blink1 <= '1'; blink2 <= '0';
@@ -255,7 +267,7 @@ begin
 				
 			when set_date_YYYY =>
 				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
-				blink1 <= '0'; blink2 <= '1';
+				blink1 <= '1'; blink2 <= '1';
 				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
 				if (btn_u = '1') then
 					up_year <= '1';

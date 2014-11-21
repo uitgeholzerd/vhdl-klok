@@ -36,7 +36,7 @@ end variable_counter;
 
 architecture Behavioral of variable_counter is
 begin
-	cntr: process (clk)
+	cntr: process (clk, max)
 		variable int_max: integer range 31 downto 28; 
 		variable count_v: integer range 31 downto min;
 	begin
