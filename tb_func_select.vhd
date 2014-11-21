@@ -190,6 +190,9 @@ BEGIN
 		hh <= std_logic_vector(to_unsigned(23, 7));
 		mm <= std_logic_vector(to_unsigned(59, 7));
 		ss <= std_logic_vector(to_unsigned(12, 7));
+		day <= std_logic_vector(to_unsigned(28, 7));
+		month <= std_logic_vector(to_unsigned(12, 7));
+		year <= std_logic_vector(to_unsigned(99, 7));
 
 		rst <= '1';
       wait for 20 ns;	

@@ -45,8 +45,8 @@ architecture Behavioral of main is
          btn_l, btn_r, btn_u, btn_d, btn_s : IN  std_logic;
          hh, mm, ss : IN  std_logic_vector(6 downto 0);
 			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;
-			--day, month, year : IN  std_logic_vector(6 downto 0);
-			--up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
+			day, month, year : IN  std_logic_vector(6 downto 0);
+			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
 			--alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
 			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
 			mode_time, mode_date, mode_alarm, alarm_enabled: out std_logic;
@@ -139,8 +139,9 @@ begin
          btn_l => sig_l, btn_r => sig_r, btn_u => sig_u, btn_d => sig_d, btn_s => sig_s,
          hh => sig_hh, mm => sig_mm, ss => sig_ss,
 			up_hh => sig_up_hh, up_mm => sig_up_mm, rst_ss => sig_rst_ss, down_hh => sig_down_hh, down_mm => sig_down_mm,
-			--day, month, year,
-			--up_day, up_month, up_year, down_day, down_month, down_year,
+			day => sig_day, month => sig_month, year => sig_year,
+			up_day => sig_up_day, up_month => sig_up_month, up_year => sig_up_year,
+			down_day => sig_down_day, down_month => sig_down_month, down_year => sig_down_year,
 			--alarm_hh, alarm_mm,
 			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm,
 			mode_time => led_time, mode_date => led_date, mode_alarm => led_alarm, alarm_enabled => sig_alarm_enabled,
