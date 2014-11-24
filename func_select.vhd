@@ -190,6 +190,12 @@ begin
 		up_mm<= '0';
 		down_mm <= '0';
 		rst_ss <= '0';
+		up_month<= '0';
+		down_month <= '0';
+		up_day<= '0';
+		down_day <= '0';
+		up_year<= '0';
+		down_year <= '0';
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
@@ -241,10 +247,12 @@ begin
 				num1 <= day; num2 <= month;
 				blink1 <= '0'; blink2 <= '0';
 				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				
 			when disp_date_YYYY =>
 				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
 				blink1 <= '0'; blink2 <= '0';
 				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				
 			when set_date_DD =>
 				num1 <= day; num2 <= month;
 				blink1 <= '1'; blink2 <= '0';
