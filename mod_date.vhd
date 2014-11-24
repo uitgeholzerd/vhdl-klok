@@ -79,8 +79,8 @@ architecture Behavioral of mod_date is
 
 begin
 	ctenDay <= cten or incr_day;
-	ctenMonth <= carryDay or incr_month;
-	ctenYear <= carryMonth or incr_year;
+	ctenMonth <= carryDay or (incr_month and not incr_day);
+	ctenYear <= carryMonth or (incr_year and not incr_month);
 	
 	year <= yearCount;
 	month <= std_logic_vector(resize(signed(monthCount), month'length));	

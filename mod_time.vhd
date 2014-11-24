@@ -56,8 +56,8 @@ architecture Behavioral of mod_time is
 	 signal reset_seconds : std_logic;
 begin
 	ctenM <= carryS or incr_min;
-	ctenH <= carryM or incr_hour;
-	--carry <= carryH;
+	ctenH <= carryM or (incr_hour and not incr_min);
+	carry <= carryH;
 	
 	reset_seconds <= rst or reset_sec;
 	
@@ -69,7 +69,7 @@ begin
 		port map (clk => clk, rst => rst, cten => ctenM, down=> down, count => mins, carry => carryM);
 	HRS: counter
 		generic map (max => 23, min => 0)
-		port map (clk => clk, rst => rst, cten => ctenH, down=> down, count => hours, carry => carry);
+		port map (clk => clk, rst => rst, cten => ctenH, down=> down, count => hours, carry => carryH);
 		
 end Behavioral;
 
