@@ -40,35 +40,42 @@ end days_in_month_calc;
 architecture Behavioral of days_in_month_calc is
 
 begin
-	process (year, month) is 
+	process (clk) is 
 	variable int_year: integer range 00 to 99;
 	variable int_month: integer range 1 to 12;
 	
 	variable leap_year: Boolean;
 	variable days: integer range 28 to 31;
 		begin
-		int_year := to_integer(unsigned(year));
-		int_month := to_integer(unsigned(month));
-		
-		case int_year is
-			when 00 | 04 | 08 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60 | 64 | 68 | 72 | 76 | 80 | 84 | 88 | 92 | 96 =>
-				leap_year := true;
-			when others =>
-				leap_year := false;
-		end case;
-		
-		case int_month is 
-			when 4 | 6 | 9 | 11 =>
-				days := 30;
-			when 1 | 3 | 5 | 7 | 8 | 10 | 12 =>
-				days := 31;
-			when 2 =>
-				if leap_year = true then
-					days := 29;
-				else
-					days := 28;
-				end if;
-		end case;
+			if rising_edge(clk) then 	
+				int_year := to_integer(unsigned(year));
+				int_month := to_integer(unsigned(month));
+				
+				case int_year is
+					when 00 | 04 | 08 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60 | 64 | 68 | 72 | 76 | 80 | 84 | 88 | 92 | 96 =>
+						leap_year := true;
+					when others =>
+						leap_year := false;
+				end case;
+				
+				case int_month is 
+					when 4 | 6 | 9 | 11 =>
+						days := 30;
+						
+					when 1 | 3 | 5 | 7 | 8 | 10 | 12 =>
+						days := 31;
+						
+					when 2 =>
+						if leap_year = true then
+							days := 29;
+						else
+							days := 28;
+						end if;
+						
+					when others =>
+						days := 31;
+			end case;
+			end if;
 		
 	days_in_month <= std_logic_vector(to_unsigned(days, days_in_month'length));
 	end process;
