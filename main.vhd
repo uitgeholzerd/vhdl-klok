@@ -102,7 +102,7 @@ architecture Behavioral of main is
 	signal sig_num1, sig_num2, sig_disp_num1, sig_disp_num2: std_logic_vector (6 downto 0);
 	signal sig_cathode : std_logic_vector (6 downto 0);
 	signal sig_anode: std_logic_vector (3 downto 0);
-	signal sig_alarm_enabled, sig_time_carry: std_logic;
+	signal sig_alarm_enabled, sig_time_carry, sig_date_cten: std_logic;
 	signal sig_blink1, sig_blink2, sig_disp_blink1, sig_disp_blink2: std_logic;
 	
 	signal sig_sec, sig_min, sig_hrs : std_logic_vector (6 downto 0);		-- Is deze regel én de volgende nodig?
@@ -122,6 +122,7 @@ begin
 	sig_u <= sig_btn_u; sig_d <= sig_btn_d; sig_l <= sig_btn_l; sig_r <= sig_btn_r; sig_s <= sig_btn_s;
 	sig_disp_blink1 <= sig_blink1; sig_disp_blink2 <= sig_blink2;
 	sig_disp_num1 <= sig_num1; sig_disp_num2 <= sig_num2;
+	sig_date_cten <= sig_time_carry;
 	
 	sig_ss <= sig_sec; sig_mm <=sig_min; sig_hh <= sig_hrs;
 	sig_change_hh <= sig_up_hh or sig_down_hh;
@@ -132,6 +133,7 @@ begin
 	sig_change_month <= sig_up_month or sig_down_month;
 	sig_change_year <= sig_up_year or sig_down_year;
 	sig_mod_date_down <= sig_down_day or sig_down_month or sig_down_year;
+	
 	
 	FUNC: func_select
 		port map(
@@ -188,7 +190,7 @@ begin
 			
 	MDATE: mod_date
 		port map (
-			clk => clk, rst => rst, cten => sig_time_carry, down => sig_mod_date_down,
+			clk => clk, rst => rst, cten => sig_date_cten, down => sig_mod_date_down,
 			incr_day => sig_change_day, incr_month => sig_change_month, incr_year => sig_change_year,
 			day => sig_day, month => sig_month, year => sig_year
 			);

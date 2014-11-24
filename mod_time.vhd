@@ -57,7 +57,7 @@ architecture Behavioral of mod_time is
 begin
 	ctenM <= carryS or incr_min;
 	ctenH <= carryM or incr_hour;
-	carry <= carryH;
+	--carry <= carryH;
 	
 	reset_seconds <= rst or reset_sec;
 	
@@ -69,7 +69,7 @@ begin
 		port map (clk => clk, rst => rst, cten => ctenM, down=> down, count => mins, carry => carryM);
 	HRS: counter
 		generic map (max => 23, min => 0)
-		port map (clk => clk, rst => rst, cten => ctenH, down=> down, count => hours, carry => carryH);
+		port map (clk => clk, rst => rst, cten => ctenH, down=> down, count => hours, carry => carry);
 		
 end Behavioral;
 
