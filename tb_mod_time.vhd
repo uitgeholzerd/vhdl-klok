@@ -134,7 +134,10 @@ BEGIN
 		incr_hour <= '0';
 		
 		down <= '0';
-
+incr_hour <= '1';
+      wait for clk_period*50;
+		incr_hour <= '0';
+		
       wait;
    end process;
 

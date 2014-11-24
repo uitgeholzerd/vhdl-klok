@@ -51,6 +51,7 @@ begin
 						--count down 
 						if count_v > min then
 							count_v := count_v -1;
+							carry <= '0';
 						else
 						--or set to max after reaching min
 							count_v := max;
@@ -60,7 +61,8 @@ begin
 					when others => 
 						--count up
 						if count_v < max then
-							count_v := count_v +1;						
+							count_v := count_v +1;	
+							carry <= '0';
 						else
 						-- or set to min before reaching max
 							count_v := min;

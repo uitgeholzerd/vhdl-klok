@@ -195,6 +195,12 @@ begin
 		up_mm<= '0';
 		down_mm <= '0';
 		rst_ss <= '0';
+		up_month<= '0';
+		down_month <= '0';
+		up_day<= '0';
+		down_day <= '0';
+		up_year<= '0';
+		down_year <= '0';
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
