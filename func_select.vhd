@@ -148,7 +148,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_time_HHMM;
 				elsif (btn_r = '1') then
-					nextmode <= set_time_HH;
+					nextmode <= disp_time_MMSS;
 				else
 					nextmode <= reset_time_SS;
 				end if;
@@ -177,7 +177,7 @@ begin
 				elsif (btn_r = '1') then
 					nextmode <= set_date_DD;
 				else
-					nextmode <= set_date_YYYY;
+					nextmode <= disp_date_YYYY;
 				end if;
 
 		end case;
@@ -196,6 +196,11 @@ begin
 		down_day <= '0';
 		up_year<= '0';
 		down_year <= '0';
+		mode_time <= '0'; 
+		mode_date <= '0'; 
+		mode_alarm <= '0'; 
+		blink1 <= '0'; 
+		blink2 <= '0';
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
@@ -206,18 +211,16 @@ begin
 		-- Time modes
 			when disp_time_HHMM =>
 				num1 <= hh; num2 <= mm;
-				blink1 <= '0'; blink2 <= '0';
-				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
+				mode_time <= '1';
 				
 			when disp_time_MMSS =>
 				num1 <= mm; num2 <= ss;
-				blink1 <= '0'; blink2 <= '0';
-				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
+				mode_time <= '1';
 				
 			when set_time_HH =>
 				num1 <= hh; num2 <= mm;
-				blink1 <= '1'; blink2 <= '0';
-				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
+				blink1 <= '1';
+				mode_time <= '1';
 				if (btn_u = '1') then
 					up_hh <= '1';
 				elsif (btn_d = '1') then
@@ -226,8 +229,8 @@ begin
 				
 			when set_time_MM =>
 				num1 <= hh; num2 <= mm;
-				blink1 <= '0'; blink2 <= '1';
-				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
+				blink2 <= '1';
+				mode_time <= '1';
 				if (btn_u = '1') then
 					up_mm <= '1';
 				elsif (btn_d = '1') then
@@ -236,8 +239,8 @@ begin
 
 			when reset_time_SS =>
 				num1 <= mm; num2 <= ss;
-				blink1 <= '0'; blink2 <= '1';
-				mode_time <= '1'; mode_date <= '0'; mode_alarm <= '0'; 
+				blink2 <= '1';
+				mode_time <= '1'; 
 				if (btn_u = '1') then
 					rst_ss <= '1';
 				end if;
@@ -245,18 +248,16 @@ begin
 		-- Date modes
 			when disp_date_DDMM =>
 				num1 <= day; num2 <= month;
-				blink1 <= '0'; blink2 <= '0';
-				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				mode_date <= '1';
 				
 			when disp_date_YYYY =>
 				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
-				blink1 <= '0'; blink2 <= '0';
-				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				mode_date <= '1'; 
 				
 			when set_date_DD =>
 				num1 <= day; num2 <= month;
-				blink1 <= '1'; blink2 <= '0';
-				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				blink1 <= '1'; 
+				mode_date <= '1';
 				if (btn_u = '1') then
 					up_day <= '1';
 				elsif (btn_d = '1') then
@@ -265,8 +266,8 @@ begin
 				
 			when set_date_MM =>
 				num1 <= day; num2 <= month;
-				blink1 <= '0'; blink2 <= '1';
-				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				blink2 <= '1';
+				mode_date <= '1'; 
 				if (btn_u = '1') then
 					up_month <= '1';
 				elsif (btn_d = '1') then
@@ -276,7 +277,7 @@ begin
 			when set_date_YYYY =>
 				num1 <= std_logic_vector(to_unsigned(20, num1'length)); num2 <= year;
 				blink1 <= '1'; blink2 <= '1';
-				mode_time <= '0'; mode_date <= '1'; mode_alarm <= '0';
+				mode_date <= '1';
 				if (btn_u = '1') then
 					up_year <= '1';
 				elsif (btn_d = '1') then

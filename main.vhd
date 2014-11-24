@@ -95,7 +95,7 @@ architecture Behavioral of main is
 				); 
 	end component;
 	
-	signal sig_div_disp, sig_div_time, sig_div_blink, sig_blink_freq, sig_disp_clk, sig_time_clk: std_logic;
+	signal sig_div_disp, sig_div_time, sig_div_blink, sig_blink_freq, sig_disp_clk, sig_time_clk, sig_dbnc_clk: std_logic;
 	signal sig_r, sig_l, sig_s, sig_u, sig_d: std_logic;
 	signal sig_btn_r, sig_btn_l, sig_btn_s, sig_btn_u, sig_btn_d: std_logic;
 	
@@ -154,6 +154,9 @@ begin
 	FREQ_DISP: clock_divider
 		generic map (max => 100000)
 		port map (clk => clk, div => sig_div_disp, ena => '1');
+	FREQ_DBNC: clock_divider
+		generic map (max => 1000)
+		port map (clk => clk, div => sig_dbnc_clk, ena => '1');
 	FREQ_TIME: clock_divider
 		generic map (max => 1000)
 		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
@@ -170,15 +173,15 @@ begin
 			);
 	
 	DBNC_R: debouncer
-		port map (clk => clk, input => btn_r, debounced => sig_btn_r);
+		port map (clk => clk, ena => sig_dbnc_clk, input => btn_r, debounced => sig_btn_r);
 	DBNC_L: debouncer
-		port map (clk => clk, input => btn_l, debounced => sig_btn_l);
+		port map (clk => clk, ena => sig_dbnc_clk, input => btn_l, debounced => sig_btn_l);
 	DBNC_U: debouncer
-		port map (clk => clk, input => btn_u, debounced => sig_btn_u);
+		port map (clk => clk, ena => sig_dbnc_clk, input => btn_u, debounced => sig_btn_u);
 	DBNC_D: debouncer
-		port map (clk => clk, input => btn_d, debounced => sig_btn_d);
+		port map (clk => clk, ena => sig_dbnc_clk, input => btn_d, debounced => sig_btn_d);
 	DBNC_S: debouncer
-		port map (clk => clk, input => btn_s, debounced => sig_btn_s);
+		port map (clk => clk, ena => sig_dbnc_clk, input => btn_s, debounced => sig_btn_s);
 	
 	MTIME: mod_time
 		port map (

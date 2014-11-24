@@ -30,34 +30,26 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity debouncer is
-	Port(	clk, input : in  STD_LOGIC; 
+	Port(	clk, input, ena : in  STD_LOGIC; 
 			debounced : out  STD_LOGIC
 			); 
 end debouncer;
 
 architecture Behavioral of debouncer is
- signal delay1, delay2, delay3, delay4, delay5, delay6, delay7, delay8, delay9, delay10, delay11, delay12  : STD_LOGIC := '0'; 
+ signal delay1, delay2, delay3, delay4  : STD_LOGIC := '0'; 
 
 begin 
 process (clk) is 
 begin 
-	if rising_edge(clk) then  
+	if rising_edge(clk) and ena = '1' then  
 		delay1 <= input;
 		delay2 <= delay1;
 		delay3 <= delay2; 
 		delay4 <= delay3; 
-		delay5 <= delay4;
-		delay6 <= delay5; 
-		delay7 <= delay6; 
-		delay8 <= delay7; 
-		delay9 <= delay8;
-		delay10 <= delay9; 
-		delay11 <= delay10; 
-		delay12 <= delay11; 
  end if; 
 end process; 
 
-debounced <= delay1 and delay2 and delay3 and delay4 and delay5 and delay6 and delay7 and delay8 and delay9 and delay10 and delay11 and not delay12;
+debounced <= delay1 and delay2 and delay3 and not delay4;
 
 end Behavioral; 
 
