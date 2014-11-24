@@ -90,7 +90,7 @@ architecture Behavioral of main is
 	end component;
 	
 	component debouncer is
-		Port(	clk, input : in  STD_LOGIC; 
+		Port(	clk, ena, input : in  STD_LOGIC; 
 			debounced : out  STD_LOGIC
 				); 
 	end component;

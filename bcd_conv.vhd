@@ -23,7 +23,7 @@ use IEEE.NUMERIC_STD.ALL;
  
 entity bcd_conv is
    Port ( 
-		clk, rst	: in std_logic;
+		rst	: in std_logic;
       number   : in  std_logic_vector (6 downto 0);
       tens     : out std_logic_vector (3 downto 0);
       ones     : out std_logic_vector (3 downto 0)

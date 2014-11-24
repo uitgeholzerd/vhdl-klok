@@ -31,7 +31,6 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity days_in_month_calc is
     Port ( 
-			clk : in std_logic;												-- clock input
 			year : in std_logic_vector(6 downto 0);					-- last 2 digits of the year in binary, should be between 00 and 99
 			month : in std_logic_vector(6 downto 0);					-- month in binary, should be between 1 and 12
 			days_in_month : out std_logic_vector(4 downto 0));		-- days in the month, in binary

@@ -41,7 +41,6 @@ ARCHITECTURE behavior OF tb_days_in_month_calc IS
  
     COMPONENT days_in_month_calc
     PORT(
-         clk : IN  std_logic;
          year : IN std_logic_vector(6 downto 0) ;
          month : IN  std_logic_vector(6 downto 0);
          days_in_month : OUT  std_logic_vector(4 downto 0)
@@ -50,7 +49,6 @@ ARCHITECTURE behavior OF tb_days_in_month_calc IS
     
 
    --Inputs
-   signal clk : std_logic := '0';
    signal year : std_logic_vector(6 downto 0) := (others => '0');
    signal month :std_logic_vector(6 downto 0) := (others => '0');
 
@@ -64,21 +62,11 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: days_in_month_calc PORT MAP (
-          clk => clk,
           year => year,
           month => month,
           days_in_month => days_in_month
         );
 
-   -- Clock process definitions
-   clk_process :process
-   begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
-   end process;
- 
 
    -- Stimulus process
    stim_proc: process
@@ -87,22 +75,22 @@ BEGIN
       wait for 100 ns;	
 		
 		year <= "0001100";	-- 2012
-		month <= "0001";	-- 01
+		month <= "0000001";	-- 01
 		wait for clk_period;
 		assert ( days_in_month = "11111" ) report "01/2012 geen 31 dagen" severity error;
 		
 		year <= "0001100"; -- 2012
-		month <= "0100"; -- 04
+		month <= "0000100"; -- 04
 		wait for clk_period;
 		assert ( days_in_month = "11110" ) report "04/2012 geen 30 dagen" severity error;
 		
 		year <= "0001100"; -- 2012
-		month <= "0010"; -- 02
+		month <= "0000010"; -- 02
 		wait for clk_period;
 		assert ( days_in_month = "11101" ) report "02/2012 geen 29 dagen" severity error;
 		 
 		year <= "0001011"; -- 2011
-		month <= "0010"; -- 02
+		month <= "0000010"; -- 02
 		wait for clk_period;
 		assert ( days_in_month = "11100" ) report "02/2011 geen 28 dagen" severity error;
 

@@ -39,7 +39,7 @@ architecture Behavioral of debouncer is
  signal delay1, delay2, delay3, delay4  : STD_LOGIC := '0'; 
 
 begin 
-process (clk) is 
+process (clk, ena) is 
 begin 
 	if rising_edge(clk) and ena = '1' then  
 		delay1 <= input;

@@ -56,8 +56,8 @@ architecture Behavioral of mod_time is
 	 signal reset_seconds : std_logic;
 begin
 	ctenM <= carryS or incr_min;
-	ctenH <= carryM or (incr_hour and not incr_min);
-	carry <= carryH;
+	ctenH <= (carryM and not incr_min) or incr_hour ;
+	carry <= carryH and not incr_hour;
 	
 	reset_seconds <= rst or reset_sec;
 	
