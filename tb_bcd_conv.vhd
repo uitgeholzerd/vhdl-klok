@@ -41,7 +41,6 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
  
     COMPONENT bcd_conv
     PORT(
-         clk : IN  std_logic;
          rst : IN  std_logic;
          number : IN  std_logic_vector(6 downto 0);
          tens : OUT  std_logic_vector(3 downto 0);
@@ -51,7 +50,6 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
     
 
    --Inputs
-   signal clk : std_logic := '0';
    signal rst : std_logic := '0';
    signal number : std_logic_vector(6 downto 0) := (others => '0');
 
@@ -66,22 +64,12 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: bcd_conv PORT MAP (
-          clk => clk,
           rst => rst,
           number => number,
           tens => tens,
           ones => ones
         );
 
-   -- Clock process definitions
-   clk_process :process
-   begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
-   end process;
- 
 
    -- Stimulus process
    stim_proc: process

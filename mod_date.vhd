@@ -64,7 +64,6 @@ architecture Behavioral of mod_date is
 	
 	component days_in_month_calc is
 		Port ( 
-			clk : in std_logic;												-- clock input
 			year : in std_logic_vector(6 downto 0);					-- year in binary, should be between 2001 and 2099
 			month : in std_logic_vector(6 downto 0);					-- month in binary, should be between 1 and 12
 			days_in_month : out std_logic_vector(4 downto 0)		-- days in the month, in binary
@@ -79,8 +78,8 @@ architecture Behavioral of mod_date is
 
 begin
 	ctenDay <= cten or incr_day;
-	ctenMonth <= carryDay or (incr_month and not incr_day);
-	ctenYear <= carryMonth or (incr_year and not incr_month);
+	ctenMonth <= (carryDay and not incr_day) or incr_month ;
+	ctenYear <= (carryMonth and not incr_month) or incr_year ;
 	
 	year <= yearCount;
 	month <= std_logic_vector(resize(signed(monthCount), month'length));	
@@ -98,7 +97,7 @@ begin
 	port map(clk => clk, cten => ctenYear, rst => rst, down => down, count => yearCount, carry => open);
 	
 	DAYS_CALC: days_in_month_calc
-	port map(clk => clk, year => yearCount, month => monthCount, days_in_month => daysInMonth);
+	port map(year => yearCount, month => monthCount, days_in_month => daysInMonth);
 
 end Behavioral;
 

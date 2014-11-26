@@ -42,7 +42,6 @@ ARCHITECTURE behavior OF tb_bcd_7seg IS
  
     COMPONENT bcd_7seg
     PORT(
-         clk,rst : IN  std_logic;
          bcd : IN  std_logic_vector(3 downto 0);
          segment7 : OUT  std_logic_vector(6 downto 0)
         );
@@ -50,33 +49,25 @@ ARCHITECTURE behavior OF tb_bcd_7seg IS
     
 
    --Inputs
-   signal clk,rst : std_logic := '0';
    signal bcd : std_logic_vector(3 downto 0) := (others => '0');
 
  	--Outputs
    signal segment7 : std_logic_vector(6 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 ns;
+
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: bcd_7seg PORT MAP (
-          clk => clk,
-			 rst => rst,
+
           bcd => bcd,
           segment7 => segment7
         );
 
    -- Clock process definitions
-   clk_process :process
-   begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
-   end process;
+
  
 
    -- Stimulus process
@@ -84,7 +75,7 @@ BEGIN
    begin		
      for i in 0 to 9 loop
            bcd <= conv_std_logic_vector(i,4);
-          wait for clk_period*2;
+          wait for 50ns;
      end loop;
 
       wait;
