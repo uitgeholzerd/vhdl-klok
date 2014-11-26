@@ -96,21 +96,54 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
- 
+ cten_process :process
+   begin
+		cten <= '0';
+		wait for clk_period*3;
+		cten <= '1';
+		wait for clk_period;
+   end process;
 
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state.
+      -- hold reset state for 10 ns.
 		rst <= '1';
-      wait for clk_period;	
+      wait for 10 ns;	
 		rst <= '0';
+      wait for clk_period*50;
+
+      -- Test manual counting
+		incr_day <= '1';
+      wait for clk_period*3;
+		incr_day <= '0';
+		incr_year <= '1';
+      wait for clk_period*3;
+		incr_year <= '0';
 		
-		cten <= '1';
-      wait for clk_period*10;
-
-      -- insert stimulus here 
-
+		incr_month <= '1';
+      wait for clk_period*5;
+		incr_month <= '0';
+		
+      wait for clk_period;
+		down <= '1';
+		
+		incr_day <= '1';
+      wait for clk_period*2;
+		incr_day <= '0';
+		incr_year <= '1';
+      wait for clk_period*2;
+		incr_year <= '0';
+				
+		incr_month <= '1';
+      wait for clk_period*5;
+		incr_month <= '0';
+		
+		down <= '0';
+		incr_year <= '1';
+      wait for clk_period*50;
+		incr_year <= '0';
+		
       wait;
    end process;
 
