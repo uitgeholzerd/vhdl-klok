@@ -201,6 +201,7 @@ begin
 		down_day <= '0';
 		up_year<= '0';
 		down_year <= '0';
+		
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
@@ -210,6 +211,7 @@ begin
 				
 			when others => null;
 		end case;
+		
 		case currentmode is
 		-- Time modes
 			when disp_time_HHMM =>

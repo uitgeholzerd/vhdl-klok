@@ -87,22 +87,22 @@ BEGIN
       wait for 100 ns;	
 		
 		year <= "0001100";	-- 2012
-		month <= "0001";	-- 01
+		month <= "0000001";	-- 01
 		wait for clk_period;
 		assert ( days_in_month = "11111" ) report "01/2012 geen 31 dagen" severity error;
 		
 		year <= "0001100"; -- 2012
-		month <= "0100"; -- 04
+		month <= "0000100"; -- 04
 		wait for clk_period;
 		assert ( days_in_month = "11110" ) report "04/2012 geen 30 dagen" severity error;
 		
 		year <= "0001100"; -- 2012
-		month <= "0010"; -- 02
+		month <= "0000010"; -- 02
 		wait for clk_period;
 		assert ( days_in_month = "11101" ) report "02/2012 geen 29 dagen" severity error;
 		 
 		year <= "0001011"; -- 2011
-		month <= "0010"; -- 02
+		month <= "0000010"; -- 02
 		wait for clk_period;
 		assert ( days_in_month = "11100" ) report "02/2011 geen 28 dagen" severity error;
 

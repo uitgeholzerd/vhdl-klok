@@ -71,9 +71,6 @@ begin
 						else
 							days := 28;
 						end if;
-						
-					when others =>
-						days := 31;
 			end case;
 			end if;
 		

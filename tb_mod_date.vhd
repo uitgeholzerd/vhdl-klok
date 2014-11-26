@@ -107,10 +107,71 @@ BEGIN
 		rst <= '0';
 		
 		cten <= '1';
-      wait for clk_period*10;
-
-      -- insert stimulus here 
-
+      wait for clk_period*100;
+		cten <= '0';
+		assert ( day = "0001010" and month = "0000100" and year = "0000000" ) report "Niet juist geteld" severity error;	
+		
+		-- Increase day/month/year
+		rst <= '1';
+      wait for clk_period;	
+		rst <= '0';
+		
+		incr_day <= '1';
+      wait for clk_period*3;
+		incr_day <= '0';
+		assert ( day = "0000100" ) report "Geen 3 dagen bijgeteld" severity error;	
+			
+			
+		incr_month <= '1';
+      wait for clk_period*3;
+		incr_month <= '0';
+		assert ( month = "0000100" ) report "Geen 3 maanden bijgeteld" severity error;
+		
+		incr_year <= '1';
+      wait for clk_period*3;
+		incr_year <= '0';
+		assert ( year = "0000011" ) report "Geen 3 jaren bijgeteld" severity error;
+		
+		-- Decrease day/month/year
+		down <= '1';
+		
+		incr_day <= '1';
+      wait for clk_period*2;
+		incr_day <= '0';
+		assert ( day = "0000010" ) report "Geen 2 dagen afgeteld" severity error;
+			
+		incr_month <= '1';
+      wait for clk_period*2;
+		incr_month <= '0';
+		assert ( month = "0000010" ) report "Geen 2 maanden afgeteld" severity error;
+		
+		incr_year <= '1';
+      wait for clk_period*2;
+		incr_year <= '0';
+		assert ( year = "0000001" ) report "Geen 2 jaren afgeteld" severity error;
+		
+		down <= '0';
+		
+		rst <= '1';
+      wait for clk_period;	
+		rst <= '0';
+		
+		--Test non- leap year
+		incr_year <= '1';
+      wait for clk_period*1;
+		incr_year <= '0';
+		
+		incr_month <= '1';
+      wait for clk_period*1;
+		incr_month <= '0';
+		
+		cten <= '1';
+      wait for clk_period*28;
+		cten <= '0';
+      wait for clk_period*1;
+		assert ( day = "0000001" and month = "0000011" and year = "0000001" ) report "Niet juist geteld 2" severity error;	
+		
+		
       wait;
    end process;
 
