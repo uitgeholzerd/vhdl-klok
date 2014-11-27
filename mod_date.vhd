@@ -72,7 +72,7 @@ architecture Behavioral of mod_date is
 	
 	signal carryDay, carryMonth : std_logic;
 	signal ctenDay, ctenMonth, ctenYear : std_logic;
-	signal daysInMonth : std_logic_vector(4 downto 0);
+	signal daysInMonth : std_logic_vector(4 downto 0) := "11110";
 	signal monthCount : std_logic_vector (6 downto 0);
 	signal yearCount : std_logic_vector (6 downto 0);
 

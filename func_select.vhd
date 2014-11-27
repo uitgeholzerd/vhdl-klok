@@ -73,15 +73,18 @@ begin
 				when enabled =>
 				if (btn_s = '1') then
 					nextalarm <= disabled;
-					else 
+				else 
 					nextalarm <= enabled;
-					end if;
+				end if;
+				
 				when disabled =>
 				if (btn_s = '1') then
 					nextalarm <= enabled;
-					else
+				else
 					nextalarm <= disabled;
-					end if;
+				end if;
+				
+				 when others => null;
 			end case;
 	
 		
@@ -109,22 +112,22 @@ begin
 				end if;
 				
 			when disp_date_DDMM =>
-			if (btn_l = '1') then
-				nextmode <= disp_date_YYYY; 
-			elsif (btn_r = '1') then
-				nextmode <= set_date_DD;
-			else
-				nextmode <= disp_date_DDMM;
-			end if;
+				if (btn_l = '1') then
+					nextmode <= disp_date_YYYY; 
+				elsif (btn_r = '1') then
+					nextmode <= set_date_DD;
+				else
+					nextmode <= disp_date_DDMM;
+				end if;
 			
 			when disp_date_YYYY =>
-			if (btn_l = '1') then
-				nextmode <= disp_time_HHMM; 
-			elsif (btn_r = '1') then
-				nextmode <= set_date_YYYY;
-			else
-				nextmode <= disp_date_YYYY;
-			end if;
+				if (btn_l = '1') then
+					nextmode <= disp_time_HHMM; 
+				elsif (btn_r = '1') then
+					nextmode <= set_date_YYYY;
+				else
+					nextmode <= disp_date_YYYY;
+				end if;
 			
 			when set_time_HH =>
 				if (btn_l = '1') then
@@ -179,6 +182,8 @@ begin
 				else
 					nextmode <= disp_date_YYYY;
 				end if;
+				
+			when others => null;
 
 		end case;
 	end process;
@@ -204,9 +209,13 @@ begin
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
+				
 			when disabled =>
 				alarm_enabled <= '0';
+				
+			when others => null;
 		end case;
+		
 		case currentmode is
 		-- Time modes
 			when disp_time_HHMM =>
@@ -225,6 +234,9 @@ begin
 					up_hh <= '1';
 				elsif (btn_d = '1') then
 					down_hh <= '1';
+				else
+					up_hh <= '0';
+					down_hh <= '0';
 				end if;
 				
 			when set_time_MM =>
@@ -235,6 +247,9 @@ begin
 					up_mm <= '1';
 				elsif (btn_d = '1') then
 					down_mm <= '1';
+				else
+					up_mm <= '0';
+					down_mm <= '0';
 				end if;
 
 			when reset_time_SS =>
@@ -243,6 +258,8 @@ begin
 				mode_time <= '1'; 
 				if (btn_u = '1') then
 					rst_ss <= '1';
+				else
+					rst_ss <= '0';
 				end if;
 				
 		-- Date modes
@@ -262,6 +279,9 @@ begin
 					up_day <= '1';
 				elsif (btn_d = '1') then
 					down_day <= '1';
+				else
+					up_day <= '0';
+					down_day <= '0';
 				end if;
 				
 			when set_date_MM =>
@@ -272,6 +292,9 @@ begin
 					up_month <= '1';
 				elsif (btn_d = '1') then
 					down_month <= '1';
+				else
+					up_month <= '0';
+					down_month <= '0';
 				end if;
 				
 			when set_date_YYYY =>
@@ -282,7 +305,12 @@ begin
 					up_year <= '1';
 				elsif (btn_d = '1') then
 					down_year <= '1';
+				else
+					up_year <= '0';
+					down_year <= '0';
 				end if;
+				
+			when others => null;
 				
 		end case;
 	end process;
