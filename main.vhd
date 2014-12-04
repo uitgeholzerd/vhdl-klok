@@ -217,6 +217,7 @@ begin
 			);
 	MALARM: mod_alarm
 		port map (
-			clk => clk, rst => rst, hh => sig_alarm_hh, mm => sig_alarm_mm, incr_hh => sig_change_alarm_hh, incr_mm => sig_change_alarm_mm, down => sig_mod_alarm_down
+			clk => clk, rst => rst, hh => sig_alarm_hh, mm => sig_alarm_mm, 
+			incr_hh => sig_change_alarm_hh, incr_mm => sig_change_alarm_mm, down => sig_mod_alarm_down
 			);
 end Behavioral;

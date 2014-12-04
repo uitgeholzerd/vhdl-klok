@@ -67,31 +67,23 @@ begin
 		end if;
 	end process;
 	
-	change_alarm: process (currentalarm, btn_s)
+	change_mode: process (currentmode, btn_l, btn_r, currentalarm, btn_s)
 	begin
-			case currentalarm is
-				when enabled =>
+		case currentalarm is
+			when enabled =>
 				if (btn_s = '1') then
 					nextalarm <= disabled;
 				else 
 					nextalarm <= enabled;
 				end if;
-				
-				when disabled =>
+			when disabled =>
 				if (btn_s = '1') then
 					nextalarm <= enabled;
 				else
 					nextalarm <= disabled;
 				end if;
-				
-				 when others => null;
-			end case;
-	
-		
-	end process;
-	
-	change_mode: process (currentmode, btn_l, btn_r)
-	begin
+			when others => null;
+		end case;
 		case currentmode is
 			when disp_time_HHMM =>
 				if (btn_l = '1') then
