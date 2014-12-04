@@ -78,11 +78,11 @@ architecture Behavioral of mod_date is
 
 begin
 	ctenDay <= cten or incr_day;
-	ctenMonth <= (carryDay and not incr_day) or incr_month ;
-	ctenYear <= (carryMonth and not incr_month) or incr_year ;
+	ctenMonth <= (carryDay ) or incr_month; --and not incr_day
+	ctenYear <= (carryMonth ) or incr_year; --and not incr_month
 	
 	year <= yearCount;
-	month <= std_logic_vector(resize(signed(monthCount), month'length));	
+	month <= monthCount;	
 
 	DAY_COUNTER: variable_counter
 	generic  map (min => 1)

@@ -72,6 +72,8 @@ begin
 							carry <= '1';
 						end if;
 				end case;
+			else
+				carry <= '0';
 			end if;
 		end if;
 		--set output to variable from procedure

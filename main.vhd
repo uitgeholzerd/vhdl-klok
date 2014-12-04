@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity main is
     Port ( clk, rst : in  STD_LOGIC;
 			  btn_u, btn_d, btn_l, btn_r, btn_s : in  STD_LOGIC;
-			  led_time, led_date, led_alarm, led_alarm_on: out std_logic;
+			  led_time, led_date, led_alarm, led_alarm_on, led_alarm_ring: out std_logic;
            disp_an : out  STD_LOGIC_VECTOR (3 downto 0);
            disp_cat : out  STD_LOGIC_VECTOR (6 downto 0)
            );
@@ -47,9 +47,9 @@ architecture Behavioral of main is
 			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;
 			day, month, year : IN  std_logic_vector(6 downto 0);
 			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
-			--alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
-			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
-			mode_time, mode_date, mode_alarm, alarm_enabled: out std_logic;
+			alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
+			up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
+			mode_time, mode_date, mode_alarm, alarm_enabled, alarm_ring: out std_logic;
 			blink1, blink2: out std_logic;
          num1, num2 : OUT  std_logic_vector(6 downto 0)
         );
@@ -89,6 +89,16 @@ architecture Behavioral of main is
 				);
 	end component;
 	
+	component mod_alarm is
+    Port ( clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           hh : out  STD_LOGIC_VECTOR (6 downto 0);
+           mm : out  STD_LOGIC_VECTOR (6 downto 0);
+           incr_hh : in  STD_LOGIC;
+           incr_mm : in  STD_LOGIC;
+           down : in  STD_LOGIC);
+	end component;
+	
 	component debouncer is
 		Port(	clk, ena, input : in  STD_LOGIC; 
 			debounced : out  STD_LOGIC
@@ -102,7 +112,7 @@ architecture Behavioral of main is
 	signal sig_num1, sig_num2, sig_disp_num1, sig_disp_num2: std_logic_vector (6 downto 0);
 	signal sig_cathode : std_logic_vector (6 downto 0);
 	signal sig_anode: std_logic_vector (3 downto 0);
-	signal sig_alarm_enabled, sig_time_carry, sig_date_cten: std_logic;
+	signal sig_alarm_enabled, sig_alarm_ring, sig_time_carry, sig_date_cten: std_logic;
 	signal sig_blink1, sig_blink2, sig_disp_blink1, sig_disp_blink2: std_logic;
 	
 	signal sig_sec, sig_min, sig_hrs : std_logic_vector (6 downto 0);		-- Is deze regel én de volgende nodig?
@@ -114,11 +124,14 @@ architecture Behavioral of main is
 	signal sig_up_day, sig_up_month, sig_up_year, sig_down_day, sig_down_month, sig_down_year : std_logic;
 	signal sig_change_day, sig_change_month, sig_change_year, sig_mod_date_down: std_logic;
 	
-
+	signal sig_change_alarm_hh, sig_alarm_up_hh, sig_alarm_down_hh, sig_change_alarm_mm, sig_alarm_up_mm, sig_alarm_down_mm, sig_mod_alarm_down: std_logic;
+	signal sig_alarm_hh, sig_alarm_mm: std_logic_vector (6 downto 0);
+	
 begin
 	sig_blink_freq <= sig_div_blink;
 	sig_disp_clk <= sig_div_disp; sig_time_clk <= sig_div_time;
 	led_alarm_on <= sig_alarm_enabled;
+	led_alarm_ring <= sig_alarm_ring;
 	sig_u <= sig_btn_u; sig_d <= sig_btn_d; sig_l <= sig_btn_l; sig_r <= sig_btn_r; sig_s <= sig_btn_s;
 	sig_disp_blink1 <= sig_blink1; sig_disp_blink2 <= sig_blink2;
 	sig_disp_num1 <= sig_num1; sig_disp_num2 <= sig_num2;
@@ -134,6 +147,9 @@ begin
 	sig_change_year <= sig_up_year or sig_down_year;
 	sig_mod_date_down <= sig_down_day or sig_down_month or sig_down_year;
 	
+	sig_change_alarm_hh <= sig_alarm_up_hh or sig_alarm_down_hh;
+	sig_change_alarm_mm <= sig_alarm_up_mm or sig_alarm_down_mm;
+	sig_mod_alarm_down <= sig_alarm_down_hh or sig_alarm_down_mm;
 	
 	FUNC: func_select
 		port map(
@@ -144,9 +160,11 @@ begin
 			day => sig_day, month => sig_month, year => sig_year,
 			up_day => sig_up_day, up_month => sig_up_month, up_year => sig_up_year,
 			down_day => sig_down_day, down_month => sig_down_month, down_year => sig_down_year,
-			--alarm_hh, alarm_mm,
-			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm,
-			mode_time => led_time, mode_date => led_date, mode_alarm => led_alarm, alarm_enabled => sig_alarm_enabled,
+			alarm_hh => sig_alarm_hh, alarm_mm => sig_alarm_mm,
+			up_alarm_hh => sig_alarm_up_hh, up_alarm_mm => sig_alarm_up_mm, 
+			down_alarm_hh => sig_alarm_down_hh, down_alarm_mm => sig_alarm_down_mm,
+			mode_time => led_time, mode_date => led_date, mode_alarm => led_alarm, 
+			alarm_enabled => sig_alarm_enabled, alarm_ring => sig_alarm_ring,
 			blink1 => sig_blink1, blink2 => sig_blink2,
          num1 => sig_num1 , num2 => sig_num2
          );
@@ -155,7 +173,7 @@ begin
 		generic map (max => 100000)
 		port map (clk => clk, div => sig_div_disp, ena => '1');
 	FREQ_DBNC: clock_divider
-		generic map (max => 1000)
+		generic map (max => 10000)
 		port map (clk => clk, div => sig_dbnc_clk, ena => '1');
 	FREQ_TIME: clock_divider
 		generic map (max => 1000)
@@ -197,5 +215,8 @@ begin
 			incr_day => sig_change_day, incr_month => sig_change_month, incr_year => sig_change_year,
 			day => sig_day, month => sig_month, year => sig_year
 			);
-	
+	MALARM: mod_alarm
+		port map (
+			clk => clk, rst => rst, hh => sig_alarm_hh, mm => sig_alarm_mm, incr_hh => sig_change_alarm_hh, incr_mm => sig_change_alarm_mm, down => sig_mod_alarm_down
+			);
 end Behavioral;
