@@ -38,9 +38,9 @@ entity func_select is
 			day, month, year : IN  std_logic_vector(6 downto 0);
 			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;
 			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
-			--alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
-			--up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
-			mode_time, mode_date, mode_alarm, alarm_enabled: OUT std_logic;
+			alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
+			up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
+			mode_time, mode_date, mode_alarm, alarm_enabled, alarm_ring: OUT std_logic;
 			blink1, blink2: OUT std_logic;
          num1, num2 : OUT  std_logic_vector(6 downto 0)
         );
@@ -48,8 +48,8 @@ end func_select;
 
 architecture Behavioral of func_select is
 	type mode is (	disp_time_HHMM, disp_time_MMSS, set_time_HH, set_time_MM, reset_time_SS,
-						disp_date_DDMM, disp_date_YYYY, set_date_DD, set_date_MM, set_date_YYYY
-						); -- disp_alarm, set_alarm
+						disp_date_DDMM, disp_date_YYYY, set_date_DD, set_date_MM, set_date_YYYY,
+						disp_alarm, set_alarm_hh, set_alarm_mm ); 
 	signal currentmode, nextmode: mode;
 	
 	type alarm_mode is (enabled, disabled);
@@ -67,31 +67,23 @@ begin
 		end if;
 	end process;
 	
-	change_alarm: process (currentalarm, btn_s)
+	change_mode: process (currentmode, btn_l, btn_r, currentalarm, btn_s)
 	begin
-			case currentalarm is
-				when enabled =>
+		case currentalarm is
+			when enabled =>
 				if (btn_s = '1') then
 					nextalarm <= disabled;
 				else 
 					nextalarm <= enabled;
 				end if;
-				
-				when disabled =>
+			when disabled =>
 				if (btn_s = '1') then
 					nextalarm <= enabled;
 				else
 					nextalarm <= disabled;
 				end if;
-				
-				 when others => null;
-			end case;
-	
-		
-	end process;
-	
-	change_mode: process (currentmode, btn_l, btn_r)
-	begin
+			when others => null;
+		end case;
 		case currentmode is
 			when disp_time_HHMM =>
 				if (btn_l = '1') then
@@ -122,7 +114,7 @@ begin
 			
 			when disp_date_YYYY =>
 				if (btn_l = '1') then
-					nextmode <= disp_time_HHMM; 
+					nextmode <= disp_alarm; 
 				elsif (btn_r = '1') then
 					nextmode <= set_date_YYYY;
 				else
@@ -155,7 +147,7 @@ begin
 				else
 					nextmode <= reset_time_SS;
 				end if;
-				
+		
 			when set_date_DD =>
 				if (btn_l = '1') then
 					nextmode <= disp_date_DDMM;
@@ -182,13 +174,37 @@ begin
 				else
 					nextmode <= set_date_YYYY;
 				end if;
-				
+		--alarm
+			when disp_alarm =>
+				if (btn_l = '1') then
+					nextmode <= disp_time_HHMM;
+				elsif (btn_r = '1') then
+					nextmode <= set_alarm_hh;
+				else
+					nextmode <= disp_alarm;
+				end if;		
+			when set_alarm_hh =>
+				if (btn_l = '1') then
+					nextmode <= disp_alarm;
+				elsif (btn_r = '1') then
+					nextmode <= set_alarm_mm;
+				else
+					nextmode <= set_alarm_hh;
+				end if;
+			when set_alarm_mm =>
+				if (btn_l = '1') then
+					nextmode <= disp_alarm;
+				elsif (btn_r = '1') then
+					nextmode <= disp_alarm;
+				else
+					nextmode <= set_alarm_mm;
+				end if;
 			when others => null;
 
 		end case;
 	end process;
 	
-	set_outputs: process (currentmode, currentalarm, btn_u, btn_d, hh, mm, ss, day, month, year)
+	set_outputs: process (currentmode, currentalarm, btn_u, btn_d, hh, mm, ss, day, month, year, alarm_hh, alarm_mm)
 	begin
 		up_hh <= '0';
 		down_hh <= '0';
@@ -201,19 +217,22 @@ begin
 		down_day <= '0';
 		up_year<= '0';
 		down_year <= '0';
+		up_alarm_hh <= '0'; up_alarm_mm <= '0'; down_alarm_hh <= '0'; down_alarm_mm <= '0';
 		mode_time <= '0'; 
 		mode_date <= '0'; 
 		mode_alarm <= '0'; 
 		blink1 <= '0'; 
 		blink2 <= '0';
-		
+		alarm_ring <= '0';
+
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';
-				
+				if (hh = alarm_hh and mm = alarm_mm) then
+					alarm_ring <= '1';				
+					end if;
 			when disabled =>
 				alarm_enabled <= '0';
-				
 			when others => null;
 		end case;
 		
@@ -311,6 +330,28 @@ begin
 					down_year <= '0';
 				end if;
 				
+		-- Alarm modes
+			when disp_alarm =>
+				num1 <= alarm_hh; num2 <= alarm_mm;
+				mode_alarm <= '1';
+			when set_alarm_hh =>
+				num1 <= alarm_hh; num2 <= alarm_mm;
+				mode_alarm <= '1';
+				blink1 <= '1'; 
+				if (btn_u = '1') then
+					up_alarm_hh <= '1';
+				elsif (btn_d = '1') then
+					down_alarm_hh <= '1';
+				end if;
+			when set_alarm_mm =>
+				num1 <= alarm_hh; num2 <= alarm_mm;
+				mode_alarm <= '1';
+				blink2 <= '1'; 
+			if (btn_u = '1') then
+					up_alarm_mm <= '1';
+				elsif (btn_d = '1') then
+					down_alarm_mm <= '1';
+				end if;
 			when others => null;
 				
 		end case;

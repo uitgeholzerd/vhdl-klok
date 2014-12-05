@@ -52,6 +52,7 @@ ARCHITECTURE behavior OF tb_main IS
          led_date : OUT  std_logic;
          led_alarm : OUT  std_logic;
          led_alarm_on : OUT  std_logic;
+			led_alarm_ring : OUT  std_logic;
          disp_an : OUT  std_logic_vector(3 downto 0);
          disp_cat : OUT  std_logic_vector(6 downto 0)
         );
@@ -72,6 +73,7 @@ ARCHITECTURE behavior OF tb_main IS
    signal led_date : std_logic;
    signal led_alarm : std_logic;
    signal led_alarm_on : std_logic;
+	signal led_alarm_ring : std_logic;
    signal disp_an : std_logic_vector(3 downto 0);
    signal disp_cat : std_logic_vector(6 downto 0);
 
@@ -93,6 +95,7 @@ BEGIN
           led_date => led_date,
           led_alarm => led_alarm,
           led_alarm_on => led_alarm_on,
+			 led_alarm_ring => led_alarm_ring,
           disp_an => disp_an,
           disp_cat => disp_cat
         );
