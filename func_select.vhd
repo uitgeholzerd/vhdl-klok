@@ -82,7 +82,6 @@ begin
 				else
 					nextalarm <= disabled;
 				end if;
-			when others => null;
 		end case;
 		case currentmode is
 			when disp_time_HHMM =>
@@ -199,8 +198,6 @@ begin
 				else
 					nextmode <= set_alarm_mm;
 				end if;
-			when others => null;
-
 		end case;
 	end process;
 	
@@ -232,7 +229,6 @@ begin
 					end if;
 			when disabled =>
 				alarm_enabled <= '0';
-			when others => null;
 		end case;
 		
 		case currentmode is
@@ -351,8 +347,6 @@ begin
 				elsif (btn_d = '1') then
 					down_alarm_mm <= '1';
 				end if;
-			when others => null;
-				
 		end case;
 	end process;
 end Behavioral;
