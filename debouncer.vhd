@@ -36,20 +36,23 @@ entity debouncer is
 end debouncer;
 
 architecture Behavioral of debouncer is
- signal delay1, delay2, delay3, delay4  : STD_LOGIC := '0'; 
+ signal delay1, delay2, delay3, delay4, edge1, edge2 : STD_LOGIC := '0'; 
 
 begin 
 process (clk, ena) is 
 begin 
-	if rising_edge(clk) and ena = '1' then  
-		delay1 <= input;
-		delay2 <= delay1;
-		delay3 <= delay2; 
-		delay4 <= delay3; 
+	if rising_edge(clk)  then  
+		if ena = '1' then
+			delay1 <= input;
+			delay2 <= delay1;
+			delay3 <= delay2; 
+			delay4 <= delay3;
+		end if;
+		edge1 <= delay1 and delay2 and delay3 and delay4;
+		edge2 <= edge1;
  end if; 
 end process; 
-
-debounced <= delay1 and delay2 and delay3 and not delay4;
+debounced <= edge1 and not edge2;
 
 end Behavioral; 
 

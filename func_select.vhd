@@ -180,7 +180,7 @@ begin
 				elsif (btn_r = '1') then
 					nextmode <= set_date_DD;
 				else
-					nextmode <= disp_date_YYYY;
+					nextmode <= set_date_YYYY;
 				end if;
 				
 			when others => null;
@@ -206,6 +206,7 @@ begin
 		mode_alarm <= '0'; 
 		blink1 <= '0'; 
 		blink2 <= '0';
+		
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';

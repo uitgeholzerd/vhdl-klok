@@ -76,13 +76,18 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
- 
+	ena_process :process
+   begin
+		ena <= '0';
+		wait for clk_period*5;
+		ena <= '1';
+		wait for clk_period;
+   end process;
 
    -- Stimulus process
    stim_proc: process
    begin		
       wait for 20 ns;
-		ena <='1';
       input <= '1';
       wait for clk_period;
       input <= '0';
@@ -93,11 +98,13 @@ BEGIN
       input <= '0';
       wait for clk_period;
       input <= '1';
-      wait for clk_period*10;
+      wait for clk_period*19;
 		assert ( debounced = '1' ) report "Signal not debounced correctly, is not 1" severity error;
-      input <= '0';
-      wait for clk_period*2;
-      input <= '1';
+      wait for clk_period;
+		assert ( debounced = '0' ) report "Edge trigger not working, is not 0" severity error;
+		wait for clk_period*10;
+	   input <= '0';
+		input <= '1';
       wait for clk_period*2;
       input <= '0';
       wait for clk_period*5;

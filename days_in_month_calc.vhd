@@ -39,14 +39,13 @@ end days_in_month_calc;
 architecture Behavioral of days_in_month_calc is
 
 begin
-	process (clk) is 
+	process (year, month) is 
 	variable int_year: integer range 00 to 99;
 	variable int_month: integer range 1 to 12;
 	
 	variable leap_year: Boolean;
 	variable days: integer range 28 to 31;
-		begin
-			if rising_edge(clk) then 	
+		begin	
 				int_year := to_integer(unsigned(year));
 				int_month := to_integer(unsigned(month));
 				
@@ -71,8 +70,7 @@ begin
 							days := 28;
 						end if;
 			end case;
-			end if;
-		
+
 	days_in_month <= std_logic_vector(to_unsigned(days, days_in_month'length));
 	end process;
 end Behavioral;

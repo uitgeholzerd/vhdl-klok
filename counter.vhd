@@ -64,7 +64,7 @@ begin
 							count_v := count_v +1;	
 							carry <= '0';
 						else
-						-- or set to min before reaching max
+						-- or set to min after reaching max
 							count_v := min;
 							carry <= '1';
 						end if;
