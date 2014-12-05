@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: Convert input binary signal to BCD output
 --
 -- Dependencies: 
 --
@@ -23,11 +23,11 @@ use IEEE.NUMERIC_STD.ALL;
  
 entity bcd_conv is
    Port ( 
-		rst	: in std_logic;
-      number   : in  std_logic_vector (6 downto 0);
-      tens     : out std_logic_vector (3 downto 0);
-      ones     : out std_logic_vector (3 downto 0)
-   );
+		rst	: in std_logic;									-- Reset the converter
+      number   : in  std_logic_vector (6 downto 0);	-- Input number in binary	
+      tens     : out std_logic_vector (3 downto 0);	-- Output of ten digits in BCD
+      ones     : out std_logic_vector (3 downto 0)		-- Output of single digits in BCD
+		);
 end bcd_conv;
  
 architecture Behavioral of bcd_conv is
@@ -49,7 +49,6 @@ begin
 		tens <= X"0";
 		ones <= X"0";
 		
-	--elsif (rising_edge(clk)) then 
 	else
       -- Clear previous number and store new number in shift register
       num := unsigned(number);
@@ -76,20 +75,9 @@ begin
       end loop;
  
       -- Push decimal numbers to output
-      --sig_tens    <= std_logic_vector(ten);
-      --sig_ones     <= std_logic_vector(one);
-		--if rising_edge(clk) then
       tens    <= std_logic_vector(ten);
       ones     <= std_logic_vector(one);
-	--	end if;
 	end if;
    end process;
 	
---	output: process (clk)
---	begin
---		if rising_edge(clk) then
---			tens <= sig_tens;
---			ones <= sig_ones;
---		end if;
---	end process;
 end Behavioral;

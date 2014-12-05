@@ -31,11 +31,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity mod_time is
 
-    Port ( clk, rst, cten : in  STD_LOGIC;
-			  incr_hour, incr_min, reset_sec : in STD_LOGIC;
-			  down : in STD_LOGIC;
-           hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);
-           carry : out  STD_LOGIC
+    Port ( clk, rst, cten : in  STD_LOGIC;									 
+			  incr_hour, incr_min, reset_sec : in STD_LOGIC;				-- Increase hours/minutes, reset seconds
+			  down : in STD_LOGIC;													-- Decrease instead of increase
+           hours, mins, secs : out  STD_LOGIC_VECTOR (6 downto 0);	-- Hours/minutes/seconds output
+           carry : out  STD_LOGIC												-- Carry after 24 hours
 			  );
 end mod_time;
 

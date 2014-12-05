@@ -5,8 +5,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity bcd_7seg is
 port (
-        bcd : in std_logic_vector(3 downto 0);  --BCD input
-        segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
+        bcd : in std_logic_vector(3 downto 0);  		-- BCD input
+        segment7 : out std_logic_vector(6 downto 0)  	-- 7 bit decoded output.
     );
 end bcd_7seg;
 

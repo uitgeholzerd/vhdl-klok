@@ -32,11 +32,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity mod_alarm is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
-           hh : out  STD_LOGIC_VECTOR (6 downto 0);
-           mm : out  STD_LOGIC_VECTOR (6 downto 0);
-           incr_hh : in  STD_LOGIC;
-           incr_mm : in  STD_LOGIC;
-           down : in  STD_LOGIC);
+           hh : out  STD_LOGIC_VECTOR (6 downto 0);		-- The hour at which the alarm should be triggered
+           mm : out  STD_LOGIC_VECTOR (6 downto 0);		-- The minute at which the alarm should be triggered
+           incr_hh : in  STD_LOGIC;								-- Increase the hour
+           incr_mm : in  STD_LOGIC;								-- Increase the minutes
+           down : in  STD_LOGIC);								-- Decrease instead of increase
 end mod_alarm;
 
 architecture Behavioral of mod_alarm is

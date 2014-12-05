@@ -24,13 +24,13 @@ use IEEE.NUMERIC_STD.ALL;
 entity variable_counter is
 	Generic (min: natural := 0);  	-- minimum, at which the counter will reset
 	
-   Port ( clk : in  STD_LOGIC;  		-- clock input
-          cten : in  STD_LOGIC;		-- count enable
-          rst : in  STD_LOGIC;		-- reset to 0
-			 down : in  STD_LOGIC;		-- count up unless this is 1
-			 max : in STD_LOGIC_VECTOR (4 downto 0);			-- maximum, at which the counter should reset
-          count : out STD_LOGIC_VECTOR (6 downto 0);		-- counter output
-			 carry : out STD_LOGIC									-- carry
+   Port ( clk : in  STD_LOGIC;  									-- Clock input
+          cten : in  STD_LOGIC;									-- Count enable
+          rst : in  STD_LOGIC;									-- Reset
+			 down : in  STD_LOGIC;									-- Count down
+			 max : in STD_LOGIC_VECTOR (4 downto 0);			-- Maximum at which the counter should reset
+          count : out STD_LOGIC_VECTOR (6 downto 0);		-- Counter output
+			 carry : out STD_LOGIC									-- Carry
 			 )	;	
 end variable_counter;
 

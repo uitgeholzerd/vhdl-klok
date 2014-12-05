@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: 	Divides the incoming (clock-)signal by the given amount
 --
 -- Dependencies: 
 --
@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity clock_divider is
 	generic (max 	: 	positive  := 10);				-- Number by which the clock should be divided
 	Port (	clk, ena : in  STD_LOGIC;
-				div : out  STD_LOGIC);
+				div : out  STD_LOGIC);					-- The divided clock signal
 end clock_divider;
 
 architecture Behavioral of clock_divider is

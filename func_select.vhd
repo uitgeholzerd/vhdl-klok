@@ -225,6 +225,7 @@ begin
 		blink2 <= '0';
 		alarm_ring <= '0';
 
+		-- Check if the alarm needs to be triggered
 		case currentalarm is
 			when enabled =>
 				alarm_enabled <= '1';

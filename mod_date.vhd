@@ -32,9 +32,9 @@ use ieee.numeric_std.all;
 
 entity mod_date is
 		Port ( clk, rst, cten : in  STD_LOGIC;
-				incr_day, incr_month, incr_year : in STD_LOGIC;
-				down : in STD_LOGIC;
-				day, month, year : out  STD_LOGIC_VECTOR (6 downto 0)
+				incr_day, incr_month, incr_year : in STD_LOGIC;					-- Increases the days/months/years
+				down : in STD_LOGIC;														-- Decreases instead of increases
+				day, month, year : out  STD_LOGIC_VECTOR (6 downto 0)			-- Day/month/year output
 				);
 end mod_date;
 

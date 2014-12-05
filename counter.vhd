@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: 	Counter that counts to the given max, gives a carry and then resets to the given min. Can also count down
 --
 -- Dependencies: 
 --
@@ -22,13 +22,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity counter is
-	Generic (max: positive := 59;
-				min: natural := 0);  	--counter will reset instead of reaching this number
-   Port ( clk : in  STD_LOGIC;  		--clock input
-          cten : in  STD_LOGIC;		--count enable
-          rst : in  STD_LOGIC;		--reset to 0
-			 down : in  STD_LOGIC;		--count up unless this is 1
-          count : out STD_LOGIC_VECTOR (6 downto 0);		--counter output
+	Generic (max: positive := 59;									-- Maximum at which the counter will reset
+				min: natural := 0);  								-- Minimum to which the counter will reset
+   Port ( clk : in  STD_LOGIC;  									-- Clock input
+          cten : in  STD_LOGIC;									-- Count enable
+          rst : in  STD_LOGIC;									-- Reset
+			 down : in  STD_LOGIC;									-- Count down
+          count : out STD_LOGIC_VECTOR (6 downto 0);		-- Counter output
 			 carry : out STD_LOGIC
 			 )	;
 end counter;

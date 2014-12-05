@@ -31,10 +31,10 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity mod_display is
     Port ( clk, rst, refresh: in STD_LOGIC;
-           num1, num2 : in  STD_LOGIC_VECTOR (6 downto 0);
-			  blink1, blink2, blink_freq: in STD_LOGIC;
-			  seg7 : out  STD_LOGIC_VECTOR (6 downto 0);
-			  anode : out STD_LOGIC_VECTOR (3 downto 0)
+           num1, num2 : in  STD_LOGIC_VECTOR (6 downto 0);		-- BCD input for the 2 numbers
+			  blink1, blink2, blink_freq: in STD_LOGIC;				-- Enables blinking on the specific number
+			  seg7 : out  STD_LOGIC_VECTOR (6 downto 0);				-- 7-segment output
+			  anode : out STD_LOGIC_VECTOR (3 downto 0)				-- Display number selection
 	 );
 end mod_display;
 
@@ -49,13 +49,14 @@ architecture Behavioral of mod_display is
 	end component;
 	component bcd_7seg is
 		port (
-			bcd : in std_logic_vector(3 downto 0);  --BCD input
+			bcd : in std_logic_vector(3 downto 0);  		-- BCD input
 			segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
 		);
 	end component;
 	
 	signal sig_num: std_logic_vector (6 downto 0);
 	signal sig_tens, sig_ones, sig_bcd, sig_anode: std_logic_vector (3 downto 0);
+	
 begin
 	CONV: bcd_conv
 		port map ( rst => rst, number => sig_num, tens => sig_tens, ones => sig_ones);
@@ -71,7 +72,6 @@ begin
 				sig_bcd <= X"0";
 				blink := '0';
 				cnt:=0;
---		elsif (rising_edge(clk) and refresh = '1' ) then
 
 		elsif (rising_edge(clk)) then
 				if (refresh = '1') then

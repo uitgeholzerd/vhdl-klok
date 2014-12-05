@@ -30,8 +30,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity debouncer is
-	Port(	clk, input, ena : in  STD_LOGIC; 
-			debounced : out  STD_LOGIC
+	Port(	clk, ena : in  STD_LOGIC; 
+			input : in  STD_LOGIC; 			-- Input signal
+			debounced : out  STD_LOGIC		-- Debounced signal
 			); 
 end debouncer;
 
@@ -43,6 +44,7 @@ process (clk, ena) is
 begin 
 	if rising_edge(clk)  then  
 		if ena = '1' then
+		-- Delay the signal by 4 clock cycles
 			delay1 <= input;
 			delay2 <= delay1;
 			delay3 <= delay2; 
