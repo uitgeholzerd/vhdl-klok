@@ -3,14 +3,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity bcd_7seg is
+entity bcd_7seg_conv is
 port (
         bcd : in std_logic_vector(3 downto 0);  		-- BCD input
         segment7 : out std_logic_vector(6 downto 0)  	-- 7 bit decoded output.
     );
-end bcd_7seg;
+end bcd_7seg_conv;
 
-architecture Behavioral of bcd_7seg is
+architecture Behavioral of bcd_7seg_conv is
 begin
 	process (bcd)
 	BEGIN

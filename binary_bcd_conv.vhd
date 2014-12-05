@@ -21,16 +21,16 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
  
-entity bcd_conv is
+entity binary_bcd_conv is
    Port ( 
 		rst	: in std_logic;									-- Reset the converter
       number   : in  std_logic_vector (6 downto 0);	-- Input number in binary	
       tens     : out std_logic_vector (3 downto 0);	-- Output of ten digits in BCD
       ones     : out std_logic_vector (3 downto 0)		-- Output of single digits in BCD
 		);
-end bcd_conv;
+end binary_bcd_conv;
  
-architecture Behavioral of bcd_conv is
+architecture Behavioral of binary_bcd_conv is
 	signal sig_tens, sig_ones: std_logic_vector (3 downto 0);
 begin
  

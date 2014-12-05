@@ -33,14 +33,14 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_bcd_7seg IS
-END tb_bcd_7seg;
+ENTITY tb_bcd_7seg_conv IS
+END tb_bcd_7seg_conv;
  
-ARCHITECTURE behavior OF tb_bcd_7seg IS 
+ARCHITECTURE behavior OF tb_bcd_7seg_conv IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT bcd_7seg
+    COMPONENT bcd_7seg_conv
     PORT(
          bcd : IN  std_logic_vector(3 downto 0);
          segment7 : OUT  std_logic_vector(6 downto 0)
@@ -60,7 +60,7 @@ ARCHITECTURE behavior OF tb_bcd_7seg IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: bcd_7seg PORT MAP (
+   uut: bcd_7seg_conv PORT MAP (
 
           bcd => bcd,
           segment7 => segment7

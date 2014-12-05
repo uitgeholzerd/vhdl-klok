@@ -32,14 +32,14 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 USE ieee.numeric_std.ALL;
  
-ENTITY tb_bcd_conv IS
-END tb_bcd_conv;
+ENTITY tb_binary_bcd_conv IS
+END tb_binary_bcd_conv;
  
-ARCHITECTURE behavior OF tb_bcd_conv IS 
+ARCHITECTURE behavior OF tb_binary_bcd_conv IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT bcd_conv
+    COMPONENT binary_bcd_conv
     PORT(
          rst : IN  std_logic;
          number : IN  std_logic_vector(6 downto 0);
@@ -63,7 +63,7 @@ ARCHITECTURE behavior OF tb_bcd_conv IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: bcd_conv PORT MAP (
+   uut: binary_bcd_conv PORT MAP (
           rst => rst,
           number => number,
           tens => tens,

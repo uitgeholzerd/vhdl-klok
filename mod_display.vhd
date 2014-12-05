@@ -39,7 +39,7 @@ entity mod_display is
 end mod_display;
 
 architecture Behavioral of mod_display is
-	component bcd_conv is
+	component binary_bcd_conv is
 		Port ( 
 			rst : in std_logic;
 			number   : in  std_logic_vector (6 downto 0);
@@ -47,7 +47,7 @@ architecture Behavioral of mod_display is
 			ones     : out std_logic_vector (3 downto 0)
 		);
 	end component;
-	component bcd_7seg is
+	component bcd_7seg_conv is
 		port (
 			bcd : in std_logic_vector(3 downto 0);  		-- BCD input
 			segment7 : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
@@ -58,9 +58,9 @@ architecture Behavioral of mod_display is
 	signal sig_tens, sig_ones, sig_bcd, sig_anode: std_logic_vector (3 downto 0);
 	
 begin
-	CONV: bcd_conv
+	CONV: binary_bcd_conv
 		port map ( rst => rst, number => sig_num, tens => sig_tens, ones => sig_ones);
-	SEGM: bcd_7seg
+	SEGM: bcd_7seg_conv
 		port map ( bcd => sig_bcd, segment7 => seg7);
 	process (rst, clk) 
 		variable cnt:integer range 3 downto 0 := 0;
