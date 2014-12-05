@@ -1,0 +1,2 @@
+vhdl work "netgen/par/counter_timesim.vhd"
+vhdl work "tb_counter.vhd"
