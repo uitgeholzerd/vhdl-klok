@@ -82,7 +82,6 @@ begin
 				else
 					nextalarm <= disabled;
 				end if;
-			when others => null;
 		end case;
 		case currentmode is
 			when disp_time_HHMM =>
@@ -107,7 +106,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_date_YYYY; 
 				elsif (btn_r = '1') then
-					nextmode <= set_date_DD;
+					nextmode <= set_date_YYYY;
 				else
 					nextmode <= disp_date_DDMM;
 				end if;
@@ -143,7 +142,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_time_HHMM;
 				elsif (btn_r = '1') then
-					nextmode <= disp_time_MMSS;
+					nextmode <= disp_time_HHMM;
 				else
 					nextmode <= reset_time_SS;
 				end if;
@@ -152,7 +151,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_date_DDMM;
 				elsif (btn_r = '1') then
-					nextmode <= set_date_MM;
+					nextmode <= disp_date_DDMM;
 				else
 					nextmode <= set_date_DD;
 				end if;
@@ -161,7 +160,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_date_DDMM;
 				elsif (btn_r = '1') then
-					nextmode <= set_date_YYYY;
+					nextmode <= set_date_DD;
 				else
 					nextmode <= set_date_MM;
 				end if;
@@ -170,7 +169,7 @@ begin
 				if (btn_l = '1') then
 					nextmode <= disp_date_DDMM;
 				elsif (btn_r = '1') then
-					nextmode <= set_date_DD;
+					nextmode <= set_date_MM;
 				else
 					nextmode <= set_date_YYYY;
 				end if;
@@ -199,8 +198,6 @@ begin
 				else
 					nextmode <= set_alarm_mm;
 				end if;
-			when others => null;
-
 		end case;
 	end process;
 	
@@ -234,7 +231,6 @@ begin
 					end if;
 			when disabled =>
 				alarm_enabled <= '0';
-			when others => null;
 		end case;
 		
 		case currentmode is
@@ -353,8 +349,6 @@ begin
 				elsif (btn_d = '1') then
 					down_alarm_mm <= '1';
 				end if;
-			when others => null;
-				
 		end case;
 	end process;
 end Behavioral;

@@ -130,6 +130,7 @@ architecture Behavioral of main is
 begin
 	sig_blink_freq <= sig_div_blink;
 	sig_disp_clk <= sig_div_disp; sig_time_clk <= sig_div_time;
+	sig_dbnc_clk <= sig_div_disp;
 	led_alarm_on <= sig_alarm_enabled;
 	led_alarm_ring <= sig_alarm_ring;
 	sig_u <= sig_btn_u; sig_d <= sig_btn_d; sig_l <= sig_btn_l; sig_r <= sig_btn_r; sig_s <= sig_btn_s;
@@ -172,9 +173,6 @@ begin
 	FREQ_DISP: clock_divider
 		generic map (max => 100000)
 		port map (clk => clk, div => sig_div_disp, ena => '1');
-	FREQ_DBNC: clock_divider
-		generic map (max => 10000)
-		port map (clk => clk, div => sig_dbnc_clk, ena => '1');
 	FREQ_TIME: clock_divider
 		generic map (max => 1000)
 		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
