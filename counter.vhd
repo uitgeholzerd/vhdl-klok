@@ -55,7 +55,6 @@ begin
 						else
 						--or set to max after reaching min
 							count_v := max;
-							carry <= '1';
 						end if;
 					--if down isn't set...
 					when others => 
