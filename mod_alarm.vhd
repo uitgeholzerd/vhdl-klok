@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: The module that stores and changes the time at which the alarm should ring
 --
 -- Dependencies: 
 --
@@ -30,8 +30,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity mod_alarm is
-    Port ( clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
+    Port ( clk, rst : in  STD_LOGIC;							-- Clock, reset signal
            hh : out  STD_LOGIC_VECTOR (6 downto 0);		-- The hour at which the alarm should be triggered
            mm : out  STD_LOGIC_VECTOR (6 downto 0);		-- The minute at which the alarm should be triggered
            incr_hh : in  STD_LOGIC;								-- Increase the hour

@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: The top module for wiring everything together
 --
 -- Dependencies: 
 --
@@ -30,11 +30,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity main is
-    Port ( clk, rst : in  STD_LOGIC;
-			  btn_u, btn_d, btn_l, btn_r, btn_s : in  STD_LOGIC;
-			  led_time, led_date, led_alarm, led_alarm_on, led_alarm_ring: out std_logic;
-           disp_an : out  STD_LOGIC_VECTOR (3 downto 0);
-           disp_cat : out  STD_LOGIC_VECTOR (6 downto 0)
+    Port ( clk, rst : in  STD_LOGIC;																		-- Clock, reset signal
+			  btn_u, btn_d, btn_l, btn_r, btn_s : in  STD_LOGIC;										-- Input signal from the physical buttons
+			  led_time, led_date, led_alarm, led_alarm_on, led_alarm_ring: out std_logic;		-- Output signals for the LEDs on the board
+           disp_an : out  STD_LOGIC_VECTOR (3 downto 0);												-- 7 segment signal for the display
+           disp_cat : out  STD_LOGIC_VECTOR (6 downto 0)												-- Display section selector
            );
 end main;
 
@@ -57,7 +57,7 @@ architecture Behavioral of main is
 
 	component clock_divider is
 	generic (max 	: 	positive );	
-		Port ( clk, ena : in  STD_LOGIC;
+		Port ( clk, en : in  STD_LOGIC;
 				div : out  STD_LOGIC
 				);
 	end component;
@@ -100,7 +100,7 @@ architecture Behavioral of main is
 	end component;
 	
 	component debouncer is
-		Port(	clk, ena, input : in  STD_LOGIC; 
+		Port(	clk, en, input : in  STD_LOGIC; 
 			debounced : out  STD_LOGIC
 				); 
 	end component;
@@ -172,13 +172,13 @@ begin
 	
 	FREQ_DISP: clock_divider
 		generic map (max => 100000)
-		port map (clk => clk, div => sig_div_disp, ena => '1');
+		port map (clk => clk, div => sig_div_disp, en => '1');
 	FREQ_TIME: clock_divider
 		generic map (max => 1000)
-		port map (clk => clk, ena => sig_disp_clk, div => sig_div_time);
+		port map (clk => clk, en => sig_disp_clk, div => sig_div_time);
 	FREQ_BLINK: clock_divider
 		generic map (max => 300)
-		port map (clk => clk, ena => sig_disp_clk, div => sig_div_blink);
+		port map (clk => clk, en => sig_disp_clk, div => sig_div_blink);
 	
 	DISPLAY: mod_display
 		port map (
@@ -189,15 +189,15 @@ begin
 			);
 	
 	DBNC_R: debouncer
-		port map (clk => clk, ena => sig_dbnc_clk, input => btn_r, debounced => sig_btn_r);
+		port map (clk => clk, en => sig_dbnc_clk, input => btn_r, debounced => sig_btn_r);
 	DBNC_L: debouncer
-		port map (clk => clk, ena => sig_dbnc_clk, input => btn_l, debounced => sig_btn_l);
+		port map (clk => clk, en => sig_dbnc_clk, input => btn_l, debounced => sig_btn_l);
 	DBNC_U: debouncer
-		port map (clk => clk, ena => sig_dbnc_clk, input => btn_u, debounced => sig_btn_u);
+		port map (clk => clk, en => sig_dbnc_clk, input => btn_u, debounced => sig_btn_u);
 	DBNC_D: debouncer
-		port map (clk => clk, ena => sig_dbnc_clk, input => btn_d, debounced => sig_btn_d);
+		port map (clk => clk, en => sig_dbnc_clk, input => btn_d, debounced => sig_btn_d);
 	DBNC_S: debouncer
-		port map (clk => clk, ena => sig_dbnc_clk, input => btn_s, debounced => sig_btn_s);
+		port map (clk => clk, en => sig_dbnc_clk, input => btn_s, debounced => sig_btn_s);
 	
 	MTIME: mod_time
 		port map (

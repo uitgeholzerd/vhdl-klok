@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: The finite-state machine of the project.
 --
 -- Dependencies: 
 --
@@ -32,17 +32,17 @@ USE IEEE.NUMERIC_STD.ALL;
 
 entity func_select is
 	port(
-         clk, rst : IN  std_logic;
-         btn_l, btn_r, btn_u, btn_d, btn_s : IN  std_logic;
-         hh, mm, ss : IN  std_logic_vector(6 downto 0);
-			day, month, year : IN  std_logic_vector(6 downto 0);
-			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;
-			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;
-			alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);
-			up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;
-			mode_time, mode_date, mode_alarm, alarm_enabled, alarm_ring: OUT std_logic;
-			blink1, blink2: OUT std_logic;
-         num1, num2 : OUT  std_logic_vector(6 downto 0)
+         clk, rst : IN  std_logic;																		-- Clock, reset signal
+         btn_l, btn_r, btn_u, btn_d, btn_s : IN  std_logic;										-- Input buttons (left,right, up, down, middle)
+         hh, mm, ss : IN  std_logic_vector(6 downto 0);											-- Hour, minute and second signal
+			day, month, year : IN  std_logic_vector(6 downto 0);									-- Day, month, year signal
+			up_hh, up_mm, rst_ss, down_hh, down_mm : OUT std_logic;								-- Increase/decrease hour, minute, reset seconds
+			up_day, up_month, up_year, down_day, down_month, down_year : OUT std_logic;	-- Increase/decrease days, month, year
+			alarm_hh, alarm_mm : IN  std_logic_vector(6 downto 0);								-- Alarm hour, minute
+			up_alarm_hh, up_alarm_mm, down_alarm_hh, down_alarm_mm : OUT std_logic;			-- Increase/decrease alarm time
+			mode_time, mode_date, mode_alarm, alarm_enabled, alarm_ring: OUT std_logic;	-- Current mode, alarm enabled and alarm ringing signals
+			blink1, blink2: OUT std_logic;																-- Singals to make each number blink
+         num1, num2 : OUT  std_logic_vector(6 downto 0)											-- 7segment signal for the display
         );
 end func_select;
 

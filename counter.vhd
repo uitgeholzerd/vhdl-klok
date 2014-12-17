@@ -53,7 +53,7 @@ begin
 							count_v := count_v -1;
 							carry <= '0';
 						else
-						--or set to max after reaching min
+						--set to max after reaching min
 							count_v := max;
 						end if;
 					--if down isn't set...

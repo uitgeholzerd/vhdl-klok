@@ -41,7 +41,7 @@ ARCHITECTURE behavior OF tb_debouncer IS
  
     COMPONENT debouncer
     PORT(
-         clk, ena : IN  std_logic;
+         clk, en : IN  std_logic;
          input : IN  std_logic;
          debounced : OUT  std_logic
         );
@@ -51,7 +51,7 @@ ARCHITECTURE behavior OF tb_debouncer IS
    --Inputs
    signal clk : std_logic := '0';
    signal input : std_logic := '0';
-	signal ena : std_logic := '0';
+	signal en : std_logic := '0';
  	--Outputs
    signal debounced : std_logic;
 
@@ -63,7 +63,7 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: debouncer PORT MAP (
           clk => clk,
-			 ena => ena,
+			 en => en,
           input => input,
           debounced => debounced
         );
@@ -78,9 +78,9 @@ BEGIN
    end process;
 	ena_process :process
    begin
-		ena <= '0';
+		en <= '0';
 		wait for clk_period*5;
-		ena <= '1';
+		en <= '1';
 		wait for clk_period;
    end process;
 

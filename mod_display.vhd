@@ -30,7 +30,7 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity mod_display is
-    Port ( clk, rst, refresh: in STD_LOGIC;
+    Port ( clk, rst, refresh: in STD_LOGIC;							-- Clock, reset, refresh signals
            num1, num2 : in  STD_LOGIC_VECTOR (6 downto 0);		-- BCD input for the 2 numbers
 			  blink1, blink2, blink_freq: in STD_LOGIC;				-- Enables blinking on the specific number
 			  seg7 : out  STD_LOGIC_VECTOR (6 downto 0);				-- 7-segment output

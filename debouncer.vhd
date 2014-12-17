@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: Debounces a signal by requiring a signal to be held for 3 clocksignals before it is allow through
+-- Description: Debounces a signal by requiring it to be held for a certain amount of clocksignals before it is allowed through
 --
 -- Dependencies: 
 --
@@ -30,7 +30,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity debouncer is
-	Port(	clk, ena : in  STD_LOGIC; 
+	Port(	clk, en : in  STD_LOGIC; 		-- Clock, enable signal
 			input : in  STD_LOGIC; 			-- Input signal
 			debounced : out  STD_LOGIC		-- Debounced signal
 			); 
@@ -40,10 +40,10 @@ architecture Behavioral of debouncer is
  signal delay1, delay2, delay3, delay4, edge1, edge2 : STD_LOGIC := '0'; 
 
 begin 
-process (clk, ena) is 
+process (clk, en) is 
 begin 
 	if rising_edge(clk)  then  
-		if ena = '1' then
+		if en = '1' then
 		-- Delay the signal by 4 clock cycles
 			delay1 <= input;
 			delay2 <= delay1;

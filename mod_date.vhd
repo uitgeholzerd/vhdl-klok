@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: 	
 --
 -- Dependencies: 
 --
@@ -31,7 +31,7 @@ use ieee.numeric_std.all;
 --use UNISIM.VComponents.all;
 
 entity mod_date is
-		Port ( clk, rst, cten : in  STD_LOGIC;
+		Port ( clk, rst, cten : in  STD_LOGIC;										-- Clock, reset, enable signals
 				incr_day, incr_month, incr_year : in STD_LOGIC;					-- Increases the days/months/years
 				down : in STD_LOGIC;														-- Decreases instead of increases
 				day, month, year : out  STD_LOGIC_VECTOR (6 downto 0)			-- Day/month/year output

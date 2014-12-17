@@ -44,14 +44,14 @@ ARCHITECTURE behavior OF tb_clock_divider IS
 			max : positive
 			);
     PORT(
-         clk, ena : IN  std_logic;
+         clk, en : IN  std_logic;
          div : OUT  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal clk, ena : std_logic := '0';
+   signal clk, en : std_logic := '0';
    --signal ena : std_logic := '0';
 
  	--Outputs
@@ -72,7 +72,7 @@ BEGIN
 		  )
 	PORT MAP (
           clk => clk,
-          ena => ena,
+          en => en,
           div => div
         );
 
@@ -90,7 +90,7 @@ BEGIN
    stim_proc: process
    begin		
 		wait for 100 ns;
-		ena <= '1';
+		en <= '1';
 		assert ( div = '0' ) report "Clock out appeared before 10 cycles" severity error;
       wait for clock_period*5;
 		assert ( div = '0' ) report "Clock out appeared before 10 cycles" severity error;

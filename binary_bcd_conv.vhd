@@ -25,8 +25,8 @@ entity binary_bcd_conv is
    Port ( 
 		rst	: in std_logic;									-- Reset the converter
       number   : in  std_logic_vector (6 downto 0);	-- Input number in binary	
-      tens     : out std_logic_vector (3 downto 0);	-- Output of ten digits in BCD
-      ones     : out std_logic_vector (3 downto 0)		-- Output of single digits in BCD
+      tens     : out std_logic_vector (3 downto 0);	-- Output of tens digit in BCD
+      ones     : out std_logic_vector (3 downto 0)		-- Output of singles digit in BCD
 		);
 end binary_bcd_conv;
  

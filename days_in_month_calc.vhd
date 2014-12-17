@@ -8,7 +8,7 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: Calculate the amount of days in the month, given the month and year
 --
 -- Dependencies: 
 --
@@ -49,7 +49,7 @@ begin
 				int_year := to_integer(unsigned(year));
 				int_month := to_integer(unsigned(month));
 				
-				-- Check is year is leapyear
+				-- Check if year is leapyear
 				case int_year is
 					when 00 | 04 | 08 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 | 56 | 60 | 64 | 68 | 72 | 76 | 80 | 84 | 88 | 92 | 96 =>
 						leap_year := true;

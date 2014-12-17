@@ -42,8 +42,8 @@ ARCHITECTURE behavior OF tb_counter IS
     COMPONENT counter
 	 -- add generic variable here!
 	 GENERIC (
-			max : positive;
-			min: natural
+			max : positive:= 59;
+			min: natural := 0
 			);
     PORT(
          clk : IN  std_logic;
